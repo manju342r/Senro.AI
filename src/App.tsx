@@ -137,11 +137,30 @@ const OnboardingStep1 = () => {
 
 const OnboardingStep2 = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = React.useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const res = await fetch('/api/config-status');
+      const data = await res.json();
+      if (data.configured) {
+        navigate('/dashboard');
+      } else {
+        navigate('/onboarding/step-3');
+      }
+    } catch (err) {
+      console.error(err);
+      navigate('/onboarding/step-3'); // fallback
+    }
+  };
+
   return (
     <OnboardingLayout step={2}>
       <h2 className="text-2xl font-bold text-zinc-100 mb-2">The Opponent</h2>
       <p className="text-zinc-500 mb-6 text-sm">Who is your primary competitor? We will track their changes against your baseline.</p>
-      <form onSubmit={(e) => { e.preventDefault(); navigate('/onboarding/step-3'); }} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-zinc-400 mb-1">Opponent Company Name</label>
           <input type="text" required placeholder="e.g. Globex" className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-3 text-zinc-200 focus:border-blue-500 focus:outline-none" />
@@ -150,8 +169,8 @@ const OnboardingStep2 = () => {
           <label className="block text-sm font-medium text-zinc-400 mb-1">Opponent Website Link</label>
           <input type="url" required placeholder="https://globex.com" className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-3 text-zinc-200 focus:border-blue-500 focus:outline-none" />
         </div>
-        <button type="submit" className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-lg transition-colors mt-6">
-          Next Step <ArrowRight size={18} />
+        <button type="submit" disabled={loading} className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-medium py-3 rounded-lg transition-colors mt-6">
+          {loading ? 'Checking configuration...' : <>Next Step <ArrowRight size={18} /></>}
         </button>
       </form>
     </OnboardingLayout>
@@ -160,6 +179,18 @@ const OnboardingStep2 = () => {
 
 const OnboardingStep3 = () => {
   const navigate = useNavigate();
+  
+  React.useEffect(() => {
+    fetch('/api/config-status')
+      .then(res => res.json())
+      .then(data => {
+        if (data.configured) {
+          navigate('/dashboard');
+        }
+      })
+      .catch(console.error);
+  }, [navigate]);
+
   return (
     <OnboardingLayout step={3}>
       <h2 className="text-2xl font-bold text-zinc-100 mb-2">API Configuration</h2>
@@ -168,19 +199,19 @@ const OnboardingStep3 = () => {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-xs font-medium text-zinc-400 mb-1">Jina API Key</label>
-            <input type="password" required className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-2.5 text-sm text-zinc-200 focus:border-blue-500 focus:outline-none" />
+            <input type="password" placeholder="Optional" className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-2.5 text-sm text-zinc-200 focus:border-blue-500 focus:outline-none" />
           </div>
           <div>
             <label className="block text-xs font-medium text-zinc-400 mb-1">Vectorize Hindsight Key</label>
-            <input type="password" required className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-2.5 text-sm text-zinc-200 focus:border-blue-500 focus:outline-none" />
+            <input type="password" placeholder="Optional" className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-2.5 text-sm text-zinc-200 focus:border-blue-500 focus:outline-none" />
           </div>
           <div>
             <label className="block text-xs font-medium text-zinc-400 mb-1">Resend Key</label>
-            <input type="password" required className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-2.5 text-sm text-zinc-200 focus:border-blue-500 focus:outline-none" />
+            <input type="password" placeholder="Optional" className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-2.5 text-sm text-zinc-200 focus:border-blue-500 focus:outline-none" />
           </div>
           <div>
             <label className="block text-xs font-medium text-zinc-400 mb-1">LLM Key</label>
-            <input type="password" required className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-2.5 text-sm text-zinc-200 focus:border-blue-500 focus:outline-none" />
+            <input type="password" placeholder="Optional" className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-2.5 text-sm text-zinc-200 focus:border-blue-500 focus:outline-none" />
           </div>
         </div>
         <button type="submit" className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 rounded-lg transition-colors mt-6 shadow-lg shadow-emerald-900/20">
