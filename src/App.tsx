@@ -254,8 +254,19 @@ const SidebarItem = ({ to, icon: Icon, label }: { to: string; icon: any; label: 
   );
 };
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => (
-  <div className="min-h-screen bg-[#0a0a0a] text-zinc-200 flex font-sans">
+
+const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+  const handleAddCompetitor = () => {
+    const url = window.prompt("Enter competitor website URL (e.g., https://amazon.in):");
+    if (url) {
+      localStorage.setItem('compUrl', url);
+      window.location.reload();
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[#0a0a0a] text-zinc-200 flex font-sans">
+
     <aside className="w-64 bg-[#121212] border-r border-zinc-800 flex flex-col justify-between">
       <div>
         <div className="p-5 flex items-center gap-2">
@@ -300,7 +311,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => (
           />
         </div>
         <div className="flex items-center gap-4">
-          <button className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-md text-sm font-medium transition-colors">
+          <button onClick={handleAddCompetitor} className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-md text-sm font-medium transition-colors">
             <Plus size={16} /> Add Competitor
           </button>
           <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm">
@@ -313,7 +324,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => (
       </div>
     </main>
   </div>
-);
+  );
+};
 
 function App() {
   return (

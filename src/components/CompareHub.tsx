@@ -35,7 +35,7 @@ export const CompareHub = () => {
               All categories <ChevronDown size={14} />
             </button>
           </div>
-          <button className="bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-sm font-medium px-4 py-1.5 rounded-md transition-colors">
+          <button onClick={() => alert("Initiating deep comparison matrix using Hindsight Context...")} className="bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-sm font-medium px-4 py-1.5 rounded-md transition-colors">
             Compare
           </button>
         </div>
@@ -77,7 +77,7 @@ export const CompareHub = () => {
               <td className="p-4 text-right">
                 <div className="flex items-center justify-end gap-3 text-zinc-500">
                   <RefreshCw size={16} className="hover:text-zinc-300 cursor-pointer transition-colors" />
-                  <Trash2 size={16} className="hover:text-red-400 cursor-pointer transition-colors" />
+                  <Trash2 size={16} onClick={() => { if(window.confirm("Remove this competitor?")) { localStorage.removeItem("compUrl"); window.location.reload(); } }} className="hover:text-red-400 cursor-pointer transition-colors" />
                 </div>
               </td>
             </tr>

@@ -50,7 +50,7 @@ export const BattlecardsList = () => {
               <div className="text-zinc-500 text-xs">0 signals available</div>
             </div>
           </div>
-          <button className="flex items-center gap-1.5 bg-blue-600/20 text-blue-400 hover:bg-blue-600/30 px-3 py-1.5 rounded-md text-xs font-medium transition-colors border border-blue-500/20">
+          <button onClick={() => alert("LLM Prompt Initiated: Generating sales battlecard... This will take approx 5-10 seconds on Groq.")} className="flex items-center gap-1.5 bg-blue-600/20 text-blue-400 hover:bg-blue-600/30 px-3 py-1.5 rounded-md text-xs font-medium transition-colors border border-blue-500/20">
             <Sparkles size={14} /> Generate
           </button>
         </div>
