@@ -9,7 +9,7 @@ import { BrowserRouter, Routes, Route, Navigate, Link, useLocation, useNavigate 
 import { DataProvider, useData } from './contexts/DataContext';
 import { 
   LayoutDashboard, Users, GitCompare, LineChart, Settings, 
-  Search, Plus, Target, CheckCircle2, ArrowRight, Activity, FileText
+  Search, Plus, Target, CheckCircle2, ArrowRight, Activity, FileText, LogOut
 } from 'lucide-react';
 import React, { useState } from 'react';
 
@@ -259,6 +259,15 @@ const SidebarItem = ({ to, icon: Icon, label }: { to: string; icon: any; label: 
 
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+  const navigate = useNavigate();
+  const { supabase } = useData();
+
+  const handleSignOut = async () => {
+    try { await supabase.auth.signOut(); } catch (e) {}
+    localStorage.removeItem('userEmail');
+    navigate('/login');
+  };
+
   const [showModal, setShowModal] = React.useState(false);
   const [urlInput, setUrlInput] = React.useState('');
 
@@ -336,6 +345,11 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             <div className="w-2 h-2 rounded-full bg-zinc-700"></div> LLM
           </div>
           <span>Off</span>
+        </div>
+        <div className="pt-2">
+          <button onClick={handleSignOut} className="w-full flex items-center gap-2 text-xs font-medium text-zinc-500 hover:text-red-400 transition-colors">
+            <LogOut size={14} /> Sign out
+          </button>
         </div>
       </div>
     </aside>

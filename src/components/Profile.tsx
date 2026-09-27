@@ -1,7 +1,18 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useData } from '../contexts/DataContext';
+import { LogOut } from 'lucide-react';
 
 export const Profile = () => {
   const [email] = useState(() => localStorage.getItem('userEmail') || 'demo@senro.ai (Guest)');
+  const navigate = useNavigate();
+  const { supabase } = useData();
+  
+  const handleSignOut = async () => {
+    try { await supabase.auth.signOut(); } catch (e) {}
+    localStorage.removeItem('userEmail');
+    navigate('/login');
+  };
   const [ownUrl] = useState(() => localStorage.getItem('ownUrl') || 'https://acme.com');
   
   const getWorkspaceName = (url: string) => {
@@ -49,8 +60,15 @@ export const Profile = () => {
             </div>
           </div>
 
+
+          <div className="pt-6 border-t border-zinc-800/50">
+            <button onClick={handleSignOut} className="flex items-center gap-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+              <LogOut size={16} /> Sign out of Senro.AI
+            </button>
+          </div>
         </div>
       </div>
+
     </div>
   );
 };
