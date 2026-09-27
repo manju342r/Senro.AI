@@ -97,7 +97,7 @@ DO NOT return any other text outside the JSON.`;
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'llama3-70b-8192',
+        model: 'llama-3.1-70b-versatile',
         response_format: { type: "json_object" },
         messages: [
           { role: 'system', content: systemPrompt },
@@ -108,7 +108,7 @@ DO NOT return any other text outside the JSON.`;
 
     if (!llmResponse.ok) {
       const errTxt = await llmResponse.text();
-      return res.status(llmResponse.status).json({ error: 'LLM failed', details: errTxt });
+      return res.status(llmResponse.status).json({ error: `LLM failed: ${errTxt}` });
     }
 
     const llmData = await llmResponse.json();
