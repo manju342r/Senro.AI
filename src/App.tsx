@@ -269,6 +269,16 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   const [showModal, setShowModal] = React.useState(false);
+
+  const [isConfigured, setIsConfigured] = React.useState(false);
+
+  React.useEffect(() => {
+    fetch('/api/config-status')
+      .then(res => res.json())
+      .then(data => setIsConfigured(data.configured))
+      .catch(() => {});
+  }, []);
+
   const [urlInput, setUrlInput] = React.useState('');
 
   const handleAddCompetitor = (e: React.FormEvent) => {
@@ -336,15 +346,15 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       <div className="p-5 border-t border-zinc-800 space-y-2">
         <div className="flex justify-between items-center text-xs text-zinc-500">
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-zinc-700"></div> Scraping
+            <div className={`w-2 h-2 rounded-full ${isConfigured ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'bg-zinc-700'}`}></div> Scraping
           </div>
-          <span>Off</span>
+          <span className={isConfigured ? 'text-emerald-500 font-medium' : ''}>{isConfigured ? 'On' : 'Off'}</span>
         </div>
         <div className="flex justify-between items-center text-xs text-zinc-500">
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-zinc-700"></div> LLM
+            <div className={`w-2 h-2 rounded-full ${isConfigured ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'bg-zinc-700'}`}></div> LLM
           </div>
-          <span>Off</span>
+          <span className={isConfigured ? 'text-emerald-500 font-medium' : ''}>{isConfigured ? 'On' : 'Off'}</span>
         </div>
         <div className="pt-2">
           <button onClick={handleSignOut} className="w-full flex items-center gap-2 text-xs font-medium text-zinc-500 hover:text-red-400 transition-colors">
