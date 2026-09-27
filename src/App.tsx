@@ -255,17 +255,54 @@ const SidebarItem = ({ to, icon: Icon, label }: { to: string; icon: any; label: 
 };
 
 
+
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-  const handleAddCompetitor = () => {
-    const url = window.prompt("Enter competitor website URL (e.g., https://amazon.in):");
-    if (url) {
-      localStorage.setItem('compUrl', url);
+  const [showModal, setShowModal] = React.useState(false);
+  const [urlInput, setUrlInput] = React.useState('');
+
+  const handleAddCompetitor = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (urlInput) {
+      localStorage.setItem('compUrl', urlInput);
+      setShowModal(false);
       window.location.reload();
     }
   };
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-zinc-200 flex font-sans">
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-[#121212] border border-zinc-800 rounded-xl w-full max-w-md shadow-2xl overflow-hidden">
+            <div className="p-4 border-b border-zinc-800 flex justify-between items-center bg-[#0a0a0a]">
+              <h3 className="font-semibold text-zinc-100">Add Tracked Competitor</h3>
+              <button onClick={() => setShowModal(false)} className="text-zinc-500 hover:text-zinc-300">✕</button>
+            </div>
+            <form onSubmit={handleAddCompetitor} className="p-5 space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-zinc-300 mb-1">Competitor Website URL</label>
+                <input 
+                  autoFocus
+                  type="url" 
+                  value={urlInput}
+                  onChange={e => setUrlInput(e.target.value)}
+                  placeholder="https://amazon.in" 
+                  required
+                  className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-2.5 text-sm text-zinc-200 focus:border-blue-500 focus:outline-none"
+                />
+              </div>
+              <div className="flex gap-3 justify-end pt-2">
+                <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 text-sm font-medium text-zinc-400 hover:text-zinc-200">Cancel</button>
+                <button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                  Add Competitor
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
 
     <aside className="w-64 bg-[#121212] border-r border-zinc-800 flex flex-col justify-between">
       <div>
@@ -311,7 +348,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           />
         </div>
         <div className="flex items-center gap-4">
-          <button onClick={handleAddCompetitor} className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-md text-sm font-medium transition-colors">
+          <button onClick={() => setShowModal(true)} className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-md text-sm font-medium transition-colors">
             <Plus size={16} /> Add Competitor
           </button>
           <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm">
