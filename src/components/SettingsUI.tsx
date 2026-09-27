@@ -11,13 +11,27 @@ export const SettingsUI = () => {
   const [industry, setIndustry] = useState(() => localStorage.getItem('userIndustry') || 'SaaS');
   const [alertSens, setAlertSens] = useState(() => localStorage.getItem('alertSens') || 'Balanced');
 
+
   useEffect(() => {
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      if (user) {
-        setEmail(user.email || '');
+    // Attempt to get session synchronously first
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user?.email) {
+        setEmail(session.user.email);
+      } else {
+        // Fallback to getUser if session is stale
+        supabase.auth.getUser().then(({ data: { user } }) => {
+          if (user?.email) {
+            setEmail(user.email);
+          } else {
+            setEmail('demo@senro.ai (Guest)');
+          }
+        }).catch(() => {
+          setEmail('demo@senro.ai (Guest)');
+        });
       }
     });
   }, [supabase]);
+
 
 
   const getWorkspaceName = (url: string) => {
