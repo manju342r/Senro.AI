@@ -10,6 +10,7 @@ export const SettingsUI = () => {
   const [email, setEmail] = useState(() => localStorage.getItem('userEmail') || 'demo@senro.ai (Guest)');
   const [industry, setIndustry] = useState(() => localStorage.getItem('userIndustry') || 'SaaS');
   const [alertSens, setAlertSens] = useState(() => localStorage.getItem('alertSens') || 'Balanced');
+  const [reportFreq, setReportFreq] = useState(() => localStorage.getItem('reportFreq') || 'never');
 
 
 
@@ -73,8 +74,30 @@ export const SettingsUI = () => {
               <option value="High">High</option>
             </select>
           </div>
+
+          <div className="flex justify-between items-center text-sm">
+            <span className="text-zinc-500 w-1/3">Email report frequency</span>
+            <select 
+              value={reportFreq}
+              onChange={async (e) => { 
+                const val = e.target.value;
+                setReportFreq(val); 
+                localStorage.setItem('reportFreq', val);
+                try {
+                  await supabase.from('user_settings').update({ email_report_frequency: val }).eq('email', email);
+                } catch(e) { console.error(e) }
+              }}
+              className="w-2/3 bg-transparent hover:bg-zinc-800/50 focus:bg-zinc-800/50 focus:ring-1 focus:ring-blue-500 rounded px-2 py-1 outline-none text-zinc-200 text-right transition-all cursor-pointer"
+            >
+              <option value="never">Never</option>
+              <option value="daily">Daily</option>
+              <option value="twice_a_day">Twice a Day</option>
+              <option value="weekly">Weekly</option>
+            </select>
+          </div>
         </div>
       </div>
+
 
       <div className="bg-[#121212] border border-zinc-800 rounded-xl overflow-hidden">
         <div className="p-4 border-b border-zinc-800 bg-[#0a0a0a] flex items-center gap-2">
