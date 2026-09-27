@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate, Link, useLocation, useNavigate } from 'react-router-dom';
-import { DataProvider } from './contexts/DataContext';
+import { DataProvider, useData } from './contexts/DataContext';
 import { 
   LayoutDashboard, Users, GitCompare, LineChart, Settings, 
   Search, Plus, Target, CheckCircle2, ArrowRight
@@ -9,12 +9,33 @@ import React, { useState } from 'react';
 // --- AUTHENTICATION VIEWS (Strictly Email/Password) ---
 const AuthScreen = ({ isLogin }: { isLogin: boolean }) => {
   const navigate = useNavigate();
+  const { supabase } = useData();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real app, this would call Supabase Auth.
-    // For now, we mock success and proceed to the onboarding flow.
-    navigate('/onboarding/step-1');
+    setError(null);
+    setLoading(true);
+
+    try {
+      if (isLogin) {
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        navigate('/dashboard');
+      } else {
+        const { error } = await supabase.auth.signUp({ email, password });
+        if (error) throw error;
+        // On successful signup, push them to the onboarding wizard
+        navigate('/onboarding/step-1');
+      }
+    } catch (err: any) {
+      setError(err.message || 'An error occurred during authentication.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -34,17 +55,22 @@ const AuthScreen = ({ isLogin }: { isLogin: boolean }) => {
           </div>
           
           <form className="space-y-5" onSubmit={handleSubmit}>
+            {error && (
+              <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-sm text-red-400">
+                {error}
+              </div>
+            )}
             <div>
               <label className="block text-sm font-medium text-zinc-400 mb-1">Email address</label>
-              <input type="email" required className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-3 text-zinc-200 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all" />
+              <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-3 text-zinc-200 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all" />
             </div>
             <div>
               <label className="block text-sm font-medium text-zinc-400 mb-1">Password</label>
-              <input type="password" required minLength={8} className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-3 text-zinc-200 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all" />
+              <input type="password" required minLength={8} value={password} onChange={(e) => setPassword(e.target.value)} className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-3 text-zinc-200 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all" />
             </div>
             
-            <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-lg transition-colors mt-6 shadow-lg shadow-blue-900/20">
-              {isLogin ? 'Sign In' : 'Sign Up'}
+            <button type="submit" disabled={loading} className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-medium py-3 rounded-lg transition-colors mt-6 shadow-lg shadow-blue-900/20">
+              {loading ? 'Processing...' : (isLogin ? 'Sign In' : 'Sign Up')}
             </button>
           </form>
 
