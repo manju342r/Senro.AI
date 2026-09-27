@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useData } from '../contexts/DataContext';
 import { User, Key, Server, Database, Globe } from 'lucide-react';
 
 export const SettingsUI = () => {
 
+  const { supabase } = useData();
   const [ownUrl, setOwnUrl] = useState(() => localStorage.getItem('ownUrl') || 'https://acme.com');
   const [compUrl, setCompUrl] = useState(() => localStorage.getItem('compUrl') || '');
-  const [email, setEmail] = useState(() => localStorage.getItem('userEmail') || 'founder@startup.com');
+  const [email, setEmail] = useState('');
   const [industry, setIndustry] = useState(() => localStorage.getItem('userIndustry') || 'SaaS');
   const [alertSens, setAlertSens] = useState(() => localStorage.getItem('alertSens') || 'Balanced');
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) {
+        setEmail(user.email || '');
+      }
+    });
+  }, [supabase]);
+
 
   const getWorkspaceName = (url: string) => {
     try {
@@ -37,8 +48,8 @@ export const SettingsUI = () => {
             <input 
               type="email" 
               value={email}
-              onChange={(e) => { setEmail(e.target.value); localStorage.setItem('userEmail', e.target.value); }}
-              className="w-2/3 bg-transparent border-b border-zinc-800 focus:border-blue-500 outline-none text-zinc-200 text-right pb-1"
+              disabled
+              className="w-2/3 bg-transparent border-b border-zinc-800 outline-none text-zinc-400 text-right pb-1 opacity-70 cursor-not-allowed"
             />
           </div>
           <div className="flex justify-between items-center text-sm">
