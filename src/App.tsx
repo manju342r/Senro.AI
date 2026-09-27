@@ -280,31 +280,91 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => (
 );
 
 // --- DASHBOARD VIEWS ---
-const Overview = () => (
-  <div className="max-w-6xl mx-auto space-y-6">
-    <div>
-      <h2 className="text-2xl font-bold text-zinc-100">Global Threat & Visibility</h2>
-      <p className="text-zinc-500 text-sm mt-1">High-level threat score and visibility comparison.</p>
-    </div>
+const Overview = () => {
+  const [ownUrl, setOwnUrl] = React.useState('https://acme.com');
+  const [compUrl, setCompUrl] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
+  const [data, setData] = React.useState<any>(null);
+  const [error, setError] = React.useState('');
+
+  const analyze = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!ownUrl || !compUrl) return;
+    setLoading(true);
+    setError('');
     
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <div className="bg-[#121212] border border-zinc-800 p-6 rounded-xl border-t-2 border-t-blue-500">
-        <div className="text-xs font-semibold text-zinc-500 tracking-wider mb-2">TRACKED COMPETITORS</div>
-        <div className="text-4xl font-bold text-zinc-100">1</div>
+    try {
+      const res = await fetch('/api/analyze-competitor', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ownUrl, competitorUrls: [compUrl] })
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || 'Analysis failed');
+      setData(json);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="max-w-6xl mx-auto space-y-6">
+      <div>
+        <h2 className="text-2xl font-bold text-zinc-100">Global Threat & Visibility</h2>
+        <p className="text-zinc-500 text-sm mt-1">High-level threat score and visibility comparison.</p>
       </div>
-      <div className="bg-[#121212] border border-zinc-800 p-6 rounded-xl border-t-2 border-t-emerald-500">
-        <div className="text-xs font-semibold text-zinc-500 tracking-wider mb-2">STRATEGIC GAP INDEX</div>
-        <div className="text-4xl font-bold text-emerald-400">42/100</div>
-        <div className="text-sm text-zinc-500 mt-1">Slight edge over market average</div>
-      </div>
-      <div className="bg-[#121212] border border-zinc-800 p-6 rounded-xl border-t-2 border-t-purple-500">
-        <div className="text-xs font-semibold text-zinc-500 tracking-wider mb-2">NET TRAFFIC IMPACT</div>
-        <div className="text-4xl font-bold text-purple-400">+14.2%</div>
-        <div className="text-sm text-zinc-500 mt-1">From applied Hindsight recommendations</div>
+
+      <form onSubmit={analyze} className="bg-[#121212] border border-zinc-800 p-5 rounded-xl flex flex-col md:flex-row items-end gap-4">
+        <div className="flex-1 w-full">
+          <label className="block text-xs font-medium text-zinc-400 mb-1">Your Website</label>
+          <input type="url" value={ownUrl} onChange={e => setOwnUrl(e.target.value)} required className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-2.5 text-sm text-zinc-200 focus:border-blue-500 focus:outline-none" />
+        </div>
+        <div className="flex-1 w-full">
+          <label className="block text-xs font-medium text-zinc-400 mb-1">Competitor Website</label>
+          <input type="url" value={compUrl} onChange={e => setCompUrl(e.target.value)} required placeholder="https://..." className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-2.5 text-sm text-zinc-200 focus:border-blue-500 focus:outline-none" />
+        </div>
+        <button type="submit" disabled={loading} className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-medium px-6 py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2">
+          {loading ? 'Analyzing...' : 'Analyze'}
+        </button>
+      </form>
+
+      {error && (
+        <div className="bg-red-500/10 border border-red-500/50 text-red-400 p-4 rounded-xl text-sm">
+          {error}
+        </div>
+      )}
+      
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="bg-[#121212] border border-zinc-800 p-6 rounded-xl border-t-2 border-t-blue-500">
+          <div className="text-xs font-semibold text-zinc-500 tracking-wider mb-2">TRACKED COMPETITORS</div>
+          {loading ? <div className="h-10 bg-zinc-800 animate-pulse rounded w-16"></div> : (
+            <div className="text-4xl font-bold text-zinc-100">{data ? data.tracked_competitors : '--'}</div>
+          )}
+        </div>
+        <div className="bg-[#121212] border border-zinc-800 p-6 rounded-xl border-t-2 border-t-emerald-500">
+          <div className="text-xs font-semibold text-zinc-500 tracking-wider mb-2">STRATEGIC GAP INDEX</div>
+          {loading ? <div className="h-10 bg-zinc-800 animate-pulse rounded w-32"></div> : (
+            <>
+              <div className="text-4xl font-bold text-emerald-400">{data ? `${data.strategic_gap_index}/100` : '--'}</div>
+              <div className="text-sm text-zinc-500 mt-1">{data ? data.reasoning : 'Awaiting analysis'}</div>
+            </>
+          )}
+        </div>
+        <div className="bg-[#121212] border border-zinc-800 p-6 rounded-xl border-t-2 border-t-blue-500">
+          <div className="text-xs font-semibold text-zinc-500 tracking-wider mb-2">NET TRAFFIC IMPACT</div>
+          {loading ? <div className="h-10 bg-zinc-800 animate-pulse rounded w-24"></div> : (
+            <>
+              <div className="text-4xl font-bold text-blue-400">{data ? data.impact_metric : '--'}</div>
+              <div className="text-sm text-zinc-500 mt-1">Estimated by LLM</div>
+            </>
+          )}
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const CompareHub = () => (
   <div className="max-w-6xl mx-auto space-y-6">
