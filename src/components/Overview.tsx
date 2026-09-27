@@ -50,8 +50,8 @@ export const Overview = () => {
           <p className="text-zinc-500 text-sm mt-1">Live competitive position across 1 tracked competitor.</p>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={() => alert("Scan initiated. Senro.AI is checking for new competitor signals in the background.")} className="flex items-center gap-2 bg-transparent border border-zinc-700 text-zinc-300 hover:text-zinc-100 hover:border-zinc-500 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-            <span className="opacity-50">⚡</span> Trigger scan
+          <button onClick={analyze} disabled={loading} className="flex items-center gap-2 bg-transparent border border-zinc-700 text-zinc-300 hover:text-zinc-100 hover:border-zinc-500 px-4 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-50">
+            <span className="opacity-50">⚡</span> {loading ? 'Scanning...' : 'Trigger scan'}
           </button>
           <button onClick={() => window.print()} className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
             <span className="opacity-50">↓</span> Export summary
@@ -59,25 +59,7 @@ export const Overview = () => {
         </div>
       </div>
 
-      <form onSubmit={analyze} className="bg-[#121212] p-4 rounded-xl border border-zinc-800 flex gap-4">
-        <input 
-          type="url" 
-          value={ownUrl} 
-          onChange={e => setOwnUrl(e.target.value)} 
-          placeholder="Your Website" 
-          className="flex-1 bg-[#0a0a0a] border border-zinc-800 rounded-lg p-2.5 text-zinc-200 text-sm focus:border-blue-500 focus:outline-none" 
-        />
-        <input 
-          type="url" 
-          value={compUrl} 
-          onChange={e => setCompUrl(e.target.value)} 
-          placeholder="Competitor Website" 
-          className="flex-1 bg-[#0a0a0a] border border-zinc-800 rounded-lg p-2.5 text-zinc-200 text-sm focus:border-blue-500 focus:outline-none" 
-        />
-        <button type="submit" disabled={loading} className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg text-sm font-medium transition-colors disabled:opacity-50">
-          {loading ? 'Analyzing...' : 'Analyze'}
-        </button>
-      </form>
+      
 
       {error && (
         <div className="bg-red-500/10 border border-red-500/30 text-red-500 p-4 rounded-lg text-sm">
