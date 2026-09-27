@@ -32,12 +32,25 @@ export const ScheduledReports = () => {
 
   const handleSendNow = async () => {
     if (!compUrl) return alert("Please set a competitor URL in Settings first.");
+    
+    // Check if it's the demo email and prompt if they want to override
+    let targetEmail = email;
+    if (email === 'demo@senro.ai') {
+      const promptEmail = window.prompt("You are using a guest account. What email address should we send the report to?", "yourname@example.com");
+      if (!promptEmail || promptEmail === "yourname@example.com") {
+        return; // User cancelled
+      }
+      targetEmail = promptEmail;
+    } else {
+      if (!window.confirm(`Ready to send the report to ${targetEmail}?`)) return;
+    }
+
     setSendingNow(true);
     try {
       const response = await fetch('/api/send-hindsight-report', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, competitorUrl: compUrl })
+        body: JSON.stringify({ email: targetEmail, competitorUrl: compUrl })
       });
       const res = await response.json();
       if (res.error) alert("Error: " + res.error);
