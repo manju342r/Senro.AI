@@ -16,20 +16,20 @@ export default async function handler(req, res) {
   }
 
   const { userId, competitorName, gapScore, recommendations, trafficDelta, emailRecipient } = req.body;
-  const authHeader = req.headers.authorization; // Expected to contain Resend API Key
+  const authHeader = req.headers.authorization || ''; 
+  const resendApiKey = authHeader.replace('Bearer ', '').trim() || process.env.RESEND_API_KEY;
 
-  if (!emailRecipient || !authHeader) {
+  if (!emailRecipient || !resendApiKey) {
     return res.status(400).json({ error: 'Missing email recipient or Resend API key' });
   }
 
   try {
-    const resendApiKey = authHeader.replace('Bearer ', '');
     const resend = new Resend(resendApiKey);
 
     const htmlContent = `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
         <h2 style="color: #1a1a1a;">Competitor Movement & Visibility Alert</h2>
-        <p>RadarAI has detected significant changes from <strong>${competitorName}</strong>.</p>
+        <p>Senro.AI has detected significant changes from <strong>${competitorName}</strong>.</p>
         
         <div style="background-color: #f4f4f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
           <h3 style="margin-top: 0;">Scorecard</h3>
@@ -49,13 +49,13 @@ export default async function handler(req, res) {
         </ul>
         
         <p style="font-size: 12px; color: #71717a; margin-top: 40px;">
-          Sent by RadarAI Adaptive Competitive Intelligence.
+          Sent by Senro.AI Adaptive Competitive Intelligence.
         </p>
       </div>
     `;
 
     const { data, error } = await resend.emails.send({
-      from: 'RadarAI <reports@radar-ai.example.com>', // Update with verified domain
+      from: 'Senro.AI <onboarding@resend.dev>', // onboarding@resend.dev works on the free tier without verifying a domain!
       to: [emailRecipient],
       subject: `🚨 Competitive Alert: ${competitorName} - Gap Score ${gapScore}`,
       html: htmlContent,
