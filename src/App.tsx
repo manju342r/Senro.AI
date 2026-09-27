@@ -77,6 +77,11 @@ const OnboardingLayout = ({ children, step }: { children: React.ReactNode, step:
       <div className="bg-[#121212] border border-zinc-800 p-8 rounded-2xl shadow-xl">
         {children}
       </div>
+      <div className="mt-6 text-center">
+        <Link to="/dashboard" className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors">
+          Skip this for now (Testing)
+        </Link>
+      </div>
     </div>
   </div>
 );
