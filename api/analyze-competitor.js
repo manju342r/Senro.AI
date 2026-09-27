@@ -98,7 +98,7 @@ DO NOT return any other text outside the JSON.`;
 
     try {
       const completion = await openai.chat.completions.create({
-        model: "llama-3.3-70b-versatile", // Or try "llama-3.1-8b-instant" if this still fails
+        model: "openai/gpt-oss-120b", // Hackathon required model ID
         response_format: { type: "json_object" },
         messages: [
           { role: 'system', content: systemPrompt },
