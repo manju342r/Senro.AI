@@ -19,7 +19,7 @@ interface RecallPayload {
 }
 
 /**
- * RadarAI Hindsight Memory Agent
+ * Senro.AI Hindsight Memory Agent
  * Interacts with Vectorize Hindsight API for multi-network agentic memory.
  */
 export class HindsightAgent {

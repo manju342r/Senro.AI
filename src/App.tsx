@@ -47,7 +47,7 @@ const AuthScreen = ({ isLogin }: { isLogin: boolean }) => {
               <div className="bg-blue-600 p-2 rounded-xl">
                 <Target size={28} className="text-white" />
               </div>
-              <h1 className="text-3xl font-bold text-zinc-100">RadarAI</h1>
+              <h1 className="text-3xl font-bold text-zinc-100">Senro.AI</h1>
             </div>
             <h2 className="text-2xl font-bold text-zinc-100 tracking-tight">
               {isLogin ? 'Welcome back' : 'Create your account'}
@@ -92,7 +92,7 @@ const OnboardingLayout = ({ children, step }: { children: React.ReactNode, step:
     <div className="w-full max-w-xl">
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-xl font-bold text-zinc-100 flex items-center gap-2">
-          <Target size={20} className="text-blue-500" /> RadarAI Setup
+          <Target size={20} className="text-blue-500" /> Senro.AI Setup
         </h1>
         <div className="flex gap-2">
           {[1, 2, 3].map(i => (
@@ -163,7 +163,7 @@ const OnboardingStep3 = () => {
   return (
     <OnboardingLayout step={3}>
       <h2 className="text-2xl font-bold text-zinc-100 mb-2">API Configuration</h2>
-      <p className="text-zinc-500 mb-6 text-sm">Connect the engines powering RadarAI's memory, scraping, and email systems.</p>
+      <p className="text-zinc-500 mb-6 text-sm">Connect the engines powering Senro.AI's memory, scraping, and email systems.</p>
       <form onSubmit={(e) => { e.preventDefault(); navigate('/dashboard'); }} className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
           <div>
@@ -216,7 +216,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => (
         <div className="bg-blue-600 p-1.5 rounded-lg flex items-center justify-center">
           <Target size={18} className="text-white" />
         </div>
-        <h1 className="text-lg font-bold text-zinc-100 tracking-wide">RadarAI</h1>
+        <h1 className="text-lg font-bold text-zinc-100 tracking-wide">Senro.AI</h1>
       </div>
       
       <nav className="flex-1 px-3 mt-4 space-y-1">
