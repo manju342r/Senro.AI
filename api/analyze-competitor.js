@@ -80,6 +80,12 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'GROQ_API_KEY or LLM_API_KEY is not set on the server.' });
     }
 
+    const { OpenAI } = await import("openai");
+    const openai = new OpenAI({
+      apiKey: groqKey,
+      baseURL: "https://api.groq.com/openai/v1", // Route specifically to Groq
+    });
+
     const systemPrompt = `You are an expert competitive intelligence AI. Analyze the provided competitor websites vs the user's website.
 Return a strict JSON object with EXACTLY these four keys:
 - "tracked_competitors": (integer) number of competitors analyzed
@@ -90,34 +96,24 @@ DO NOT return any other text outside the JSON.`;
 
     const userPrompt = `User Website (${ownUrl}):\n${ownText.substring(0, 4000)}\n\nCompetitor Websites:\n${compTexts.map((t, i) => `Comp ${i+1}:\n${t.substring(0, 4000)}`).join('\n\n')}`;
 
-    const llmResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${groqKey}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
+    try {
+      const completion = await openai.chat.completions.create({
+        model: "llama-3.3-70b-versatile", // Or try "llama-3.1-8b-instant" if this still fails
         response_format: { type: "json_object" },
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }
         ]
-      })
-    });
+      });
 
-    if (!llmResponse.ok) {
-      const errTxt = await llmResponse.text();
-      return res.status(llmResponse.status).json({ error: `LLM failed: ${errTxt}` });
+      const resultObj = JSON.parse(completion.choices[0].message.content);
+      // Ensure tracked_competitors matches the input array if the LLM hallucinated
+      resultObj.tracked_competitors = competitorUrls.length;
+
+      return res.status(200).json(resultObj);
+    } catch (llmError) {
+      return res.status(500).json({ error: `LLM failed: ${llmError.message}`, details: llmError.stack });
     }
-
-    const llmData = await llmResponse.json();
-    const resultObj = JSON.parse(llmData.choices[0].message.content);
-    
-    // Ensure tracked_competitors matches the input array if the LLM hallucinated
-    resultObj.tracked_competitors = competitorUrls.length;
-
-    return res.status(200).json(resultObj);
 
   } catch (error) {
     console.error('Analyze error:', error);
