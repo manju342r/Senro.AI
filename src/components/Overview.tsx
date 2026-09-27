@@ -92,10 +92,10 @@ export const Overview = () => {
           <div className="relative w-40 h-40 mb-6">
             <svg viewBox="0 0 100 100" className="w-full h-full transform -rotate-90">
               <circle cx="50" cy="50" r="40" stroke="#1f2937" strokeWidth="8" fill="none" />
-              <circle cx="50" cy="50" r="40" stroke="#10b981" strokeWidth="8" fill="none" strokeDasharray="251.2" strokeDashoffset={loading ? 251.2 : (data ? 251.2 * (1 - (data.strategic_gap_index / 100)) : 160)} className="transition-all duration-1000 ease-out" />
+              <circle cx="50" cy="50" r="40" stroke="#10b981" strokeWidth="8" fill="none" strokeDasharray="251.2" strokeDashoffset={loading ? 251.2 : (data ? 251.2 * (1 - (data.strategic_gap_index / 100)) : 251.2)} className="transition-all duration-1000 ease-out" />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-4xl font-bold text-zinc-100">{loading ? '--' : (data ? data.strategic_gap_index : '33')}</span>
+              <span className="text-4xl font-bold text-zinc-100">{loading ? '--' : (data ? data.strategic_gap_index : '--')}</span>
               <span className="text-emerald-500 text-sm font-medium">Contained</span>
             </div>
           </div>
