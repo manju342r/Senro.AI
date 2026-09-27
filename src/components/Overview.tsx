@@ -3,7 +3,7 @@ import { Target, Zap, TrendingUp, AlertTriangle, Activity } from 'lucide-react';
 import { useData } from '../contexts/DataContext';
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  BarChart, Bar
+  
 } from 'recharts';
 
 export const Overview = () => {
@@ -23,12 +23,7 @@ export const Overview = () => {
     { name: 'Sun', threat: 75, signals: 8 },
   ];
 
-  const mockCategoryData = [
-    { name: 'Pricing', value: 4 },
-    { name: 'Features', value: 7 },
-    { name: 'Hiring', value: 2 },
-    { name: 'Messaging', value: 5 },
-  ];
+  
 
   const handleScan = async () => {
     if (!compUrl) return alert("Please set a competitor URL in settings first.");
@@ -128,7 +123,7 @@ export const Overview = () => {
 
       {/* Charts Row */}
       <div className="grid grid-cols-3 gap-6">
-        <div className="col-span-2 bg-[#121212] border border-zinc-800 p-6 rounded-xl">
+        <div className="col-span-3 bg-[#121212] border border-zinc-800 p-6 rounded-xl">
           <h3 className="text-sm font-semibold text-zinc-300 mb-6">Threat Score Timeline (7 Days)</h3>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -152,23 +147,7 @@ export const Overview = () => {
           </div>
         </div>
 
-        <div className="bg-[#121212] border border-zinc-800 p-6 rounded-xl">
-          <h3 className="text-sm font-semibold text-zinc-300 mb-6">Signals by Category</h3>
-          <div className="h-64 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={mockCategoryData} layout="vertical" margin={{ top: 0, right: 0, left: 20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#27272a" horizontal={false} />
-                <XAxis type="number" stroke="#71717a" fontSize={12} hide />
-                <YAxis dataKey="name" type="category" stroke="#a1a1aa" fontSize={12} tickLine={false} axisLine={false} />
-                <Tooltip 
-                  cursor={{fill: '#27272a'}}
-                  contentStyle={{ backgroundColor: '#18181b', borderColor: '#27272a', borderRadius: '8px' }}
-                />
-                <Bar dataKey="value" fill="#10b981" radius={[0, 4, 4, 0]} barSize={20} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
+        
       </div>
 
       {/* Analysis Block */}
