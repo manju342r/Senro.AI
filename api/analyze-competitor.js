@@ -100,7 +100,7 @@ DO NOT return any other text outside the JSON.`;
 
     try {
       const completion = await openai.chat.completions.create({
-        model: "mixtral-8x7b-32768", // Hackathon required model ID
+        model: process.env.LLM_MODEL || "llama-3.3-70b-versatile", // Hackathon required model ID
         response_format: { type: "json_object" },
         messages: [
           { role: 'system', content: systemPrompt },
