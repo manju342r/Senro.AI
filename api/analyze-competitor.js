@@ -87,11 +87,13 @@ export default async function handler(req, res) {
     });
 
     const systemPrompt = `You are an expert competitive intelligence AI. Analyze the provided competitor websites vs the user's website.
-Return a strict JSON object with EXACTLY these four keys:
-- "tracked_competitors": (integer) number of competitors analyzed
-- "strategic_gap_index": (integer 0-100) How well the user's site competes (higher is better)
-- "impact_metric": (string) Estimated traffic/conversion impact, e.g., "+5.4%" or "-2.1%"
-- "reasoning": (string) A short 1-sentence explanation of the score.
+Return a strict JSON object with EXACTLY these keys:
+- "strategic_gap_index": (integer 0-100) How well the user's site competes (higher is better).
+- "net_traffic_impact": (string) Estimated traffic/conversion impact, e.g., "+5.4%" or "-2.1%".
+- "risk_level": (string) "High", "Medium", or "Low" based on the threat level.
+- "signals_24h": (integer) Number of competitor changes detected in last 24h.
+- "signals_total": (integer) Total number of competitor changes detected overall.
+- "analysis_summary": (string) A detailed 2-3 sentence executive summary explaining the score and the competitor's main advantages.
 DO NOT return any other text outside the JSON.`;
 
     const userPrompt = `User Website (${ownUrl}):\n${ownText.substring(0, 4000)}\n\nCompetitor Websites:\n${compTexts.map((t, i) => `Comp ${i+1}:\n${t.substring(0, 4000)}`).join('\n\n')}`;
