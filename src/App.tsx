@@ -1,3 +1,9 @@
+import { Overview } from './components/Overview';
+import { CompareHub } from './components/CompareHub';
+import { BattlecardsList } from './components/BattlecardsList';
+import { LiveSignals } from './components/LiveSignals';
+import { SettingsUI } from './components/SettingsUI';
+
 import { BrowserRouter, Routes, Route, Navigate, Link, useLocation, useNavigate } from 'react-router-dom';
 import { DataProvider, useData } from './contexts/DataContext';
 import { 
@@ -308,11 +314,6 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => (
     </main>
   </div>
 );
-import { Overview } from './components/Overview';
-import { CompareHub } from './components/CompareHub';
-import { BattlecardsList } from './components/BattlecardsList';
-import { LiveSignals } from './components/LiveSignals';
-import { SettingsUI } from './components/SettingsUI';
 
 function App() {
   return (
