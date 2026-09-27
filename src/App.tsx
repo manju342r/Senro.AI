@@ -167,7 +167,7 @@ const OnboardingStep3 = () => {
       <form onSubmit={(e) => { e.preventDefault(); navigate('/dashboard'); }} className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-medium text-zinc-400 mb-1">Bright Data Key</label>
+            <label className="block text-xs font-medium text-zinc-400 mb-1">Jina API Key</label>
             <input type="password" required className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-2.5 text-sm text-zinc-200 focus:border-blue-500 focus:outline-none" />
           </div>
           <div>

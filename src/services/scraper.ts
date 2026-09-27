@@ -1,69 +1,56 @@
 // services/scraper.ts
 
-interface ScrapePayload {
+export interface ScrapePayload {
   ownWebsiteUrl: string;
   competitorUrl: string;
-  brightDataKey: string;
+  jinaKey: string;
 }
 
-interface ParsedSnapshot {
+export interface ParsedSnapshot {
   title: string;
-  metaDescription: string;
   headings: string[];
   pricingDetected: boolean;
-  ctaText: string[];
   rawTextLength: number;
 }
 
 /**
- * Parses raw HTML into a structured JSON snapshot
+ * Parses raw Markdown into a structured JSON snapshot
  */
-function parseHTML(html: string): ParsedSnapshot {
-  // In a real browser/Node environment, you would use DOMParser or Cheerio.
-  // This is a simplified regex-based mockup for illustration.
-  
-  const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i);
-  const title = titleMatch ? titleMatch[1] : '';
+function parseMarkdown(md: string): ParsedSnapshot {
+  // Simple markdown parsing
+  const titleMatch = md.match(/^# (.*$)/m);
+  const title = titleMatch ? titleMatch[1].trim() : '';
 
-  const metaDescMatch = html.match(/<meta[^>]*name="description"[^>]*content="([^"]*)"[^>]*>/i) 
-                     || html.match(/<meta[^>]*content="([^"]*)"[^>]*name="description"[^>]*>/i);
-  const metaDescription = metaDescMatch ? metaDescMatch[1] : '';
-
-  const h1Match = html.match(/<h1[^>]*>([^<]+)<\/h1>/gi) || [];
-  const h2Match = html.match(/<h2[^>]*>([^<]+)<\/h2>/gi) || [];
+  const h2Match = md.match(/^## (.*$)/gm) || [];
+  const h3Match = md.match(/^### (.*$)/gm) || [];
   
-  const headings = [...h1Match, ...h2Match].map(h => h.replace(/<[^>]*>?/gm, '').trim());
+  const headings = [...h2Match, ...h3Match].map(h => h.replace(/^#+\s/, '').trim());
   
-  const pricingDetected = html.toLowerCase().includes('pricing') || html.includes('$');
+  const pricingDetected = md.toLowerCase().includes('pricing') || md.includes('$');
   
-  const ctaMatch = html.match(/<button[^>]*>([^<]+)<\/button>/gi) || html.match(/<a[^>]*class="[^"]*btn[^"]*"[^>]*>([^<]+)<\/a>/gi) || [];
-  const ctaText = ctaMatch.map(b => b.replace(/<[^>]*>?/gm, '').trim()).filter(Boolean);
-
   return {
     title,
-    metaDescription,
     headings,
     pricingDetected,
-    ctaText,
-    rawTextLength: html.length
+    rawTextLength: md.length
   };
 }
 
 /**
- * Dispatches a request to the Bright Data proxy
+ * Dispatches a request to the Jina Reader API via our backend
  */
-async function fetchViaProxy(url: string, brightDataKey: string): Promise<string> {
+async function fetchViaJina(url: string, jinaKey: string): Promise<string> {
   const response = await fetch('/api/request', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${brightDataKey}`
+      'Authorization': `Bearer ${jinaKey}`
     },
     body: JSON.stringify({ targetUrl: url })
   });
 
   if (!response.ok) {
-    throw new Error(`Proxy fetch failed for ${url}: ${response.statusText}`);
+    throw new Error(`Jina fetch failed for ${url}: ${response.statusText}`);
   }
 
   return await response.text();
@@ -72,19 +59,19 @@ async function fetchViaProxy(url: string, brightDataKey: string): Promise<string
 /**
  * Concurrent Dual-Scraper Engine
  */
-export async function executeDualScrape({ ownWebsiteUrl, competitorUrl, brightDataKey }: ScrapePayload) {
+export async function executeDualScrape({ ownWebsiteUrl, competitorUrl, jinaKey }: ScrapePayload) {
   try {
     console.log(`[Scraper] Initiating concurrent scrape for ${ownWebsiteUrl} and ${competitorUrl}`);
     
-    // Concurrent fetch via Bright Data Web Unlocker proxy
-    const [ownHtml, compHtml] = await Promise.all([
-      fetchViaProxy(ownWebsiteUrl, brightDataKey),
-      fetchViaProxy(competitorUrl, brightDataKey)
+    // Concurrent fetch via Jina Reader
+    const [ownMd, compMd] = await Promise.all([
+      fetchViaJina(ownWebsiteUrl, jinaKey),
+      fetchViaJina(competitorUrl, jinaKey)
     ]);
 
-    // Parse both DOMs
-    const ownSnapshot = parseHTML(ownHtml);
-    const competitorSnapshot = parseHTML(compHtml);
+    // Parse both Markdowns
+    const ownSnapshot = parseMarkdown(ownMd);
+    const competitorSnapshot = parseMarkdown(compMd);
 
     return {
       success: true,
