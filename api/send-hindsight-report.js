@@ -59,14 +59,19 @@ export default async function handler(req, res) {
     }
 
     const resend = new Resend(resendKey);
-    const result = await resend.emails.send({
+    const { data, error } = await resend.emails.send({
       from: 'Senro.AI <onboarding@resend.dev>',
       to: email,
       subject: `🚨 Hindsight Intelligence Report: ${competitorUrl}`,
       html: emailHtml
     });
 
-    return res.status(200).json({ success: true, result });
+    if (error) {
+      console.error('Resend error:', error);
+      return res.status(400).json({ error: error.message });
+    }
+
+    return res.status(200).json({ success: true, data });
   } catch (error) {
     console.error('Email report error:', error);
     return res.status(500).json({ error: error.message });

@@ -41,6 +41,7 @@ export const ScheduledReports = () => {
       });
       const res = await response.json();
       if (res.error) alert("Error: " + res.error);
+      else if (res.simulated) alert("Simulated Send (No Resend API Key configured). Check console for HTML.");
       else alert("Report sent to your email successfully!");
     } catch (e) {
       alert("Failed to send email.");
