@@ -39,8 +39,8 @@ export const Overview = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          targetUrl: ownUrl,
-          competitorUrl: compUrl
+          ownUrl: ownUrl,
+          competitorUrls: [compUrl]
         })
       });
 
