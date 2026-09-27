@@ -41,7 +41,7 @@ export default async function handler(req, res) {
     const userPrompt = `Target Competitor: ${competitorUrl}\nRecent Hindsight Memory Signals:\n${hindsightMemory}`;
 
     const completion = await openai.chat.completions.create({
-      model: "openai/gpt-oss-120b", // Use a faster model for email generation if 120b is not strictly needed, but let's stick to user request
+      model: "mixtral-8x7b-32768", // Use a faster model for email generation if 120b is not strictly needed, but let's stick to user request
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt }
