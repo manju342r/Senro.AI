@@ -1,147 +1,188 @@
 import React, { useState, useEffect } from 'react';
+import { Target, Zap, TrendingUp, AlertTriangle, Activity } from 'lucide-react';
+import { useData } from '../contexts/DataContext';
+import {
+  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+  BarChart, Bar
+} from 'recharts';
 
 export const Overview = () => {
-  const [ownUrl, setOwnUrl] = useState(() => localStorage.getItem('ownUrl') || 'https://acme.com');
-  const [compUrl, setCompUrl] = useState(() => localStorage.getItem('compUrl') || '');
+  const { supabase, ingestToHindsight } = useData();
+  const [ownUrl] = useState(() => localStorage.getItem('ownUrl') || 'https://acme.com');
+  const [compUrl] = useState(() => localStorage.getItem('compUrl') || '');
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any>(null);
-  const [error, setError] = useState('');
 
-  const analyze = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!ownUrl || !compUrl) return;
+  const mockTimelineData = [
+    { name: 'Mon', threat: 20, signals: 1 },
+    { name: 'Tue', threat: 35, signals: 3 },
+    { name: 'Wed', threat: 30, signals: 2 },
+    { name: 'Thu', threat: 50, signals: 5 },
+    { name: 'Fri', threat: 45, signals: 4 },
+    { name: 'Sat', threat: 60, signals: 7 },
+    { name: 'Sun', threat: 75, signals: 8 },
+  ];
+
+  const mockCategoryData = [
+    { name: 'Pricing', value: 4 },
+    { name: 'Features', value: 7 },
+    { name: 'Hiring', value: 2 },
+    { name: 'Messaging', value: 5 },
+  ];
+
+  const handleScan = async () => {
+    if (!compUrl) return alert("Please set a competitor URL in settings first.");
     setLoading(true);
-    setError('');
     
     try {
-      const res = await fetch('/api/analyze-competitor', {
+      const response = await fetch('/api/analyze-competitor', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ownUrl, competitorUrls: [compUrl] })
+        body: JSON.stringify({
+          targetUrl: ownUrl,
+          competitorUrl: compUrl
+        })
       });
-      const json = await res.json();
 
-      if (!res.ok) {
-        setError(json.error || 'Analysis failed');
+      const result = await response.json();
+      if (response.ok) {
+        setData(result);
+        if (result.analysis_summary) {
+          await ingestToHindsight(compUrl, result.analysis_summary);
+        }
       } else {
-        setData(json);
+        alert("Error: " + result.error);
       }
-    } catch (err: any) {
-      setError(err.message);
+    } catch (error) {
+      alert("Failed to run analysis.");
     } finally {
       setLoading(false);
     }
   };
 
-  const getWorkspaceName = (url: string) => {
+  const getDomain = (url: string) => {
     try {
       return new URL(url).hostname.replace('www.', '');
     } catch {
-      return 'workspace';
+      return url || 'competitor';
     }
   };
 
   return (
-    <div className="max-w-6xl space-y-8">
-      {/* Header */}
-      <div className="flex justify-between items-center">
+    <div className="max-w-7xl space-y-8 pb-10">
+      <div className="flex justify-between items-end">
         <div>
-          <h2 className="text-2xl font-bold text-zinc-100">{getWorkspaceName(ownUrl)} radar</h2>
-          <p className="text-zinc-500 text-sm mt-1">Live competitive position across 1 tracked competitor.</p>
+          <h2 className="text-3xl font-bold text-zinc-100 flex items-center gap-2">
+            Dashboard
+          </h2>
+          <p className="text-zinc-500 text-sm mt-1">
+            Monitoring <span className="font-medium text-zinc-300">{compUrl ? getDomain(compUrl) : 'competitors'}</span> against <span className="font-medium text-zinc-300">{getDomain(ownUrl)}</span>
+          </p>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={analyze} disabled={loading} className="flex items-center gap-2 bg-transparent border border-zinc-700 text-zinc-300 hover:text-zinc-100 hover:border-zinc-500 px-4 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-50">
-            <span className="opacity-50">⚡</span> {loading ? 'Scanning...' : 'Trigger scan'}
-          </button>
-          <button onClick={() => window.print()} className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-            <span className="opacity-50">↓</span> Export summary
+          <button 
+            onClick={handleScan}
+            disabled={loading}
+            className="flex items-center gap-2 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-200 px-4 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
+          >
+            {loading ? <Activity size={16} className="animate-spin text-blue-500" /> : <Zap size={16} className="text-amber-500" />}
+            {loading ? 'Analyzing...' : 'Trigger Scan'}
           </button>
         </div>
       </div>
 
-      
+      {/* Top Metrics Row */}
+      <div className="grid grid-cols-4 gap-4">
+        <div className="bg-[#121212] border border-zinc-800 p-5 rounded-xl flex flex-col justify-between">
+          <div className="text-xs font-semibold text-zinc-500 tracking-wider">STRATEGIC GAP INDEX</div>
+          <div className="mt-4 flex items-end justify-between">
+            <div className="text-4xl font-bold text-zinc-100">{loading ? '--' : (data ? data.strategic_gap_index : '--')}</div>
+            <TrendingUp size={20} className="text-emerald-500 mb-1" />
+          </div>
+        </div>
+        
+        <div className="bg-[#121212] border border-zinc-800 p-5 rounded-xl flex flex-col justify-between">
+          <div className="text-xs font-semibold text-zinc-500 tracking-wider">TRAFFIC IMPACT</div>
+          <div className="mt-4 flex items-end justify-between">
+            <div className="text-2xl font-bold text-zinc-100">{loading ? '--' : (data ? data.net_traffic_impact : '--')}</div>
+            <Activity size={20} className="text-blue-500 mb-1" />
+          </div>
+        </div>
 
-      {error && (
-        <div className="bg-red-500/10 border border-red-500/30 text-red-500 p-4 rounded-lg text-sm">
-          {error}
+        <div className="bg-[#121212] border border-zinc-800 p-5 rounded-xl flex flex-col justify-between">
+          <div className="text-xs font-semibold text-zinc-500 tracking-wider">THREAT LEVEL</div>
+          <div className="mt-4 flex items-end justify-between">
+            <div className="text-2xl font-bold text-zinc-100 capitalize">{loading ? '--' : (data ? data.risk_level : '--')}</div>
+            <AlertTriangle size={20} className={data?.risk_level === 'High' ? 'text-red-500 mb-1' : 'text-amber-500 mb-1'} />
+          </div>
+        </div>
+
+        <div className="bg-[#121212] border border-zinc-800 p-5 rounded-xl flex flex-col justify-between">
+          <div className="text-xs font-semibold text-zinc-500 tracking-wider">RECENT SIGNALS</div>
+          <div className="mt-4 flex items-end justify-between">
+            <div className="text-4xl font-bold text-zinc-100">{loading ? '--' : (data ? data.signals_24h : '--')}</div>
+            <div className="text-xs text-zinc-500 mb-1">{loading ? '--' : (data ? data.signals_total : '--')} total</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Charts Row */}
+      <div className="grid grid-cols-3 gap-6">
+        <div className="col-span-2 bg-[#121212] border border-zinc-800 p-6 rounded-xl">
+          <h3 className="text-sm font-semibold text-zinc-300 mb-6">Threat Score Timeline (7 Days)</h3>
+          <div className="h-64 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={mockTimelineData}>
+                <defs>
+                  <linearGradient id="colorThreat" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
+                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="#27272a" vertical={false} />
+                <XAxis dataKey="name" stroke="#71717a" fontSize={12} tickLine={false} axisLine={false} />
+                <YAxis stroke="#71717a" fontSize={12} tickLine={false} axisLine={false} />
+                <Tooltip 
+                  contentStyle={{ backgroundColor: '#18181b', borderColor: '#27272a', borderRadius: '8px', color: '#e4e4e7' }}
+                  itemStyle={{ color: '#60a5fa' }}
+                />
+                <Area type="monotone" dataKey="threat" stroke="#3b82f6" strokeWidth={3} fillOpacity={1} fill="url(#colorThreat)" />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        <div className="bg-[#121212] border border-zinc-800 p-6 rounded-xl">
+          <h3 className="text-sm font-semibold text-zinc-300 mb-6">Signals by Category</h3>
+          <div className="h-64 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={mockCategoryData} layout="vertical" margin={{ top: 0, right: 0, left: 20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#27272a" horizontal={false} />
+                <XAxis type="number" stroke="#71717a" fontSize={12} hide />
+                <YAxis dataKey="name" type="category" stroke="#a1a1aa" fontSize={12} tickLine={false} axisLine={false} />
+                <Tooltip 
+                  cursor={{fill: '#27272a'}}
+                  contentStyle={{ backgroundColor: '#18181b', borderColor: '#27272a', borderRadius: '8px' }}
+                />
+                <Bar dataKey="value" fill="#10b981" radius={[0, 4, 4, 0]} barSize={20} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      </div>
+
+      {/* Analysis Block */}
+      {data?.analysis_summary && (
+        <div className="bg-[#121212] border border-blue-500/30 p-6 rounded-xl relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
+          <h3 className="text-sm font-semibold text-blue-400 mb-3 flex items-center gap-2">
+            <Zap size={16} /> AI Executive Summary
+          </h3>
+          <p className="text-zinc-300 text-sm leading-relaxed">
+            {data.analysis_summary}
+          </p>
         </div>
       )}
-
-      {/* Hero Section */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Left Column (Threat Score) */}
-        <div className="col-span-1 bg-[#121212] border border-zinc-800 rounded-xl p-8 flex flex-col items-center justify-center text-center">
-          <div className="relative w-40 h-40 mb-6">
-            <svg viewBox="0 0 100 100" className="w-full h-full transform -rotate-90">
-              <circle cx="50" cy="50" r="40" stroke="#1f2937" strokeWidth="8" fill="none" />
-              <circle cx="50" cy="50" r="40" stroke="#10b981" strokeWidth="8" fill="none" strokeDasharray="251.2" strokeDashoffset={loading ? 251.2 : (data ? 251.2 * (1 - (data.strategic_gap_index / 100)) : 251.2)} className="transition-all duration-1000 ease-out" />
-            </svg>
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-4xl font-bold text-zinc-100">{loading ? '--' : (data ? data.strategic_gap_index : '--')}</span>
-              <span className="text-emerald-500 text-sm font-medium">{loading ? 'Scanning' : (data ? 'Contained' : 'Unknown')}</span>
-            </div>
-          </div>
-          <h3 className="text-zinc-100 font-semibold mb-2">Threat score</h3>
-          <p className="text-zinc-500 text-xs">Weighted from competitor risk levels and high-impact signals in the last 7 days.</p>
-        </div>
-
-        {/* Right Column (2x2 Grid) */}
-        <div className="col-span-2 grid grid-cols-2 gap-4">
-          <div className="bg-[#121212] border border-zinc-800 p-6 rounded-xl border-t-2 border-t-blue-500">
-            <div className="text-xs font-semibold text-zinc-500 tracking-wider mb-4">TRACKED COMPETITORS</div>
-            <div className="text-3xl font-bold text-zinc-100">{loading ? '--' : (data ? data.tracked_competitors : '--')}</div>
-            <div className="text-xs text-zinc-500 mt-2">{loading ? '--' : (data ? data.baseline_count : '--')} with a baseline</div>
-          </div>
-          
-          <div className="bg-[#121212] border border-zinc-800 p-6 rounded-xl border-t-2 border-t-blue-500">
-            <div className="text-xs font-semibold text-zinc-500 tracking-wider mb-4">NET TRAFFIC IMPACT</div>
-            <div className="text-3xl font-bold text-blue-400">{loading ? '--' : (data ? data.impact_metric : '--')}</div>
-            <div className="text-xs text-zinc-500 mt-2">Estimated by LLM</div>
-          </div>
-
-          <div className="bg-[#121212] border border-zinc-800 p-6 rounded-xl border-t-2 border-t-cyan-500">
-            <div className="text-xs font-semibold text-zinc-500 tracking-wider mb-4">SIGNALS (24H)</div>
-            <div className="text-3xl font-bold text-zinc-100">{loading ? '--' : (data ? data.signals_24h : '--')}</div>
-            <div className="text-xs text-zinc-500 mt-2">{loading ? '--' : (data ? data.signals_total : '--')} total recorded</div>
-          </div>
-
-          <div className="bg-[#121212] border border-zinc-800 p-6 rounded-xl border-t-2 border-t-emerald-500">
-            <div className="text-xs font-semibold text-zinc-500 tracking-wider mb-4">BATTLECARDS</div>
-            <div className="text-3xl font-bold text-zinc-100">{loading ? '--' : (data ? data.battlecards_generated : '--')}</div>
-            <div className="text-xs text-zinc-500 mt-2">AI-generated</div>
-          </div>
-        </div>
-      </div>
-
-      {/* Tables Section */}
-      <div className="bg-[#121212] border border-zinc-800 rounded-xl overflow-hidden">
-        <div className="p-4 border-b border-zinc-800 flex justify-between items-center bg-[#0a0a0a]">
-          <h3 className="text-sm font-semibold text-zinc-300">Recent web scrapes</h3>
-          <span className="text-xs text-blue-400 cursor-pointer hover:text-blue-300">View all signals →</span>
-        </div>
-        <div className="p-4 flex items-center justify-between hover:bg-zinc-900/50 transition-colors">
-          <div className="flex items-center gap-3">
-            <div className="w-2 h-2 rounded-full bg-amber-500"></div>
-            <div>
-              <div className="text-sm font-medium text-zinc-200">{compUrl ? getWorkspaceName(compUrl) : "No competitor"}</div>
-              <div className="text-xs text-zinc-500">{data ? "Scraped recently" : "Waiting for scan"}</div>
-            </div>
-          </div>
-          <div className="text-sm text-blue-400 hover:underline cursor-pointer">
-            {compUrl ? getWorkspaceName(compUrl) : ""} {compUrl && "↗"}
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-[#121212] border border-zinc-800 rounded-xl overflow-hidden">
-        <div className="p-4 border-b border-zinc-800 bg-[#0a0a0a]">
-          <h3 className="text-sm font-semibold text-zinc-300">Latest signals</h3>
-        </div>
-        <div className="p-16 flex items-center justify-center text-center">
-          <span className="text-sm text-zinc-500">No changes detected yet. Run a scan after a competitor updates their site.</span>
-        </div>
-      </div>
-
     </div>
   );
 };

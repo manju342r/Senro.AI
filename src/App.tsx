@@ -4,12 +4,13 @@ import { BattlecardsList } from './components/BattlecardsList';
 import { LiveSignals } from './components/LiveSignals';
 import { SettingsUI } from './components/SettingsUI';
 import { Profile } from './components/Profile';
+import { ScheduledReports } from './components/ScheduledReports';
 
 import { BrowserRouter, Routes, Route, Navigate, Link, useLocation, useNavigate } from 'react-router-dom';
 import { DataProvider, useData } from './contexts/DataContext';
 import { 
   LayoutDashboard, Users, GitCompare, LineChart, Settings, 
-  Search, Plus, Target, CheckCircle2, ArrowRight, Activity, FileText, LogOut
+  Search, Plus, Target, CheckCircle2, ArrowRight, Activity, FileText, LogOut, Calendar
 } from 'lucide-react';
 import React, { useState } from 'react';
 
@@ -339,6 +340,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           <SidebarItem to="/dashboard/compare" icon={GitCompare} label="Competitors" />
           <SidebarItem to="/dashboard/live-signals" icon={Activity} label="Live Signals" />
           <SidebarItem to="/dashboard/battlecards" icon={FileText} label="Battlecards" />
+          <SidebarItem to="/dashboard/reports" icon={Calendar} label="Scheduled Reports" />
           <SidebarItem to="/dashboard/settings" icon={Settings} label="Settings" />
         </nav>
       </div>
@@ -408,6 +410,7 @@ function App() {
           <Route path="/dashboard/battlecards" element={<DashboardLayout><BattlecardsList /></DashboardLayout>} />
           <Route path="/dashboard/settings" element={<DashboardLayout><SettingsUI /></DashboardLayout>} />
           <Route path="/dashboard/profile" element={<DashboardLayout><Profile /></DashboardLayout>} />
+          <Route path="/dashboard/reports" element={<DashboardLayout><ScheduledReports /></DashboardLayout>} />
           
           <Route path="/" element={<Navigate to="/login" replace />} />
         </Routes>
