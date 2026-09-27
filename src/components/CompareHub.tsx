@@ -73,7 +73,7 @@ export const CompareHub = () => {
               <td className="p-4">
                 <span className="text-zinc-500 text-xs font-medium">--</span>
               </td>
-              <td className="p-4 text-zinc-500">Not scanned</td>
+              <td className="p-4 text-zinc-500">--</td>
               <td className="p-4 text-right">
                 <div className="flex items-center justify-end gap-3 text-zinc-500">
                   <RefreshCw size={16} className="hover:text-zinc-300 cursor-pointer transition-colors" />

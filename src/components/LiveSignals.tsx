@@ -1,7 +1,17 @@
 import React from 'react';
 import { Activity } from 'lucide-react';
 
+
 export const LiveSignals = () => {
+  const [isConfigured, setIsConfigured] = React.useState(false);
+
+  React.useEffect(() => {
+    fetch('/api/config-status')
+      .then(res => res.json())
+      .then(data => setIsConfigured(data.configured))
+      .catch(() => {});
+  }, []);
+
   return (
     <div className="max-w-6xl space-y-8">
       <div className="flex justify-between items-center">
@@ -9,9 +19,15 @@ export const LiveSignals = () => {
           <h2 className="text-2xl font-bold text-zinc-100">Live signals</h2>
           <p className="text-zinc-500 text-sm mt-1">Real-time alerts triggered by competitor changes.</p>
         </div>
-        <div className="bg-amber-500/10 text-amber-500 border border-amber-500/30 px-3 py-1.5 rounded text-sm font-medium">
-          Scraping not configured
-        </div>
+        {isConfigured ? (
+          <div className="bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 px-3 py-1.5 rounded text-sm font-medium">
+            Scraping Active
+          </div>
+        ) : (
+          <div className="bg-amber-500/10 text-amber-500 border border-amber-500/30 px-3 py-1.5 rounded text-sm font-medium">
+            Scraping offline
+          </div>
+        )}
       </div>
 
       <div className="border border-dashed border-zinc-800 rounded-xl flex flex-col items-center justify-center p-24 text-center">

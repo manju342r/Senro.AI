@@ -78,7 +78,7 @@ export const Overview = () => {
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               <span className="text-4xl font-bold text-zinc-100">{loading ? '--' : (data ? data.strategic_gap_index : '--')}</span>
-              <span className="text-emerald-500 text-sm font-medium">Contained</span>
+              <span className="text-emerald-500 text-sm font-medium">{loading ? 'Scanning' : (data ? 'Contained' : 'Unknown')}</span>
             </div>
           </div>
           <h3 className="text-zinc-100 font-semibold mb-2">Threat score</h3>
@@ -89,8 +89,8 @@ export const Overview = () => {
         <div className="col-span-2 grid grid-cols-2 gap-4">
           <div className="bg-[#121212] border border-zinc-800 p-6 rounded-xl border-t-2 border-t-blue-500">
             <div className="text-xs font-semibold text-zinc-500 tracking-wider mb-4">TRACKED COMPETITORS</div>
-            <div className="text-3xl font-bold text-zinc-100">{loading ? '--' : (data ? data.tracked_competitors : '1')}</div>
-            <div className="text-xs text-zinc-500 mt-2">0 with a baseline</div>
+            <div className="text-3xl font-bold text-zinc-100">{loading ? '--' : (data ? data.tracked_competitors : '--')}</div>
+            <div className="text-xs text-zinc-500 mt-2">{loading ? '--' : (data ? data.baseline_count : '--')} with a baseline</div>
           </div>
           
           <div className="bg-[#121212] border border-zinc-800 p-6 rounded-xl border-t-2 border-t-blue-500">
@@ -101,13 +101,13 @@ export const Overview = () => {
 
           <div className="bg-[#121212] border border-zinc-800 p-6 rounded-xl border-t-2 border-t-cyan-500">
             <div className="text-xs font-semibold text-zinc-500 tracking-wider mb-4">SIGNALS (24H)</div>
-            <div className="text-3xl font-bold text-zinc-100">0</div>
-            <div className="text-xs text-zinc-500 mt-2">0 total recorded</div>
+            <div className="text-3xl font-bold text-zinc-100">{loading ? '--' : (data ? data.signals_24h : '--')}</div>
+            <div className="text-xs text-zinc-500 mt-2">{loading ? '--' : (data ? data.signals_total : '--')} total recorded</div>
           </div>
 
           <div className="bg-[#121212] border border-zinc-800 p-6 rounded-xl border-t-2 border-t-emerald-500">
             <div className="text-xs font-semibold text-zinc-500 tracking-wider mb-4">BATTLECARDS</div>
-            <div className="text-3xl font-bold text-zinc-100">0</div>
+            <div className="text-3xl font-bold text-zinc-100">{loading ? '--' : (data ? data.battlecards_generated : '--')}</div>
             <div className="text-xs text-zinc-500 mt-2">AI-generated</div>
           </div>
         </div>
@@ -124,7 +124,7 @@ export const Overview = () => {
             <div className="w-2 h-2 rounded-full bg-amber-500"></div>
             <div>
               <div className="text-sm font-medium text-zinc-200">{compUrl ? getWorkspaceName(compUrl) : "No competitor"}</div>
-              <div className="text-xs text-zinc-500">Never scraped</div>
+              <div className="text-xs text-zinc-500">{data ? "Scraped recently" : "Waiting for scan"}</div>
             </div>
           </div>
           <div className="text-sm text-blue-400 hover:underline cursor-pointer">
