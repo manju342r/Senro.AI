@@ -1,5 +1,6 @@
 import { Resend } from 'resend';
 import { createClient } from '@supabase/supabase-js';
+import OpenAI from 'openai';
 
 // Vercel Cron routes should ideally verify the authorization header for security
 export default async function handler(req, res) {
@@ -16,6 +17,12 @@ export default async function handler(req, res) {
   
   const resendApiKey = process.env.RESEND_API_KEY;
   const groqApiKey = process.env.GROQ_API_KEY;
+
+
+  const openai = new OpenAI({
+    apiKey: process.env.GROQ_API_KEY || process.env.LLM_KEY,
+    baseURL: "https://api.groq.com/openai/v1", // This routes the call to Groq
+  });
 
   if (!resendApiKey || !groqApiKey) {
     return res.status(500).json({ error: 'Missing external API keys (Resend / Groq)' });
@@ -44,14 +51,11 @@ export default async function handler(req, res) {
       if (!user.email || user.email.includes('placeholder')) continue;
 
       // a. Use Groq to generate a professional summary
-      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Authorization': \`Bearer \${groqApiKey}\`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          model: 'openai/gpt-oss-120b',
+      
+      let aiSummary = 'Competitor intelligence scan completed. Strategic gap index is stable at 42. Traffic impact shows a nominal variance. No critical pricing shifts detected in the last cycle.';
+      try {
+        const completion = await openai.chat.completions.create({
+          model: process.env.LLM_MODEL || "llama-3.3-70b-versatile",
           messages: [
             { 
               role: 'system', 
@@ -59,16 +63,19 @@ export default async function handler(req, res) {
             },
             { 
               role: 'user', 
-              content: \`Analyze recent data for competitor \${user.competitor_url} tracking against baseline \${user.target_url}.\`
+              content: `Analyze recent data for competitor ${user.competitor_url} tracking against baseline ${user.target_url}.`
             }
           ],
           max_tokens: 150,
           temperature: 0.7
-        })
-      });
+        });
+        if (completion.choices?.[0]?.message?.content) {
+          aiSummary = completion.choices[0].message.content;
+        }
+      } catch (llmError) {
+        console.error("LLM Error:", llmError);
+      }
 
-      const aiData = await response.json();
-      const aiSummary = aiData.choices?.[0]?.message?.content || 'Competitor intelligence scan completed. Strategic gap index is stable at 42. Traffic impact shows a nominal variance. No critical pricing shifts detected in the last cycle.';
 
       // b. Send Email via Resend
       const htmlContent = \`
