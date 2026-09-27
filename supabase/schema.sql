@@ -1,4 +1,4 @@
--- Schema for RadarAI (Adaptive Competitive Intelligence & Visibility Engine)
+-- Schema for Senro.AI (Adaptive Competitive Intelligence & Visibility Engine)
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
