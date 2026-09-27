@@ -45,12 +45,12 @@ export const SettingsUI = () => {
               type="email" 
               value={email}
               disabled
-              className="w-2/3 bg-transparent border-b border-zinc-800 outline-none text-zinc-400 text-right pb-1 opacity-70 cursor-not-allowed"
+              className="w-2/3 bg-transparent outline-none text-zinc-400 text-right pr-2 opacity-70 cursor-not-allowed"
             />
           </div>
           <div className="flex justify-between items-center text-sm">
             <span className="text-zinc-500 w-1/3">Workspace</span>
-            <span className="w-2/3 text-zinc-400 text-right pb-1">{getWorkspaceName(ownUrl)}</span>
+            <span className="w-2/3 text-zinc-400 text-right pr-2">{getWorkspaceName(ownUrl)}</span>
           </div>
           <div className="flex justify-between items-center text-sm">
             <span className="text-zinc-500 w-1/3">Industry</span>
@@ -58,7 +58,7 @@ export const SettingsUI = () => {
               type="text" 
               value={industry}
               onChange={(e) => { setIndustry(e.target.value); localStorage.setItem('userIndustry', e.target.value); }}
-              className="w-2/3 bg-transparent border-b border-zinc-800 focus:border-blue-500 outline-none text-zinc-200 text-right pb-1"
+              className="w-2/3 bg-transparent hover:bg-zinc-800/50 focus:bg-zinc-800/50 focus:ring-1 focus:ring-blue-500 rounded px-2 py-1 outline-none text-zinc-200 text-right transition-all"
             />
           </div>
           <div className="flex justify-between items-center text-sm">
@@ -66,7 +66,7 @@ export const SettingsUI = () => {
             <select 
               value={alertSens}
               onChange={(e) => { setAlertSens(e.target.value); localStorage.setItem('alertSens', e.target.value); }}
-              className="w-2/3 bg-transparent border-b border-zinc-800 focus:border-blue-500 outline-none text-zinc-200 text-right pb-1 appearance-none cursor-pointer"
+              className="w-2/3 bg-transparent hover:bg-zinc-800/50 focus:bg-zinc-800/50 focus:ring-1 focus:ring-blue-500 rounded px-2 py-1 outline-none text-zinc-200 text-right transition-all cursor-pointer"
             >
               <option value="Low">Low</option>
               <option value="Balanced">Balanced</option>
