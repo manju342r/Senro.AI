@@ -10,7 +10,7 @@ import { BrowserRouter, Routes, Route, Navigate, Link, useLocation, useNavigate 
 import { DataProvider, useData } from './contexts/DataContext';
 import { 
   LayoutDashboard, Users, GitCompare, LineChart, Settings, 
-  Search, Plus, Target, CheckCircle2, ArrowRight, Activity, FileText, LogOut, Calendar
+  Search, Plus, Target, CheckCircle2, ArrowRight, Activity, FileText, LogOut, Calendar, Eye, EyeOff
 } from 'lucide-react';
 import React, { useState } from 'react';
 
@@ -22,6 +22,7 @@ const AuthScreen = ({ isLogin }: { isLogin: boolean }) => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
 
   const handleForgotPassword = async () => {
@@ -93,7 +94,34 @@ const AuthScreen = ({ isLogin }: { isLogin: boolean }) => {
             </div>
             <div>
               <label className="block text-sm font-medium text-zinc-400 mb-1">Password</label>
-              <input type="password" required minLength={8} value={password} onChange={(e) => setPassword(e.target.value)} className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-3 text-zinc-200 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all" />
+              <div className="relative">
+                <input 
+                  type={showPassword ? "text" : "password"} 
+                  required 
+                  minLength={8} 
+                  value={password} 
+                  onChange={(e) => setPassword(e.target.value)} 
+                  className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-3 pr-10 text-zinc-200 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all" 
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 transition-colors"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+              {isLogin && (
+                <div className="flex justify-end mt-2">
+                  <button 
+                    type="button" 
+                    onClick={handleForgotPassword}
+                    className="text-xs text-blue-500 hover:text-blue-400 font-medium transition-colors"
+                  >
+                    Forgot password?
+                  </button>
+                </div>
+              )}
             </div>
             
             <button type="submit" disabled={loading} className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-medium py-3 rounded-lg transition-colors mt-6 shadow-lg shadow-blue-900/20">
