@@ -55,7 +55,7 @@ export default async function handler(req, res) {
       let aiSummary = 'Competitor intelligence scan completed. Strategic gap index is stable at 42. Traffic impact shows a nominal variance. No critical pricing shifts detected in the last cycle.';
       try {
         const completion = await openai.chat.completions.create({
-          model: process.env.LLM_MODEL || "llama-3.3-70b-versatile",
+          model: process.env.LLM_MODEL || "openai/gpt-oss-120b",
           messages: [
             { 
               role: 'system', 
@@ -74,6 +74,7 @@ export default async function handler(req, res) {
         }
       } catch (llmError) {
         console.error("LLM Error:", llmError);
+        return res.status(500).json({ error: 'LLM Generation Failed', details: llmError.message });
       }
 
 

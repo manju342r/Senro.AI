@@ -1,3 +1,4 @@
+import OpenAI from "openai";
 import { Resend } from 'resend';
 
 export default async function handler(req, res) {
@@ -26,14 +27,13 @@ export default async function handler(req, res) {
     `;
 
     // 2. Call Groq LLM to generate email HTML
-    const groqKey = process.env.GROQ_API_KEY || process.env.LLM_API_KEY;
+    const groqKey = process.env.GROQ_API_KEY || process.env.LLM_KEY;
     if (!groqKey) {
       return res.status(400).json({ error: 'LLM API key not configured on server' });
     }
 
-    const { OpenAI } = await import("openai");
-    const openai = new OpenAI({
-      apiKey: groqKey,
+        const openai = new OpenAI({
+      apiKey: groqKey || process.env.LLM_KEY,
       baseURL: "https://api.groq.com/openai/v1",
     });
 
@@ -41,7 +41,7 @@ export default async function handler(req, res) {
     const userPrompt = `Target Competitor: ${competitorUrl}\nRecent Hindsight Memory Signals:\n${hindsightMemory}`;
 
     const completion = await openai.chat.completions.create({
-      model: process.env.LLM_MODEL || "llama-3.3-70b-versatile", // Use a faster model for email generation if 120b is not strictly needed, but let's stick to user request
+      model: process.env.LLM_MODEL || "openai/gpt-oss-120b", // Use a faster model for email generation if 120b is not strictly needed, but let's stick to user request
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt }
