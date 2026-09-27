@@ -24,29 +24,39 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'targetUrl is required' });
   }
 
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ error: 'Authorization header with Bearer token is required (Bright Data Key)' });
-  }
+  const proxyAuthString = authHeader ? authHeader.replace('Bearer ', '').trim() : '';
 
   try {
-    const proxyAuthString = authHeader.replace('Bearer ', '');
-    // Bright Data Super Proxy format
-    const proxyUrl = `http://${proxyAuthString}@brd.superproxy.io:22225`;
-    const proxyAgent = new HttpsProxyAgent(proxyUrl);
+    let response;
 
-    // Proxy request through Bright Data Web Unlocker
-    const response = await fetch(targetUrl, {
-      method: 'GET',
-      agent: proxyAgent,
-      headers: {
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'
-      }
-    });
+    // If no key is provided, or user types "skip", just do a direct fetch from Vercel
+    if (!proxyAuthString || proxyAuthString === 'skip') {
+      console.log('No Bright Data key provided, fetching directly...');
+      response = await fetch(targetUrl, {
+        method: 'GET',
+        headers: {
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'
+        }
+      });
+    } else {
+      // Use Bright Data Proxy
+      const proxyUrl = `http://${proxyAuthString}@brd.superproxy.io:22225`;
+      const proxyAgent = new HttpsProxyAgent(proxyUrl);
+
+      response = await fetch(targetUrl, {
+        method: 'GET',
+        agent: proxyAgent,
+        headers: {
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'
+        }
+      });
+    }
 
     if (!response.ok) {
       const errorText = await response.text();
-      return res.status(response.status).json({ error: 'Proxy request failed', details: errorText });
+      return res.status(response.status).json({ error: 'Request failed', details: errorText });
     }
 
     const data = await response.text();
