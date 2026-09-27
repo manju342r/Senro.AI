@@ -1,0 +1,77 @@
+import React from 'react';
+import { Search, ChevronDown, RefreshCw, Trash2, ExternalLink } from 'lucide-react';
+
+export const CompareHub = () => {
+  return (
+    <div className="max-w-6xl space-y-6">
+      <div className="flex justify-between items-center">
+        <div>
+          <h2 className="text-2xl font-bold text-zinc-100">Competitor matrix</h2>
+        </div>
+      </div>
+
+      <div className="bg-[#121212] border border-zinc-800 rounded-xl overflow-hidden">
+        <div className="p-4 border-b border-zinc-800 flex justify-between items-center bg-[#0a0a0a]">
+          <div className="flex gap-3">
+            <div className="relative">
+              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
+              <input type="text" placeholder="Search..." className="bg-zinc-900 border border-zinc-800 rounded-md pl-9 pr-3 py-1.5 text-sm text-zinc-200 focus:outline-none focus:border-blue-500" />
+            </div>
+            <button className="flex items-center gap-2 bg-zinc-900 border border-zinc-800 px-3 py-1.5 rounded-md text-sm text-zinc-300 hover:bg-zinc-800 transition-colors">
+              All risk levels <ChevronDown size={14} />
+            </button>
+            <button className="flex items-center gap-2 bg-zinc-900 border border-zinc-800 px-3 py-1.5 rounded-md text-sm text-zinc-300 hover:bg-zinc-800 transition-colors">
+              All categories <ChevronDown size={14} />
+            </button>
+          </div>
+          <button className="bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-sm font-medium px-4 py-1.5 rounded-md transition-colors">
+            Compare
+          </button>
+        </div>
+
+        <table className="w-full text-left text-sm">
+          <thead className="bg-[#0a0a0a] border-b border-zinc-800 text-zinc-500 font-medium">
+            <tr>
+              <th className="p-4 w-12"><input type="checkbox" className="rounded border-zinc-700 bg-zinc-900" /></th>
+              <th className="p-4">COMPETITOR</th>
+              <th className="p-4">CATEGORY</th>
+              <th className="p-4">PRICING</th>
+              <th className="p-4">SENTIMENT</th>
+              <th className="p-4">RISK</th>
+              <th className="p-4">LAST SCAN</th>
+              <th className="p-4 text-right">ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-zinc-800">
+            <tr className="hover:bg-zinc-900/50 transition-colors">
+              <td className="p-4"><input type="checkbox" className="rounded border-zinc-700 bg-zinc-900" /></td>
+              <td className="p-4">
+                <div className="flex items-center gap-2 text-zinc-200 font-medium">
+                  amazon.in
+                  <ExternalLink size={14} className="text-zinc-500 hover:text-zinc-300 cursor-pointer" />
+                </div>
+              </td>
+              <td className="p-4 text-zinc-400">Retail</td>
+              <td className="p-4 text-zinc-400">Dynamic</td>
+              <td className="p-4">
+                <div className="w-24 h-2 bg-zinc-800 rounded-full overflow-hidden">
+                  <div className="h-full bg-blue-500 w-[65%]"></div>
+                </div>
+              </td>
+              <td className="p-4">
+                <span className="bg-red-500/10 text-red-400 border border-red-500/20 px-2 py-0.5 rounded text-xs font-medium">High</span>
+              </td>
+              <td className="p-4 text-zinc-500">2 hours ago</td>
+              <td className="p-4 text-right">
+                <div className="flex items-center justify-end gap-3 text-zinc-500">
+                  <RefreshCw size={16} className="hover:text-zinc-300 cursor-pointer transition-colors" />
+                  <Trash2 size={16} className="hover:text-red-400 cursor-pointer transition-colors" />
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};

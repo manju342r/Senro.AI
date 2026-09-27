@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate, Link, useLocation, useNavigate 
 import { DataProvider, useData } from './contexts/DataContext';
 import { 
   LayoutDashboard, Users, GitCompare, LineChart, Settings, 
-  Search, Plus, Target, CheckCircle2, ArrowRight
+  Search, Plus, Target, CheckCircle2, ArrowRight, Activity, FileText
 } from 'lucide-react';
 import React, { useState } from 'react';
 
@@ -250,21 +250,38 @@ const SidebarItem = ({ to, icon: Icon, label }: { to: string; icon: any; label: 
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => (
   <div className="min-h-screen bg-[#0a0a0a] text-zinc-200 flex font-sans">
-    <aside className="w-64 bg-[#121212] border-r border-zinc-800 flex flex-col">
-      <div className="p-5 flex items-center gap-2">
-        <div className="bg-blue-600 p-1.5 rounded-lg flex items-center justify-center">
-          <Target size={18} className="text-white" />
+    <aside className="w-64 bg-[#121212] border-r border-zinc-800 flex flex-col justify-between">
+      <div>
+        <div className="p-5 flex items-center gap-2">
+          <div className="bg-blue-600 p-1.5 rounded-lg flex items-center justify-center">
+            <Target size={18} className="text-white" />
+          </div>
+          <h1 className="text-lg font-bold text-zinc-100 tracking-wide">Senro.AI</h1>
         </div>
-        <h1 className="text-lg font-bold text-zinc-100 tracking-wide">Senro.AI</h1>
+        
+        <nav className="px-3 mt-4 space-y-1">
+          <SidebarItem to="/dashboard" icon={LayoutDashboard} label="Overview" />
+          <SidebarItem to="/dashboard/compare" icon={GitCompare} label="Competitors" />
+          <SidebarItem to="/dashboard/live-signals" icon={Activity} label="Live Signals" />
+          <SidebarItem to="/dashboard/battlecards" icon={FileText} label="Battlecards" />
+          <SidebarItem to="/dashboard/settings" icon={Settings} label="Settings" />
+        </nav>
       </div>
-      
-      <nav className="flex-1 px-3 mt-4 space-y-1">
-        <SidebarItem to="/dashboard" icon={LayoutDashboard} label="Overview" />
-        <SidebarItem to="/dashboard/compare" icon={GitCompare} label="Competitors" />
-        <SidebarItem to="/dashboard/battlecards" icon={Users} label="Battlecards" />
-        <SidebarItem to="/dashboard/performance" icon={LineChart} label="Performance" />
-        <SidebarItem to="/dashboard/settings" icon={Settings} label="Settings" />
-      </nav>
+
+      <div className="p-5 border-t border-zinc-800 space-y-2">
+        <div className="flex justify-between items-center text-xs text-zinc-500">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-zinc-700"></div> Scraping
+          </div>
+          <span>Off</span>
+        </div>
+        <div className="flex justify-between items-center text-xs text-zinc-500">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-zinc-700"></div> LLM
+          </div>
+          <span>Off</span>
+        </div>
+      </div>
     </aside>
 
     <main className="flex-1 flex flex-col h-screen overflow-hidden">
@@ -276,8 +293,13 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => (
             className="w-full bg-[#121212] border border-zinc-800 text-sm text-zinc-200 rounded-md pl-9 pr-4 py-1.5 focus:border-blue-500 focus:outline-none"
           />
         </div>
-        <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm">
-          A
+        <div className="flex items-center gap-4">
+          <button className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-md text-sm font-medium transition-colors">
+            <Plus size={16} /> Add Competitor
+          </button>
+          <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm">
+            FL
+          </div>
         </div>
       </header>
       <div className="flex-1 overflow-y-auto p-8">
@@ -286,139 +308,10 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => (
     </main>
   </div>
 );
-
-// --- DASHBOARD VIEWS ---
-const Overview = () => {
-  const [ownUrl, setOwnUrl] = React.useState(() => localStorage.getItem('ownUrl') || 'https://acme.com');
-  const [compUrl, setCompUrl] = React.useState(() => localStorage.getItem('compUrl') || '');
-  const [loading, setLoading] = React.useState(false);
-  const [data, setData] = React.useState<any>(null);
-  const [error, setError] = React.useState('');
-
-  const analyze = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!ownUrl || !compUrl) return;
-    setLoading(true);
-    setError('');
-    
-    try {
-      const res = await fetch('/api/analyze-competitor', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ownUrl, competitorUrls: [compUrl] })
-      });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.error || 'Analysis failed');
-      setData(json);
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <div className="max-w-6xl mx-auto space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold text-zinc-100">Global Threat & Visibility</h2>
-        <p className="text-zinc-500 text-sm mt-1">High-level threat score and visibility comparison.</p>
-      </div>
-
-      <form onSubmit={analyze} className="bg-[#121212] border border-zinc-800 p-5 rounded-xl flex flex-col md:flex-row items-end gap-4">
-        <div className="flex-1 w-full">
-          <label className="block text-xs font-medium text-zinc-400 mb-1">Your Website</label>
-          <input type="url" value={ownUrl} onChange={e => setOwnUrl(e.target.value)} required className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-2.5 text-sm text-zinc-200 focus:border-blue-500 focus:outline-none" />
-        </div>
-        <div className="flex-1 w-full">
-          <label className="block text-xs font-medium text-zinc-400 mb-1">Competitor Website</label>
-          <input type="url" value={compUrl} onChange={e => setCompUrl(e.target.value)} required placeholder="https://..." className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-2.5 text-sm text-zinc-200 focus:border-blue-500 focus:outline-none" />
-        </div>
-        <button type="submit" disabled={loading} className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-medium px-6 py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2">
-          {loading ? 'Analyzing...' : 'Analyze'}
-        </button>
-      </form>
-
-      {error && (
-        <div className="bg-red-500/10 border border-red-500/50 text-red-400 p-4 rounded-xl text-sm">
-          {error}
-        </div>
-      )}
-      
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="bg-[#121212] border border-zinc-800 p-6 rounded-xl border-t-2 border-t-blue-500">
-          <div className="text-xs font-semibold text-zinc-500 tracking-wider mb-2">TRACKED COMPETITORS</div>
-          {loading ? <div className="h-10 bg-zinc-800 animate-pulse rounded w-16"></div> : (
-            <div className="text-4xl font-bold text-zinc-100">{data ? data.tracked_competitors : '--'}</div>
-          )}
-        </div>
-        <div className="bg-[#121212] border border-zinc-800 p-6 rounded-xl border-t-2 border-t-emerald-500">
-          <div className="text-xs font-semibold text-zinc-500 tracking-wider mb-2">STRATEGIC GAP INDEX</div>
-          {loading ? <div className="h-10 bg-zinc-800 animate-pulse rounded w-32"></div> : (
-            <>
-              <div className="text-4xl font-bold text-emerald-400">{data ? `${data.strategic_gap_index}/100` : '--'}</div>
-              <div className="text-sm text-zinc-500 mt-1">{data ? data.reasoning : 'Awaiting analysis'}</div>
-            </>
-          )}
-        </div>
-        <div className="bg-[#121212] border border-zinc-800 p-6 rounded-xl border-t-2 border-t-blue-500">
-          <div className="text-xs font-semibold text-zinc-500 tracking-wider mb-2">NET TRAFFIC IMPACT</div>
-          {loading ? <div className="h-10 bg-zinc-800 animate-pulse rounded w-24"></div> : (
-            <>
-              <div className="text-4xl font-bold text-blue-400">{data ? data.impact_metric : '--'}</div>
-              <div className="text-sm text-zinc-500 mt-1">Estimated by LLM</div>
-            </>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const CompareHub = () => (
-  <div className="max-w-6xl mx-auto space-y-6">
-    <div className="flex justify-between items-start">
-      <div>
-        <h2 className="text-2xl font-bold text-zinc-100">Head-to-Head Breakdown</h2>
-        <p className="text-zinc-500 text-sm mt-1">Side-by-side analysis against specific competitors.</p>
-      </div>
-    </div>
-    <div className="bg-[#121212] border border-zinc-800 rounded-xl p-6">
-      <h3 className="font-semibold text-zinc-100 mb-4">Actionable Recommendations (Hindsight Conditioned)</h3>
-      <div className="space-y-4">
-        <div className="p-4 border border-zinc-800 rounded-lg flex justify-between items-center bg-[#0a0a0a]">
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded text-xs font-semibold">Pricing Structure</span>
-              <span className="text-zinc-100 font-medium text-sm">Add transparent tiers</span>
-            </div>
-            <p className="text-xs text-zinc-400">Competitor X added a free tier. Hindsight indicates transparent tables drive +12% engagement.</p>
-          </div>
-          <button className="flex items-center gap-1.5 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 px-3 py-1.5 rounded-md text-xs font-medium border border-emerald-500/20 transition">
-            <CheckCircle2 size={14} /> Mark as Implemented
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-const PerformanceLoop = () => (
-  <div className="max-w-6xl mx-auto space-y-6">
-    <div>
-      <h2 className="text-2xl font-bold text-zinc-100">Closed-Loop Analytics</h2>
-      <p className="text-zinc-500 text-sm mt-1">Tracking the real-world traffic impact of implemented recommendations.</p>
-    </div>
-
-    <div className="bg-[#121212] border border-zinc-800 rounded-xl p-6">
-      <h3 className="font-semibold text-zinc-100 mb-4">Hindsight Opinion Network Insights</h3>
-      <div className="p-4 bg-purple-500/10 border border-purple-500/20 rounded-lg text-sm text-purple-200 italic">
-        "Learned Heuristic: For Workspace AcmeCorp, competitive changes matching 'social proof' consistently outperform 'aggressive price slashing'. Feature matrices yield +12% engagement; removal of free trial decreased traffic by 5%."
-      </div>
-    </div>
-  </div>
-);
-
+import { Overview } from './components/Overview';
+import { CompareHub } from './components/CompareHub';
 import { BattlecardsList } from './components/BattlecardsList';
+import { LiveSignals } from './components/LiveSignals';
 import { SettingsUI } from './components/SettingsUI';
 
 function App() {
@@ -435,8 +328,8 @@ function App() {
           
           <Route path="/dashboard" element={<DashboardLayout><Overview /></DashboardLayout>} />
           <Route path="/dashboard/compare" element={<DashboardLayout><CompareHub /></DashboardLayout>} />
+          <Route path="/dashboard/live-signals" element={<DashboardLayout><LiveSignals /></DashboardLayout>} />
           <Route path="/dashboard/battlecards" element={<DashboardLayout><BattlecardsList /></DashboardLayout>} />
-          <Route path="/dashboard/performance" element={<DashboardLayout><PerformanceLoop /></DashboardLayout>} />
           <Route path="/dashboard/settings" element={<DashboardLayout><SettingsUI /></DashboardLayout>} />
           
           <Route path="/" element={<Navigate to="/login" replace />} />
