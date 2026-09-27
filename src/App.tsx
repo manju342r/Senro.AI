@@ -3,6 +3,7 @@ import { CompareHub } from './components/CompareHub';
 import { BattlecardsList } from './components/BattlecardsList';
 import { LiveSignals } from './components/LiveSignals';
 import { SettingsUI } from './components/SettingsUI';
+import { Profile } from './components/Profile';
 
 import { BrowserRouter, Routes, Route, Navigate, Link, useLocation, useNavigate } from 'react-router-dom';
 import { DataProvider, useData } from './contexts/DataContext';
@@ -307,12 +308,12 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
     <aside className="w-64 bg-[#121212] border-r border-zinc-800 flex flex-col justify-between">
       <div>
-        <div className="p-5 flex items-center gap-2">
+        <Link to="/dashboard" className="p-5 flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
           <div className="bg-blue-600 p-1.5 rounded-lg flex items-center justify-center">
             <Target size={18} className="text-white" />
           </div>
           <h1 className="text-lg font-bold text-zinc-100 tracking-wide">Senro.AI</h1>
-        </div>
+        </Link>
         
         <nav className="px-3 mt-4 space-y-1">
           <SidebarItem to="/dashboard" icon={LayoutDashboard} label="Overview" />
@@ -352,9 +353,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           <button onClick={() => setShowModal(true)} className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-md text-sm font-medium transition-colors">
             <Plus size={16} /> Add Competitor
           </button>
-          <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm">
-            FL
-          </div>
+          <Link to="/dashboard/profile" className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all">
+            {(localStorage.getItem('userEmail') || 'F').charAt(0).toUpperCase()}
+          </Link>
         </div>
       </header>
       <div className="flex-1 overflow-y-auto p-8">
@@ -382,6 +383,7 @@ function App() {
           <Route path="/dashboard/live-signals" element={<DashboardLayout><LiveSignals /></DashboardLayout>} />
           <Route path="/dashboard/battlecards" element={<DashboardLayout><BattlecardsList /></DashboardLayout>} />
           <Route path="/dashboard/settings" element={<DashboardLayout><SettingsUI /></DashboardLayout>} />
+          <Route path="/dashboard/profile" element={<DashboardLayout><Profile /></DashboardLayout>} />
           
           <Route path="/" element={<Navigate to="/login" replace />} />
         </Routes>
