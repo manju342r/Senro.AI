@@ -11,7 +11,12 @@ export const Overview = () => {
   const [ownUrl] = useState(() => localStorage.getItem('ownUrl') || 'https://acme.com');
   const [compUrl] = useState(() => localStorage.getItem('compUrl') || '');
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<any>(() => {
+    try {
+      const stored = localStorage.getItem('overviewData');
+      return stored ? JSON.parse(stored) : null;
+    } catch { return null; }
+  });
 
   const mockTimelineData = [
     { name: 'Mon', threat: 20, signals: 1 },
@@ -42,6 +47,7 @@ export const Overview = () => {
       const result = await response.json();
       if (response.ok) {
         setData(result);
+        localStorage.setItem('overviewData', JSON.stringify(result));
         if (result.analysis_summary) {
           await ingestToHindsight(compUrl, result.analysis_summary);
         }

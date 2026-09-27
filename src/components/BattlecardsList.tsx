@@ -7,6 +7,14 @@ export const BattlecardsList = () => {
   const [compUrl, setCompUrl] = React.useState(() => localStorage.getItem('compUrl') || '');
   const [isConfigured, setIsConfigured] = React.useState(false);
 
+  const [data] = React.useState<any>(() => {
+    try {
+      const stored = localStorage.getItem('overviewData');
+      return stored ? JSON.parse(stored) : null;
+    } catch { return null; }
+  });
+
+
   React.useEffect(() => {
     fetch('/api/config-status')
       .then(res => res.json())
@@ -38,7 +46,24 @@ export const BattlecardsList = () => {
         </div>
       )}
 
-      <div className="space-y-4">
+      
+      {data && (
+        <div className="space-y-4 mb-8">
+          <h3 className="text-sm font-semibold text-zinc-400">Generated Battlecards</h3>
+          <div className="bg-[#121212] border border-blue-500/30 p-5 rounded-xl max-w-2xl relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
+            <div className="flex justify-between items-start mb-4">
+              <div>
+                <h4 className="text-lg font-bold text-zinc-100">{compUrl ? getDomain(compUrl) : "Competitor"}</h4>
+                <div className="text-xs text-blue-400 mt-1 flex items-center gap-1"><Sparkles size={12} /> Auto-generated just now</div>
+              </div>
+              <div className="bg-blue-600 text-white text-xs px-2 py-1 rounded font-medium">Gap Index: {data.strategic_gap_index}</div>
+            </div>
+            <p className="text-sm text-zinc-300 leading-relaxed">{data.analysis_summary}</p>
+          </div>
+        </div>
+      )}
+<div className="space-y-4">
         <h3 className="text-sm font-semibold text-zinc-400">Not yet analyzed</h3>
         <div className="bg-[#121212] border border-zinc-800 p-4 rounded-xl flex justify-between items-center max-w-xl">
           <div className="flex items-center gap-3">

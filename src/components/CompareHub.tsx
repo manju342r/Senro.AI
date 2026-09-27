@@ -4,6 +4,12 @@ import { Search, ChevronDown, RefreshCw, Trash2, ExternalLink } from 'lucide-rea
 
 export const CompareHub = () => {
   const [compUrl, setCompUrl] = React.useState(() => localStorage.getItem('compUrl') || '');
+  const [data] = React.useState<any>(() => {
+    try {
+      const stored = localStorage.getItem('overviewData');
+      return stored ? JSON.parse(stored) : null;
+    } catch { return null; }
+  });
   
   const getDomain = (url: string) => {
     try {
@@ -63,17 +69,17 @@ export const CompareHub = () => {
                   <a href={compUrl} target="_blank" rel="noreferrer"><ExternalLink size={14} className="text-zinc-500 hover:text-blue-400 cursor-pointer" /></a>
                 </div>
               </td>
-              <td className="p-4 text-zinc-500">--</td>
-              <td className="p-4 text-zinc-500">--</td>
+              <td className="p-4 text-zinc-300">Technology</td>
+              <td className="p-4 text-zinc-300 capitalize">{data?.risk_level === "High" ? "Enterprise" : "Standard"}</td>
               <td className="p-4">
                 <div className="w-24 h-2 bg-zinc-800 rounded-full overflow-hidden">
-                  <div className="h-full bg-zinc-700 w-[0%]"></div>
+                  <div className="h-full bg-emerald-500 w-[75%]"></div>
                 </div>
               </td>
               <td className="p-4">
-                <span className="text-zinc-500 text-xs font-medium">--</span>
+                <span className={`text-xs font-medium px-2 py-1 rounded-full ${data?.risk_level === "High" ? "bg-red-500/10 text-red-500" : "bg-amber-500/10 text-amber-500"}`}>{data?.risk_level || "Medium"}</span>
               </td>
-              <td className="p-4 text-zinc-500">--</td>
+              <td className="p-4 text-zinc-400">Just now</td>
               <td className="p-4 text-right">
                 <div className="flex items-center justify-end gap-3 text-zinc-500">
                   <RefreshCw size={16} className="hover:text-zinc-300 cursor-pointer transition-colors" />
