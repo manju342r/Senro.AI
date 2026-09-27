@@ -1,7 +1,18 @@
 import React from 'react';
 import { Search, ChevronDown, RefreshCw, Trash2, ExternalLink } from 'lucide-react';
 
+
 export const CompareHub = () => {
+  const [compUrl, setCompUrl] = React.useState(() => localStorage.getItem('compUrl') || '');
+  
+  const getDomain = (url: string) => {
+    try {
+      return new URL(url).hostname.replace('www.', '');
+    } catch {
+      return url || 'No competitor';
+    }
+  };
+
   return (
     <div className="max-w-6xl space-y-6">
       <div className="flex justify-between items-center">
@@ -47,7 +58,7 @@ export const CompareHub = () => {
               <td className="p-4"><input type="checkbox" className="rounded border-zinc-700 bg-zinc-900" /></td>
               <td className="p-4">
                 <div className="flex items-center gap-2 text-zinc-200 font-medium">
-                  amazon.in
+                  {compUrl ? getDomain(compUrl) : "No competitor added"}
                   <ExternalLink size={14} className="text-zinc-500 hover:text-zinc-300 cursor-pointer" />
                 </div>
               </td>

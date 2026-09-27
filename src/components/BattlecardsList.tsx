@@ -1,7 +1,18 @@
 import React from 'react';
 import { FileText, Sparkles } from 'lucide-react';
 
+
 export const BattlecardsList = () => {
+  const [compUrl, setCompUrl] = React.useState(() => localStorage.getItem('compUrl') || '');
+  
+  const getDomain = (url: string) => {
+    try {
+      return new URL(url).hostname.replace('www.', '');
+    } catch {
+      return url || 'No competitor';
+    }
+  };
+
   return (
     <div className="max-w-6xl space-y-8">
       <div>
@@ -21,7 +32,7 @@ export const BattlecardsList = () => {
               <FileText size={18} className="text-zinc-400" />
             </div>
             <div>
-              <div className="text-zinc-200 font-medium text-sm">amazon.in</div>
+              <div className="text-zinc-200 font-medium text-sm">{compUrl ? getDomain(compUrl) : "No competitor added"}</div>
               <div className="text-zinc-500 text-xs">0 signals available</div>
             </div>
           </div>

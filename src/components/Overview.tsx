@@ -141,12 +141,12 @@ export const Overview = () => {
           <div className="flex items-center gap-3">
             <div className="w-2 h-2 rounded-full bg-amber-500"></div>
             <div>
-              <div className="text-sm font-medium text-zinc-200">amazon.in</div>
+              <div className="text-sm font-medium text-zinc-200">{compUrl ? getWorkspaceName(compUrl) : "No competitor"}</div>
               <div className="text-xs text-zinc-500">Never scraped</div>
             </div>
           </div>
           <div className="text-sm text-blue-400 hover:underline cursor-pointer">
-            amazon.in ↗
+            {compUrl ? getWorkspaceName(compUrl) : ""} {compUrl && "↗"}
           </div>
         </div>
       </div>
