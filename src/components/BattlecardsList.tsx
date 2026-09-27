@@ -2,10 +2,22 @@ import React from 'react';
 import { FileText, Sparkles } from 'lucide-react';
 
 
+
 export const BattlecardsList = () => {
   const [compUrl, setCompUrl] = React.useState(() => localStorage.getItem('compUrl') || '');
+  const [isConfigured, setIsConfigured] = React.useState(false);
+
+  React.useEffect(() => {
+    fetch('/api/config-status')
+      .then(res => res.json())
+      .then(data => {
+        setIsConfigured(data.configured);
+      })
+      .catch(console.error);
+  }, []);
   
   const getDomain = (url: string) => {
+
     try {
       return new URL(url).hostname.replace('www.', '');
     } catch {
@@ -20,9 +32,11 @@ export const BattlecardsList = () => {
         <p className="text-zinc-500 text-sm mt-1">Generated live from the signals Senro.AI has observed for each competitor.</p>
       </div>
 
-      <div className="bg-amber-500/10 border border-amber-500/30 text-amber-500 p-4 rounded-lg text-sm font-medium">
-        No LLM API key configured. Add one in Settings to generate battlecards.
-      </div>
+      {!isConfigured && (
+        <div className="bg-amber-500/10 border border-amber-500/30 text-amber-500 p-4 rounded-lg text-sm font-medium">
+          No LLM API key configured. Add one in Settings to generate battlecards.
+        </div>
+      )}
 
       <div className="space-y-4">
         <h3 className="text-sm font-semibold text-zinc-400">Not yet analyzed</h3>
