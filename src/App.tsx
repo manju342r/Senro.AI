@@ -114,18 +114,24 @@ const OnboardingLayout = ({ children, step }: { children: React.ReactNode, step:
 
 const OnboardingStep1 = () => {
   const navigate = useNavigate();
+  const [url, setUrl] = useState('');
+  
   return (
     <OnboardingLayout step={1}>
       <h2 className="text-2xl font-bold text-zinc-100 mb-2">My Workspace</h2>
       <p className="text-zinc-500 mb-6 text-sm">Tell us about your company so we can monitor your own visibility baseline.</p>
-      <form onSubmit={(e) => { e.preventDefault(); navigate('/onboarding/step-2'); }} className="space-y-4">
+      <form onSubmit={(e) => { 
+        e.preventDefault(); 
+        if(url) localStorage.setItem('ownUrl', url);
+        navigate('/onboarding/step-2'); 
+      }} className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-zinc-400 mb-1">Company Name</label>
           <input type="text" required placeholder="e.g. Acme Corp" className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-3 text-zinc-200 focus:border-blue-500 focus:outline-none" />
         </div>
         <div>
           <label className="block text-sm font-medium text-zinc-400 mb-1">Company Website Link</label>
-          <input type="url" required placeholder="https://acme.com" className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-3 text-zinc-200 focus:border-blue-500 focus:outline-none" />
+          <input type="url" required value={url} onChange={e => setUrl(e.target.value)} placeholder="https://acme.com" className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-3 text-zinc-200 focus:border-blue-500 focus:outline-none" />
         </div>
         <button type="submit" className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-lg transition-colors mt-6">
           Next Step <ArrowRight size={18} />
@@ -138,9 +144,11 @@ const OnboardingStep1 = () => {
 const OnboardingStep2 = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = React.useState(false);
+  const [compUrl, setCompUrl] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if(compUrl) localStorage.setItem('compUrl', compUrl);
     setLoading(true);
     try {
       const res = await fetch('/api/config-status');
@@ -167,7 +175,7 @@ const OnboardingStep2 = () => {
         </div>
         <div>
           <label className="block text-sm font-medium text-zinc-400 mb-1">Opponent Website Link</label>
-          <input type="url" required placeholder="https://globex.com" className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-3 text-zinc-200 focus:border-blue-500 focus:outline-none" />
+          <input type="url" required value={compUrl} onChange={e => setCompUrl(e.target.value)} placeholder="https://globex.com" className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-3 text-zinc-200 focus:border-blue-500 focus:outline-none" />
         </div>
         <button type="submit" disabled={loading} className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-medium py-3 rounded-lg transition-colors mt-6">
           {loading ? 'Checking configuration...' : <>Next Step <ArrowRight size={18} /></>}
@@ -281,8 +289,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => (
 
 // --- DASHBOARD VIEWS ---
 const Overview = () => {
-  const [ownUrl, setOwnUrl] = React.useState('https://acme.com');
-  const [compUrl, setCompUrl] = React.useState('');
+  const [ownUrl, setOwnUrl] = React.useState(() => localStorage.getItem('ownUrl') || 'https://acme.com');
+  const [compUrl, setCompUrl] = React.useState(() => localStorage.getItem('compUrl') || '');
   const [loading, setLoading] = React.useState(false);
   const [data, setData] = React.useState<any>(null);
   const [error, setError] = React.useState('');
@@ -410,6 +418,9 @@ const PerformanceLoop = () => (
   </div>
 );
 
+import { BattlecardsList } from './components/BattlecardsList';
+import { SettingsUI } from './components/SettingsUI';
+
 function App() {
   return (
     <DataProvider>
@@ -424,11 +435,11 @@ function App() {
           
           <Route path="/dashboard" element={<DashboardLayout><Overview /></DashboardLayout>} />
           <Route path="/dashboard/compare" element={<DashboardLayout><CompareHub /></DashboardLayout>} />
-          <Route path="/dashboard/battlecards" element={<DashboardLayout><div className="text-zinc-100 text-2xl font-bold">Battlecards UI</div></DashboardLayout>} />
+          <Route path="/dashboard/battlecards" element={<DashboardLayout><BattlecardsList /></DashboardLayout>} />
           <Route path="/dashboard/performance" element={<DashboardLayout><PerformanceLoop /></DashboardLayout>} />
-          <Route path="/dashboard/settings" element={<DashboardLayout><div className="text-zinc-100 text-2xl font-bold">Settings UI</div></DashboardLayout>} />
+          <Route path="/dashboard/settings" element={<DashboardLayout><SettingsUI /></DashboardLayout>} />
           
-          <Route path="*" element={<Navigate to="/login" replace />} />
+          <Route path="/" element={<Navigate to="/login" replace />} />
         </Routes>
       </BrowserRouter>
     </DataProvider>
