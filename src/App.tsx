@@ -27,6 +27,7 @@ const AuthScreen = ({ isLogin }: { isLogin: boolean }) => {
     setLoading(true);
 
     try {
+      localStorage.setItem('userEmail', email);
       if (isLogin) {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;

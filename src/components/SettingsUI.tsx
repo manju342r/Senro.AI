@@ -7,30 +7,12 @@ export const SettingsUI = () => {
   const { supabase } = useData();
   const [ownUrl, setOwnUrl] = useState(() => localStorage.getItem('ownUrl') || 'https://acme.com');
   const [compUrl, setCompUrl] = useState(() => localStorage.getItem('compUrl') || '');
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(() => localStorage.getItem('userEmail') || 'demo@senro.ai (Guest)');
   const [industry, setIndustry] = useState(() => localStorage.getItem('userIndustry') || 'SaaS');
   const [alertSens, setAlertSens] = useState(() => localStorage.getItem('alertSens') || 'Balanced');
 
 
-  useEffect(() => {
-    // Attempt to get session synchronously first
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user?.email) {
-        setEmail(session.user.email);
-      } else {
-        // Fallback to getUser if session is stale
-        supabase.auth.getUser().then(({ data: { user } }) => {
-          if (user?.email) {
-            setEmail(user.email);
-          } else {
-            setEmail('demo@senro.ai (Guest)');
-          }
-        }).catch(() => {
-          setEmail('demo@senro.ai (Guest)');
-        });
-      }
-    });
-  }, [supabase]);
+
 
 
 
