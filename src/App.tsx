@@ -106,7 +106,7 @@ const AuthScreen = ({ isLogin }: { isLogin: boolean }) => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8A8F98] hover:text-zinc-300 transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 transition-colors"
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
@@ -129,7 +129,7 @@ const AuthScreen = ({ isLogin }: { isLogin: boolean }) => {
             </button>
           </form>
 
-          <p className="text-center text-sm text-[#8A8F98]">
+          <p className="text-center text-sm text-zinc-500">
             {isLogin ? "Don't have an account? " : "Already have an account? "}
             <Link to={isLogin ? "/signup" : "/login"} className="text-blue-500 hover:text-blue-400 font-medium transition-colors">
               {isLogin ? "Sign up" : "Log in"}
@@ -159,7 +159,7 @@ const OnboardingLayout = ({ children, step }: { children: React.ReactNode, step:
         {children}
       </div>
       <div className="mt-6 text-center">
-        <Link to="/dashboard" className="text-sm text-[#8A8F98] hover:text-zinc-300 transition-colors">
+        <Link to="/dashboard" className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors">
           Skip this for now (Testing)
         </Link>
       </div>
@@ -174,7 +174,7 @@ const OnboardingStep1 = () => {
   return (
     <OnboardingLayout step={1}>
       <h2 className="text-2xl font-bold text-zinc-100 mb-2">My Workspace</h2>
-      <p className="text-[#8A8F98] mb-6 text-sm">Tell us about your company so we can monitor your own visibility baseline.</p>
+      <p className="text-zinc-500 mb-6 text-sm">Tell us about your company so we can monitor your own visibility baseline.</p>
       <form onSubmit={(e) => { 
         e.preventDefault(); 
         if(url) localStorage.setItem('ownUrl', url);
@@ -222,7 +222,7 @@ const OnboardingStep2 = () => {
   return (
     <OnboardingLayout step={2}>
       <h2 className="text-2xl font-bold text-zinc-100 mb-2">The Opponent</h2>
-      <p className="text-[#8A8F98] mb-6 text-sm">Who is your primary competitor? We will track their changes against your baseline.</p>
+      <p className="text-zinc-500 mb-6 text-sm">Who is your primary competitor? We will track their changes against your baseline.</p>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-zinc-400 mb-1">Opponent Company Name</label>
@@ -257,7 +257,7 @@ const OnboardingStep3 = () => {
   return (
     <OnboardingLayout step={3}>
       <h2 className="text-2xl font-bold text-zinc-100 mb-2">API Configuration</h2>
-      <p className="text-[#8A8F98] mb-6 text-sm">Connect the engines powering Senro.AI's memory, scraping, and email systems.</p>
+      <p className="text-zinc-500 mb-6 text-sm">Connect the engines powering Senro.AI's memory, scraping, and email systems.</p>
       <form onSubmit={(e) => { e.preventDefault(); navigate('/dashboard'); }} className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
           <div>
@@ -297,7 +297,7 @@ const SidebarItem = ({ to, icon: Icon, label }: { to: string; icon: any; label: 
         isActive ? 'bg-zinc-800 text-zinc-100' : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/50'
       }`}
     >
-      <Icon size={16} strokeWidth={1.5} className={isActive ? "text-[#E2E4E9]" : "text-[#8A8F98]"} />
+      <Icon size={18} className={isActive ? 'text-blue-500' : 'text-zinc-500'} />
       {label}
     </Link>
   );
@@ -338,14 +338,14 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#08090A] text-[#F7F8F8] flex font-sans">
+    <div className="min-h-screen bg-transparent text-zinc-200 flex font-sans selection:bg-blue-500/30">
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#0E1015] border border-[#222631] rounded-lg w-full max-w-md shadow-2xl overflow-hidden">
-            <div className="p-4 border-b border-[#222631] flex justify-between items-center bg-[#08090A]">
-              <h3 className="font-medium text-[#F7F8F8] text-[14px]">Add Tracked Competitor</h3>
-              <button onClick={() => setShowModal(false)} className="text-[#8A8F98] hover:text-zinc-300">✕</button>
+          <div className="bg-[#0f0f13]/90 backdrop-blur-2xl border border-white/10 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden ring-1 ring-white/5">
+            <div className="p-5 border-b border-white/10 flex justify-between items-center bg-black/40">
+              <h3 className="font-semibold text-zinc-100">Add Tracked Competitor</h3>
+              <button onClick={() => setShowModal(false)} className="text-zinc-500 hover:text-zinc-300">✕</button>
             </div>
             <form onSubmit={handleAddCompetitor} className="p-5 space-y-4">
               <div>
@@ -361,8 +361,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                 />
               </div>
               <div className="flex gap-3 justify-end pt-2">
-                <button type="button" onClick={() => setShowModal(false)} className="px-3 py-1.5 text-[13px] font-medium text-[#8A8F98] hover:text-[#E2E4E9]">Cancel</button>
-                <button type="submit" className="bg-[#E2E4E9] hover:bg-[#F7F8F8] text-[#08090A] px-3 py-1.5 rounded-md text-[13px] font-medium transition-colors">
+                <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 text-sm font-medium text-zinc-400 hover:text-zinc-200">Cancel</button>
+                <button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                   Add Competitor
                 </button>
               </div>
@@ -372,13 +372,13 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       )}
 
 
-    <aside className="w-56 bg-[#08090A] border-r border-[#222631] flex flex-col justify-between relative z-20 shrink-0">
+    <aside className="w-64 bg-black/40 backdrop-blur-2xl border-r border-white/5 flex flex-col justify-between relative z-20 shadow-2xl">
       <div>
-        <Link to="/dashboard" className="px-5 py-4 flex items-center gap-2.5 cursor-pointer group">
-          <div className="w-5 h-5 rounded flex items-center justify-center bg-[#5E6AD2]">
-            <Target size={12} className="text-white" strokeWidth={2.5} />
+        <Link to="/dashboard" className="p-5 flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
+          <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-1.5 rounded-xl flex items-center justify-center shadow-lg shadow-blue-900/40">
+            <Target size={18} className="text-white" />
           </div>
-          <h1 className="text-[14px] font-semibold text-[#F7F8F8] tracking-tight">Senro</h1>
+          <h1 className="text-xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-zinc-100 to-zinc-400 tracking-tight">Senro.AI</h1>
         </Link>
         
         <nav className="px-3 mt-4 space-y-1">
@@ -392,20 +392,20 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       </div>
 
       <div className="p-5 border-t border-zinc-800 space-y-2">
-        <div className="flex justify-between items-center text-xs text-[#8A8F98]">
+        <div className="flex justify-between items-center text-xs text-zinc-500">
           <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full ${isConfigured ? 'bg-[#27C93F]' : 'bg-[#222631]'}`}></div> Scraping
+            <div className={`w-2 h-2 rounded-full ${isConfigured ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'bg-zinc-700'}`}></div> Scraping
           </div>
-          <span className={isConfigured ? 'text-[#27C93F] font-medium' : ''}>{isConfigured ? 'On' : 'Off'}</span>
+          <span className={isConfigured ? 'text-emerald-500 font-medium' : ''}>{isConfigured ? 'On' : 'Off'}</span>
         </div>
-        <div className="flex justify-between items-center text-xs text-[#8A8F98]">
+        <div className="flex justify-between items-center text-xs text-zinc-500">
           <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full ${isConfigured ? 'bg-[#27C93F]' : 'bg-[#222631]'}`}></div> LLM
+            <div className={`w-2 h-2 rounded-full ${isConfigured ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'bg-zinc-700'}`}></div> LLM
           </div>
-          <span className={isConfigured ? 'text-[#27C93F] font-medium' : ''}>{isConfigured ? 'On' : 'Off'}</span>
+          <span className={isConfigured ? 'text-emerald-500 font-medium' : ''}>{isConfigured ? 'On' : 'Off'}</span>
         </div>
         <div className="pt-2">
-          <button onClick={handleSignOut} className="w-full flex items-center gap-2 text-xs font-medium text-[#8A8F98] hover:text-red-400 transition-colors">
+          <button onClick={handleSignOut} className="w-full flex items-center gap-2 text-xs font-medium text-zinc-500 hover:text-red-400 transition-colors">
             <LogOut size={14} /> Sign out
           </button>
         </div>
@@ -413,20 +413,19 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     </aside>
 
     <main className="flex-1 flex flex-col h-screen overflow-hidden">
-      <header className="h-14 border-b border-[#222631] bg-[#08090A] px-6 flex justify-between items-center shrink-0 sticky top-0 z-10">
-        <div className="relative w-72 flex items-center">
-          <Search size={14} className="absolute left-3 text-[#8A8F98]" strokeWidth={2} />
+      <header className="h-16 border-b border-white/5 bg-black/40 backdrop-blur-xl px-6 flex justify-between items-center shrink-0 sticky top-0 z-10">
+        <div className="relative w-64">
+          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
           <input 
-            type="text" placeholder="Search..." 
-            className="w-full bg-[#12151C] border border-[#222631] text-[13px] text-[#F7F8F8] rounded-md pl-9 pr-12 py-1.5 focus:border-[#5E6AD2] focus:outline-none transition-colors placeholder-[#8A8F98]"
+            type="text" placeholder="Search memory or competitors..." 
+            className="w-full bg-white/5 border border-white/10 text-sm text-zinc-200 rounded-xl pl-9 pr-4 py-2 focus:border-blue-500/50 focus:bg-white/10 focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all backdrop-blur-md"
           />
-          <div className="absolute right-3 text-[10px] text-[#8A8F98] bg-[#1A1D24] border border-[#222631] px-1.5 py-0.5 rounded shadow-sm font-sans tracking-widest">⌘K</div>
         </div>
         <div className="flex items-center gap-4">
-          <button onClick={() => setShowModal(true)} className="flex items-center gap-1.5 bg-[#5E6AD2] hover:bg-[#4f5bbf] text-white px-3 py-1.5 rounded-md text-[13px] font-medium transition-colors border border-[#5E6AD2] shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
-            <Plus size={14} strokeWidth={2} /> Add Competitor
+          <button onClick={() => setShowModal(true)} className="flex items-center gap-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-4 py-2 rounded-xl text-sm font-bold transition-all shadow-lg shadow-blue-900/20 hover:shadow-blue-900/40 transform hover:-translate-y-0.5">
+            <Plus size={16} /> Add Competitor
           </button>
-          <Link to="/dashboard/profile" className="w-7 h-7 rounded-full bg-[#1A1D24] border border-[#222631] flex items-center justify-center text-[#E2E4E9] font-medium text-[11px] cursor-pointer hover:bg-[#222631] transition-colors">
+          <Link to="/dashboard/profile" className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-sm cursor-pointer hover:ring-4 hover:ring-blue-500/30 transition-all shadow-lg">
             {(localStorage.getItem('userEmail') || 'F').charAt(0).toUpperCase()}
           </Link>
         </div>

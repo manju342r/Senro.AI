@@ -16,8 +16,8 @@ export const LiveSignals = () => {
     <div className="max-w-6xl space-y-8">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-[#F7F8F8]">Live signals</h2>
-          <p className="text-[#8A8F98] text-sm mt-1">Real-time alerts triggered by competitor changes.</p>
+          <h2 className="text-2xl font-bold text-zinc-100">Live signals</h2>
+          <p className="text-zinc-500 text-sm mt-1">Real-time alerts triggered by competitor changes.</p>
         </div>
         {isConfigured ? (
           <div className="bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 px-3 py-1.5 rounded text-sm font-medium">
@@ -30,12 +30,12 @@ export const LiveSignals = () => {
         )}
       </div>
 
-      <div className="border border-dashed border-[#222631] rounded-lg flex flex-col items-center justify-center p-24 text-center">
-        <div className="w-16 h-16 bg-[#12151C] rounded-full flex items-center justify-center mb-4">
+      <div className="border border-dashed border-white/5 rounded-2xl flex flex-col items-center justify-center p-24 text-center">
+        <div className="w-16 h-16 bg-zinc-900/60 backdrop-blur-md rounded-full flex items-center justify-center mb-4">
           <Activity size={32} className="text-zinc-700" />
         </div>
-        <h3 className="text-[#E2E4E9] font-medium mb-1">No signals recorded yet</h3>
-        <p className="text-[#8A8F98] text-sm max-w-sm">
+        <h3 className="text-zinc-300 font-medium mb-1">No signals recorded yet</h3>
+        <p className="text-zinc-500 text-sm max-w-sm">
           Run a scan or wait for scheduled monitoring to detect changes in competitor pricing, messaging, or features.
         </p>
       </div>
