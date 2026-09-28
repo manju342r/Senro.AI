@@ -35,12 +35,12 @@ export const Overview = () => {
         <motion.div 
           initial={{ opacity: 0, y: 5 }} 
           animate={{ opacity: 1, y: 0 }} 
-          className="bg-[#18181b] border border-zinc-700/50 p-4 rounded-xl shadow-2xl backdrop-blur-md"
+          className="bg-[#18181b] border border-zinc-700/50 p-4 rounded-2xl shadow-2xl backdrop-blur-md"
         >
           <p className="text-zinc-200 font-bold mb-1">{label}</p>
           <p className="text-blue-400 text-sm font-medium">Threat Score: {data.threat}</p>
           {data.annotation && (
-            <div className="mt-3 pt-3 border-t border-zinc-800 max-w-[220px]">
+            <div className="mt-3 pt-3 border-t border-white/5 max-w-[220px]">
               <p className="text-xs text-amber-400 font-bold flex items-center gap-1.5 uppercase tracking-wider"><Zap size={12} /> Memory Annotation</p>
               <p className="text-xs text-zinc-300 mt-1.5 leading-relaxed">{data.annotation}</p>
             </div>
@@ -157,7 +157,7 @@ export const Overview = () => {
             whileTap={{ scale: 0.98 }}
             onClick={handleEmailReport}
             disabled={emailing || loading}
-            className="flex-1 sm:flex-none flex justify-center items-center gap-2 bg-zinc-900/80 border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-800 text-zinc-200 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all disabled:opacity-50 backdrop-blur-sm shadow-sm"
+            className="flex-1 sm:flex-none flex justify-center items-center gap-2 bg-zinc-900/60 backdrop-blur-md/80 border border-white/5 hover:border-zinc-700 hover:bg-zinc-800 text-zinc-200 px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all disabled:opacity-50 backdrop-blur-sm shadow-sm"
           >
             {emailing ? <Activity size={16} className="animate-spin text-zinc-400" /> : <Mail size={16} className="text-zinc-400" />}
             {emailing ? 'Sending...' : 'Email Report'}
@@ -167,7 +167,7 @@ export const Overview = () => {
             whileTap={{ scale: 0.98 }}
             onClick={handleScan}
             disabled={loading}
-            className="flex-1 sm:flex-none flex justify-center items-center gap-2 bg-zinc-900/80 border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-800 text-zinc-200 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all disabled:opacity-50 backdrop-blur-sm shadow-sm"
+            className="flex-1 sm:flex-none flex justify-center items-center gap-2 bg-zinc-900/60 backdrop-blur-md/80 border border-white/5 hover:border-zinc-700 hover:bg-zinc-800 text-zinc-200 px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all disabled:opacity-50 backdrop-blur-sm shadow-sm"
           >
             {loading ? <Activity size={16} className="animate-spin text-blue-500" /> : <Zap size={16} className="text-amber-500" />}
             {loading ? 'Analyzing...' : 'Trigger Scan'}
@@ -177,7 +177,7 @@ export const Overview = () => {
 
       {/* Top Metrics Row */}
       <motion.div variants={containerVariants} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-        <motion.div variants={itemVariants} whileHover={{ y: -4 }} className="bg-[#121212]/90 backdrop-blur-md border border-zinc-800/80 hover:border-zinc-700 p-6 rounded-2xl flex flex-col justify-between shadow-lg transition-colors group">
+        <motion.div variants={itemVariants} whileHover={{ y: -4 }} className="bg-[#121212]/80 backdrop-blur-xl/90 backdrop-blur-md border border-white/5/80 hover:border-zinc-700 p-6 rounded-2xl flex flex-col justify-between shadow-lg transition-colors group">
           <div className="text-xs font-bold text-zinc-500 tracking-widest uppercase">Strategic Gap Index</div>
           <div className="mt-5 flex items-end justify-between">
             <div className="text-4xl font-black text-zinc-100 tracking-tight">{loading ? '--' : (data ? data.strategic_gap_index : '--')}</div>
@@ -185,7 +185,7 @@ export const Overview = () => {
           </div>
         </motion.div>
         
-        <motion.div variants={itemVariants} whileHover={{ y: -4 }} className="bg-[#121212]/90 backdrop-blur-md border border-zinc-800/80 hover:border-zinc-700 p-6 rounded-2xl flex flex-col justify-between shadow-lg transition-colors group">
+        <motion.div variants={itemVariants} whileHover={{ y: -4 }} className="bg-[#121212]/80 backdrop-blur-xl/90 backdrop-blur-md border border-white/5/80 hover:border-zinc-700 p-6 rounded-2xl flex flex-col justify-between shadow-lg transition-colors group">
           <div className="text-xs font-bold text-zinc-500 tracking-widest uppercase">Traffic Impact</div>
           <div className="mt-5 flex items-end justify-between">
             <div className="text-3xl font-black text-zinc-100 tracking-tight">{loading ? '--' : (data ? data.net_traffic_impact : '--')}</div>
@@ -193,7 +193,7 @@ export const Overview = () => {
           </div>
         </motion.div>
 
-        <motion.div variants={itemVariants} whileHover={{ y: -4 }} className="bg-[#121212]/90 backdrop-blur-md border border-zinc-800/80 hover:border-zinc-700 p-6 rounded-2xl flex flex-col justify-between shadow-lg transition-colors group">
+        <motion.div variants={itemVariants} whileHover={{ y: -4 }} className="bg-[#121212]/80 backdrop-blur-xl/90 backdrop-blur-md border border-white/5/80 hover:border-zinc-700 p-6 rounded-2xl flex flex-col justify-between shadow-lg transition-colors group">
           <div className="text-xs font-bold text-zinc-500 tracking-widest uppercase">Threat Level</div>
           <div className="mt-5 flex items-end justify-between">
             <div className="text-3xl font-black text-zinc-100 capitalize tracking-tight">{loading ? '--' : (data ? data.risk_level : '--')}</div>
@@ -201,7 +201,7 @@ export const Overview = () => {
           </div>
         </motion.div>
 
-        <motion.div variants={itemVariants} whileHover={{ y: -4 }} className="bg-[#121212]/90 backdrop-blur-md border border-zinc-800/80 hover:border-zinc-700 p-6 rounded-2xl flex flex-col justify-between shadow-lg transition-colors group">
+        <motion.div variants={itemVariants} whileHover={{ y: -4 }} className="bg-[#121212]/80 backdrop-blur-xl/90 backdrop-blur-md border border-white/5/80 hover:border-zinc-700 p-6 rounded-2xl flex flex-col justify-between shadow-lg transition-colors group">
           <div className="text-xs font-bold text-zinc-500 tracking-widest uppercase">Recent Signals</div>
           <div className="mt-5 flex items-end justify-between">
             <div className="text-4xl font-black text-zinc-100 tracking-tight">{loading ? '--' : (data ? data.signals_24h : '--')}</div>
@@ -212,7 +212,7 @@ export const Overview = () => {
 
       {/* Charts Row */}
       <motion.div variants={itemVariants} className="grid grid-cols-1 gap-6">
-        <div className="bg-[#121212]/90 backdrop-blur-md border border-zinc-800/80 p-6 sm:p-8 rounded-2xl shadow-lg">
+        <div className="bg-[#121212]/80 backdrop-blur-xl/90 backdrop-blur-md border border-white/5/80 p-6 sm:p-8 rounded-2xl shadow-lg">
           <h3 className="text-sm font-bold text-zinc-200 mb-6 uppercase tracking-widest flex items-center gap-2">
             Threat Score Timeline <span className="text-zinc-600 font-medium normal-case tracking-normal">(7 Days)</span>
           </h3>
@@ -267,7 +267,7 @@ export const Overview = () => {
             </motion.div>
           )}
           
-          <motion.div variants={itemVariants} className="bg-[#121212]/90 backdrop-blur-md border border-zinc-800/80 p-6 sm:p-8 rounded-2xl shadow-lg flex-1">
+          <motion.div variants={itemVariants} className="bg-[#121212]/80 backdrop-blur-xl/90 backdrop-blur-md border border-white/5/80 p-6 sm:p-8 rounded-2xl shadow-lg flex-1">
             <h3 className="text-sm font-bold text-zinc-200 mb-6 uppercase tracking-widest">Raw Live Signals</h3>
             <div className="space-y-4">
               {[
@@ -280,7 +280,7 @@ export const Overview = () => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.4 + i * 0.1 }}
                   key={i} 
-                  className="flex items-start justify-between gap-4 border-b border-zinc-800/50 pb-4 last:border-0 last:pb-0"
+                  className="flex items-start justify-between gap-4 border-b border-white/5/50 pb-4 last:border-0 last:pb-0"
                 >
                   <div className="flex items-start gap-4">
                     <div className={"w-2.5 h-2.5 rounded-full mt-1.5 flex-shrink-0 " + sig.status}></div>
@@ -294,7 +294,7 @@ export const Overview = () => {
         </div>
 
         {/* RIGHT COLUMN (40%) */}
-        <motion.div variants={itemVariants} className="lg:col-span-2 bg-[#121212]/90 backdrop-blur-md border border-zinc-800/80 p-6 sm:p-8 rounded-2xl flex flex-col shadow-lg">
+        <motion.div variants={itemVariants} className="lg:col-span-2 bg-[#121212]/80 backdrop-blur-xl/90 backdrop-blur-md border border-white/5/80 p-6 sm:p-8 rounded-2xl flex flex-col shadow-lg">
           <h3 className="text-sm font-bold text-zinc-200 mb-6 uppercase tracking-widest">Recommended Actions</h3>
           <div className="space-y-6 flex-1">
             <div className="group">
@@ -313,7 +313,7 @@ export const Overview = () => {
           <motion.button 
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full mt-8 py-3 bg-zinc-900 border border-zinc-700/50 hover:bg-zinc-800 hover:border-zinc-600 text-zinc-200 rounded-xl text-sm font-bold transition-all shadow-sm"
+            className="w-full mt-8 py-3 bg-zinc-900/60 backdrop-blur-md border border-zinc-700/50 hover:bg-zinc-800 hover:border-zinc-600 text-zinc-200 rounded-2xl text-sm font-bold transition-all shadow-sm"
           >
             Generate Counter-Moves
           </motion.button>

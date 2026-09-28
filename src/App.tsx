@@ -262,7 +262,7 @@ const OnboardingStep3 = () => {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-xs font-medium text-zinc-400 mb-1">Jina API Key</label>
-            <input type="password" placeholder="Optional" className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-2.5 text-sm text-zinc-200 focus:border-blue-500 focus:outline-none" />
+            <input type="password" placeholder="Optional" className="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-sm text-zinc-200 focus:border-blue-500/50 focus:ring-4 focus:ring-blue-500/10 focus:outline-none transition-all shadow-inner" />
           </div>
           <div>
             <label className="block text-xs font-medium text-zinc-400 mb-1">Vectorize Hindsight Key</label>
@@ -338,12 +338,12 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-zinc-200 flex font-sans">
+    <div className="min-h-screen bg-transparent text-zinc-200 flex font-sans selection:bg-blue-500/30">
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#121212] border border-zinc-800 rounded-xl w-full max-w-md shadow-2xl overflow-hidden">
-            <div className="p-4 border-b border-zinc-800 flex justify-between items-center bg-[#0a0a0a]">
+          <div className="bg-[#0f0f13]/90 backdrop-blur-2xl border border-white/10 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden ring-1 ring-white/5">
+            <div className="p-5 border-b border-white/10 flex justify-between items-center bg-black/40">
               <h3 className="font-semibold text-zinc-100">Add Tracked Competitor</h3>
               <button onClick={() => setShowModal(false)} className="text-zinc-500 hover:text-zinc-300">✕</button>
             </div>
@@ -372,13 +372,13 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       )}
 
 
-    <aside className="w-64 bg-[#121212] border-r border-zinc-800 flex flex-col justify-between">
+    <aside className="w-64 bg-black/40 backdrop-blur-2xl border-r border-white/5 flex flex-col justify-between relative z-20 shadow-2xl">
       <div>
         <Link to="/dashboard" className="p-5 flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
-          <div className="bg-blue-600 p-1.5 rounded-lg flex items-center justify-center">
+          <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-1.5 rounded-xl flex items-center justify-center shadow-lg shadow-blue-900/40">
             <Target size={18} className="text-white" />
           </div>
-          <h1 className="text-lg font-bold text-zinc-100 tracking-wide">Senro.AI</h1>
+          <h1 className="text-xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-zinc-100 to-zinc-400 tracking-tight">Senro.AI</h1>
         </Link>
         
         <nav className="px-3 mt-4 space-y-1">
@@ -413,19 +413,19 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     </aside>
 
     <main className="flex-1 flex flex-col h-screen overflow-hidden">
-      <header className="h-16 border-b border-zinc-800 bg-[#0a0a0a] px-6 flex justify-between items-center shrink-0">
+      <header className="h-16 border-b border-white/5 bg-black/40 backdrop-blur-xl px-6 flex justify-between items-center shrink-0 sticky top-0 z-10">
         <div className="relative w-64">
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
           <input 
             type="text" placeholder="Search memory or competitors..." 
-            className="w-full bg-[#121212] border border-zinc-800 text-sm text-zinc-200 rounded-md pl-9 pr-4 py-1.5 focus:border-blue-500 focus:outline-none"
+            className="w-full bg-white/5 border border-white/10 text-sm text-zinc-200 rounded-xl pl-9 pr-4 py-2 focus:border-blue-500/50 focus:bg-white/10 focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all backdrop-blur-md"
           />
         </div>
         <div className="flex items-center gap-4">
-          <button onClick={() => setShowModal(true)} className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-md text-sm font-medium transition-colors">
+          <button onClick={() => setShowModal(true)} className="flex items-center gap-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-4 py-2 rounded-xl text-sm font-bold transition-all shadow-lg shadow-blue-900/20 hover:shadow-blue-900/40 transform hover:-translate-y-0.5">
             <Plus size={16} /> Add Competitor
           </button>
-          <Link to="/dashboard/profile" className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all">
+          <Link to="/dashboard/profile" className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-sm cursor-pointer hover:ring-4 hover:ring-blue-500/30 transition-all shadow-lg">
             {(localStorage.getItem('userEmail') || 'F').charAt(0).toUpperCase()}
           </Link>
         </div>

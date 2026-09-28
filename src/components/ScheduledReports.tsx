@@ -95,7 +95,7 @@ export const ScheduledReports = () => {
           whileTap={{ scale: 0.98 }}
           onClick={handleSendNow}
           disabled={sendingNow}
-          className="w-full sm:w-auto flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-colors shadow-lg shadow-blue-900/20"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white px-5 py-2.5 rounded-2xl text-sm font-bold transition-colors shadow-lg shadow-blue-900/20"
         >
           {sendingNow ? <Activity size={18} className="animate-spin" /> : <Send size={18} />}
           {sendingNow ? 'Sending...' : 'Send Email Now'}
@@ -107,7 +107,7 @@ export const ScheduledReports = () => {
           variants={itemVariants}
           whileHover={{ y: -4 }}
           onClick={() => handleSaveFreq('daily')}
-          className={`cursor-pointer border rounded-2xl p-6 sm:p-8 transition-all shadow-lg backdrop-blur-sm relative overflow-hidden group ${reportFreq === 'daily' ? 'bg-blue-500/10 border-blue-500/50 shadow-blue-900/20' : 'bg-[#121212]/90 border-zinc-800/80 hover:border-zinc-700'}`}
+          className={`cursor-pointer border rounded-2xl p-6 sm:p-8 transition-all shadow-lg backdrop-blur-sm relative overflow-hidden group ${reportFreq === 'daily' ? 'bg-blue-500/10 border-blue-500/50 shadow-blue-900/20' : 'bg-[#121212]/80 backdrop-blur-xl/90 border-white/5/80 hover:border-zinc-700'}`}
         >
           {reportFreq === 'daily' && <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>}
           <div className="flex justify-between items-start mb-6 relative">
@@ -124,7 +124,7 @@ export const ScheduledReports = () => {
           variants={itemVariants}
           whileHover={{ y: -4 }}
           onClick={() => handleSaveFreq('twice_a_day')}
-          className={`cursor-pointer border rounded-2xl p-6 sm:p-8 transition-all shadow-lg backdrop-blur-sm relative overflow-hidden group ${reportFreq === 'twice_a_day' ? 'bg-emerald-500/10 border-emerald-500/50 shadow-emerald-900/20' : 'bg-[#121212]/90 border-zinc-800/80 hover:border-zinc-700'}`}
+          className={`cursor-pointer border rounded-2xl p-6 sm:p-8 transition-all shadow-lg backdrop-blur-sm relative overflow-hidden group ${reportFreq === 'twice_a_day' ? 'bg-emerald-500/10 border-emerald-500/50 shadow-emerald-900/20' : 'bg-[#121212]/80 backdrop-blur-xl/90 border-white/5/80 hover:border-zinc-700'}`}
         >
           {reportFreq === 'twice_a_day' && <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>}
           <div className="flex justify-between items-start mb-6 relative">
@@ -141,7 +141,7 @@ export const ScheduledReports = () => {
           variants={itemVariants}
           whileHover={{ y: -4 }}
           onClick={() => handleSaveFreq('weekly')}
-          className={`cursor-pointer border rounded-2xl p-6 sm:p-8 transition-all shadow-lg backdrop-blur-sm relative overflow-hidden group ${reportFreq === 'weekly' ? 'bg-purple-500/10 border-purple-500/50 shadow-purple-900/20' : 'bg-[#121212]/90 border-zinc-800/80 hover:border-zinc-700'}`}
+          className={`cursor-pointer border rounded-2xl p-6 sm:p-8 transition-all shadow-lg backdrop-blur-sm relative overflow-hidden group ${reportFreq === 'weekly' ? 'bg-purple-500/10 border-purple-500/50 shadow-purple-900/20' : 'bg-[#121212]/80 backdrop-blur-xl/90 border-white/5/80 hover:border-zinc-700'}`}
         >
           {reportFreq === 'weekly' && <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>}
           <div className="flex justify-between items-start mb-6 relative">
@@ -155,7 +155,7 @@ export const ScheduledReports = () => {
         </motion.div>
       </motion.div>
 
-      <motion.div variants={itemVariants} className="bg-[#121212]/90 backdrop-blur-md border border-zinc-800/80 rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-lg">
+      <motion.div variants={itemVariants} className="bg-[#121212]/80 backdrop-blur-xl/90 backdrop-blur-md border border-white/5/80 rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-lg">
         <div>
           <h3 className="text-zinc-100 font-bold text-lg mb-1.5 tracking-tight">Preferred Delivery Time</h3>
           <p className="text-zinc-400 text-sm">Choose exactly when you want your scheduled reports to arrive.</p>
@@ -166,12 +166,12 @@ export const ScheduledReports = () => {
             type="time" 
             value={customTime}
             onChange={handleSaveTime}
-            className="w-full sm:w-auto bg-zinc-900/80 border border-zinc-700 text-zinc-100 font-medium rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all shadow-inner"
+            className="w-full sm:w-auto bg-zinc-900/60 backdrop-blur-md/80 border border-zinc-700 text-zinc-100 font-medium rounded-2xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all shadow-inner"
           />
         </div>
       </motion.div>
 
-      <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-start sm:items-center justify-between bg-[#121212]/90 backdrop-blur-md border border-zinc-800/80 rounded-2xl p-6 sm:p-8 gap-6 shadow-lg">
+      <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-start sm:items-center justify-between bg-[#121212]/80 backdrop-blur-xl/90 backdrop-blur-md border border-white/5/80 rounded-2xl p-6 sm:p-8 gap-6 shadow-lg">
         <div>
           <h4 className="text-zinc-200 font-bold text-lg mb-1.5 tracking-tight">Pause automated reports</h4>
           <p className="text-zinc-400 text-sm">Temporarily stop receiving email summaries.</p>
@@ -180,7 +180,7 @@ export const ScheduledReports = () => {
           whileHover={reportFreq !== 'never' ? { scale: 1.02 } : {}}
           whileTap={reportFreq !== 'never' ? { scale: 0.98 } : {}}
           onClick={() => handleSaveFreq('never')}
-          className={`w-full sm:w-auto px-6 py-2.5 rounded-xl text-sm font-bold transition-all ${reportFreq === 'never' ? 'bg-zinc-800/50 text-zinc-500 cursor-default border border-zinc-800/50' : 'bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white border border-red-500/20 shadow-lg shadow-red-900/10'}`}
+          className={`w-full sm:w-auto px-6 py-2.5 rounded-2xl text-sm font-bold transition-all ${reportFreq === 'never' ? 'bg-zinc-800/50 text-zinc-500 cursor-default border border-white/5/50' : 'bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white border border-red-500/20 shadow-lg shadow-red-900/10'}`}
         >
           {reportFreq === 'never' ? 'Currently Paused' : 'Pause Emails'}
         </motion.button>
@@ -192,7 +192,7 @@ export const ScheduledReports = () => {
             initial={{ opacity: 0, y: 50, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
-            className="fixed bottom-6 right-6 bg-emerald-500 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 font-medium"
+            className="fixed bottom-6 right-6 bg-emerald-500 text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 font-medium"
           >
             <CheckCircle2 size={20} /> Preferences updated successfully
           </motion.div>

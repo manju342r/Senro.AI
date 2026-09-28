@@ -27,17 +27,17 @@ export const CompareHub = () => {
         </div>
       </div>
 
-      <div className="bg-[#121212] border border-zinc-800 rounded-xl overflow-hidden">
-        <div className="p-4 border-b border-zinc-800 flex justify-between items-center bg-[#0a0a0a]">
+      <div className="bg-[#121212]/80 backdrop-blur-xl border border-white/5 rounded-2xl overflow-hidden">
+        <div className="p-4 border-b border-white/5 flex justify-between items-center bg-[#0a0a0a]">
           <div className="flex gap-3">
             <div className="relative">
               <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
-              <input type="text" placeholder="Search..." className="bg-zinc-900 border border-zinc-800 rounded-md pl-9 pr-3 py-1.5 text-sm text-zinc-200 focus:outline-none focus:border-blue-500" />
+              <input type="text" placeholder="Search..." className="bg-zinc-900/60 backdrop-blur-md border border-white/5 rounded-md pl-9 pr-3 py-1.5 text-sm text-zinc-200 focus:outline-none focus:border-blue-500" />
             </div>
-            <button className="flex items-center gap-2 bg-zinc-900 border border-zinc-800 px-3 py-1.5 rounded-md text-sm text-zinc-300 hover:bg-zinc-800 transition-colors">
+            <button className="flex items-center gap-2 bg-zinc-900/60 backdrop-blur-md border border-white/5 px-3 py-1.5 rounded-md text-sm text-zinc-300 hover:bg-zinc-800 transition-colors">
               All risk levels <ChevronDown size={14} />
             </button>
-            <button className="flex items-center gap-2 bg-zinc-900 border border-zinc-800 px-3 py-1.5 rounded-md text-sm text-zinc-300 hover:bg-zinc-800 transition-colors">
+            <button className="flex items-center gap-2 bg-zinc-900/60 backdrop-blur-md border border-white/5 px-3 py-1.5 rounded-md text-sm text-zinc-300 hover:bg-zinc-800 transition-colors">
               All categories <ChevronDown size={14} />
             </button>
           </div>
@@ -47,9 +47,9 @@ export const CompareHub = () => {
         </div>
 
         <table className="w-full text-left text-sm">
-          <thead className="bg-[#0a0a0a] border-b border-zinc-800 text-zinc-500 font-medium">
+          <thead className="bg-[#0a0a0a] border-b border-white/5 text-zinc-500 font-medium">
             <tr>
-              <th className="p-4 w-12"><input type="checkbox" className="rounded border-zinc-700 bg-zinc-900" /></th>
+              <th className="p-4 w-12"><input type="checkbox" className="rounded border-zinc-700 bg-zinc-900/60 backdrop-blur-md" /></th>
               <th className="p-4">COMPETITOR</th>
               <th className="p-4">CATEGORY</th>
               <th className="p-4">PRICING</th>
@@ -61,8 +61,8 @@ export const CompareHub = () => {
           </thead>
           <tbody className="divide-y divide-zinc-800">
             {compUrl ? (
-            <tr className="hover:bg-zinc-900/50 transition-colors">
-              <td className="p-4"><input type="checkbox" className="rounded border-zinc-700 bg-zinc-900" /></td>
+            <tr className="hover:bg-zinc-900/60 backdrop-blur-md/50 transition-colors">
+              <td className="p-4"><input type="checkbox" className="rounded border-zinc-700 bg-zinc-900/60 backdrop-blur-md" /></td>
               <td className="p-4">
                 <div className="flex items-center gap-2 text-zinc-200 font-medium">
                   {getDomain(compUrl)}

@@ -30,8 +30,8 @@ export const LiveSignals = () => {
         )}
       </div>
 
-      <div className="border border-dashed border-zinc-800 rounded-xl flex flex-col items-center justify-center p-24 text-center">
-        <div className="w-16 h-16 bg-zinc-900 rounded-full flex items-center justify-center mb-4">
+      <div className="border border-dashed border-white/5 rounded-2xl flex flex-col items-center justify-center p-24 text-center">
+        <div className="w-16 h-16 bg-zinc-900/60 backdrop-blur-md rounded-full flex items-center justify-center mb-4">
           <Activity size={32} className="text-zinc-700" />
         </div>
         <h3 className="text-zinc-300 font-medium mb-1">No signals recorded yet</h3>

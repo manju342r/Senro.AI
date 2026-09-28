@@ -41,7 +41,7 @@ export const BattlecardsList = () => {
       </div>
 
       {!isConfigured && (
-        <div className="bg-amber-500/10 border border-amber-500/30 text-amber-500 p-4 rounded-lg text-sm font-medium">
+        <div className="bg-amber-500/10 border border-amber-500/30 text-amber-500 p-4 rounded-xl text-sm font-medium">
           No LLM API key configured. Add one in Settings to generate battlecards.
         </div>
       )}
@@ -50,7 +50,7 @@ export const BattlecardsList = () => {
       {data && (
         <div className="space-y-4 mb-8">
           <h3 className="text-sm font-semibold text-zinc-400">Generated Battlecards</h3>
-          <div className="bg-[#121212] border border-blue-500/30 p-5 rounded-xl max-w-2xl relative overflow-hidden">
+          <div className="bg-[#121212]/80 backdrop-blur-xl border border-blue-500/30 p-5 rounded-2xl max-w-2xl relative overflow-hidden">
             <div className="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
             <div className="flex justify-between items-start mb-4">
               <div>
@@ -65,9 +65,9 @@ export const BattlecardsList = () => {
       )}
 <div className="space-y-4">
         <h3 className="text-sm font-semibold text-zinc-400">Not yet analyzed</h3>
-        <div className="bg-[#121212] border border-zinc-800 p-4 rounded-xl flex justify-between items-center max-w-xl">
+        <div className="bg-[#121212]/80 backdrop-blur-xl border border-white/5 p-4 rounded-2xl flex justify-between items-center max-w-xl">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-zinc-800 rounded-lg flex items-center justify-center">
+            <div className="w-10 h-10 bg-zinc-800 rounded-xl flex items-center justify-center">
               <FileText size={18} className="text-zinc-400" />
             </div>
             <div>
