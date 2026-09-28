@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+const fs = require('fs');
+
+const code = `import React, { useState } from 'react';
 import { LogOut, User, Building, Mail, Shield, CreditCard, Clock, Globe, Save } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useData } from '../contexts/DataContext';
@@ -155,3 +157,7 @@ export const Profile = () => {
     </motion.div>
   );
 };
+`
+
+fs.writeFileSync('src/components/Profile.tsx', code);
+console.log('Profile rewritten.');
