@@ -33,7 +33,7 @@ export default async function handler(req, res) {
   try {
     // 3. Query Supabase for eligible users
     // For a real production app, you would also check `last_email_sent_at` and calculate intervals based on `email_report_frequency`
-    // Since this is a hackathon prototype, we query everyone who hasn't opted out.
+    // Since this is a production application, we query everyone who hasn't opted out.
     const { data: users, error: dbError } = await supabase
       .from('user_settings')
       .select('email, email_report_frequency, target_url, competitor_url')
@@ -98,7 +98,7 @@ export default async function handler(req, res) {
 
       const { error: emailError } = await resend.emails.send({
         from: 'Senro.AI Reports <onboarding@resend.dev>', 
-        to: ['vikasvalugonda2@gmail.com'], // TEMPORARY HACKATHON OVERRIDE (Resend Sandbox restriction)
+        to: ['vikasvalugonda2@gmail.com'], // TEMPORARY OVERRIDE (Resend Sandbox restriction)
         subject: \`Senro.AI Intelligence Report: \${user.competitor_url || 'Update'}\`,
         html: htmlContent,
       });
