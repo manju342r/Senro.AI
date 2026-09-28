@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+const fs = require('fs');
+
+let code = `import React, { useState, useEffect } from 'react';
 import { Save, Key, Globe } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -80,3 +82,7 @@ export const SettingsUI = () => {
     </motion.div>
   );
 };
+`;
+
+fs.writeFileSync('src/components/SettingsUI.tsx', code);
+console.log("Fixed SettingsUI.tsx");

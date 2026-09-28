@@ -54,7 +54,7 @@ export const Overview = () => {
   const [emailing, setEmailing] = useState(false);
   
   const handleEmailReport = async () => {
-    if (!compUrl) return alert("Please set a competitor URL first.");
+    if (!compUrl) return alert("Please click '+ Add Competitor' at the top right to start tracking.");
     let email = localStorage.getItem('userEmail');
     
     if (!email || email === 'demo@senro.ai' || email === 'demo@senro.ai (Guest)') {
@@ -84,7 +84,7 @@ export const Overview = () => {
   };
 
   const handleScan = async () => {
-    if (!compUrl) return alert("Please set a competitor URL in settings first.");
+    if (!compUrl) return alert("Please click '+ Add Competitor' at the top right to start tracking.");
     setLoading(true);
     
     try {
