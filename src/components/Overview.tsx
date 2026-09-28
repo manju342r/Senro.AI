@@ -74,7 +74,7 @@ export const Overview = () => {
       const res = await response.json();
       if (res.error) alert("Error: " + res.error);
       else if (res.simulated) alert("Simulated Send (No Resend API Key). HTML is in console.");
-      else alert("Hindsight Report emailed to " + email + " successfully!");
+      else alert("Hindsight Report sent! (Check the SPAM folder of vikasvalugonda2@gmail.com - Resend test emails often land there)");
     } catch (e) {
       alert("Failed to send email.");
     } finally {
