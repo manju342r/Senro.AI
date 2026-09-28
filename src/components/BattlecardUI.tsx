@@ -89,12 +89,12 @@ Ensure the output aligns strictly with the user's formatting preferences.`;
       {/* Header */}
       <div className="border-b border-zinc-800 p-4 flex items-center justify-between bg-[#121212]">
         <div className="flex items-center gap-2">
-          <div className="p-1.5 bg-blue-500/10 rounded-md">
-            <BrainCircuit className="w-5 h-5 text-blue-500" />
+          <div className="p-1.5 bg-violet-500/10 rounded-md">
+            <BrainCircuit className="w-5 h-5 text-violet-500" />
           </div>
           <h2 className="font-semibold text-sm text-zinc-100">AI Battlecard Agent</h2>
         </div>
-        <div className="text-[10px] uppercase font-mono tracking-wider bg-blue-500/10 border border-blue-500/20 px-2 py-1 rounded text-blue-400">
+        <div className="text-[10px] uppercase font-mono tracking-wider bg-violet-500/10 border border-violet-500/20 px-2 py-1 rounded text-violet-400">
           Hindsight Active
         </div>
       </div>
@@ -106,14 +106,14 @@ Ensure the output aligns strictly with the user's formatting preferences.`;
             <div className={`flex gap-3 max-w-[85%] ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
               <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
                 msg.role === 'user' 
-                  ? 'bg-blue-600 text-white' 
+                  ? 'bg-violet-600 text-white' 
                   : 'bg-zinc-800 border border-zinc-700 text-zinc-300'
               }`}>
                 {msg.role === 'user' ? <User size={14} /> : <Bot size={14} />}
               </div>
               <div className={`p-4 rounded-xl ${
                 msg.role === 'user' 
-                  ? 'bg-blue-600 text-white rounded-tr-none' 
+                  ? 'bg-violet-600 text-white rounded-tr-none' 
                   : 'bg-zinc-900 border border-zinc-800 text-zinc-200 rounded-tl-none'
               }`}>
                 <div className="whitespace-pre-wrap text-sm leading-relaxed">{msg.content}</div>
@@ -132,13 +132,13 @@ Ensure the output aligns strictly with the user's formatting preferences.`;
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Instruct the agent (e.g., 'Focus on enterprise pricing')"
-            className="w-full bg-[#0a0a0a] border border-zinc-800 text-sm text-zinc-200 pl-4 pr-12 py-3 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-zinc-600"
+            className="w-full bg-[#0a0a0a] border border-zinc-800 text-sm text-zinc-200 pl-4 pr-12 py-3 rounded-lg focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all placeholder:text-zinc-600"
             disabled={isGenerating}
           />
           <button
             type="submit"
             disabled={!input.trim() || isGenerating}
-            className="absolute right-2 p-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:hover:bg-blue-600 transition-colors"
+            className="absolute right-2 p-2 bg-violet-600 text-white rounded-md hover:bg-violet-700 disabled:opacity-50 disabled:hover:bg-violet-600 transition-colors"
           >
             <Send size={16} />
           </button>

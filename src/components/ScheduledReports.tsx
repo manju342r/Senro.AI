@@ -86,7 +86,7 @@ export const ScheduledReports = () => {
       <motion.div variants={itemVariants} className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
         <div>
           <h2 className="text-3xl font-extrabold text-zinc-100 flex items-center gap-2 tracking-tight">
-            <Calendar className="text-blue-500 mb-1" /> Automated Reports
+            <Calendar className="text-violet-500 mb-1" /> Automated Reports
           </h2>
           <p className="text-zinc-400 text-sm mt-1.5 font-medium">Configure your email intelligence summaries sent via Resend & Vercel Cron.</p>
         </div>
@@ -95,7 +95,7 @@ export const ScheduledReports = () => {
           whileTap={{ scale: 0.98 }}
           onClick={handleSendNow}
           disabled={sendingNow}
-          className="w-full sm:w-auto flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white px-5 py-2.5 rounded-2xl text-sm font-bold transition-colors shadow-lg shadow-blue-900/20"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 bg-violet-600 hover:bg-blue-500 disabled:opacity-50 text-white px-5 py-2.5 rounded-2xl text-sm font-bold transition-colors shadow-lg shadow-violet-900/20"
         >
           {sendingNow ? <Activity size={18} className="animate-spin" /> : <Send size={18} />}
           {sendingNow ? 'Sending...' : 'Send Email Now'}
@@ -107,14 +107,14 @@ export const ScheduledReports = () => {
           variants={itemVariants}
           whileHover={{ y: -4 }}
           onClick={() => handleSaveFreq('daily')}
-          className={`cursor-pointer border rounded-2xl p-6 sm:p-8 transition-all shadow-lg backdrop-blur-sm relative overflow-hidden group ${reportFreq === 'daily' ? 'bg-blue-500/10 border-blue-500/50 shadow-blue-900/20' : 'bg-[#121212]/80 backdrop-blur-xl/90 border-white/5/80 hover:border-zinc-700'}`}
+          className={`cursor-pointer border rounded-2xl p-6 sm:p-8 transition-all shadow-lg backdrop-blur-sm relative overflow-hidden group ${reportFreq === 'daily' ? 'bg-violet-500/10 border-violet-500/50 shadow-violet-900/20' : 'bg-[#121212]/80 backdrop-blur-xl/90 border-white/5/80 hover:border-zinc-700'}`}
         >
-          {reportFreq === 'daily' && <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>}
+          {reportFreq === 'daily' && <div className="absolute top-0 right-0 w-32 h-32 bg-violet-500/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>}
           <div className="flex justify-between items-start mb-6 relative">
-            <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${reportFreq === 'daily' ? 'bg-blue-600 shadow-lg shadow-blue-900/50' : 'bg-zinc-800 group-hover:bg-zinc-700'}`}>
+            <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${reportFreq === 'daily' ? 'bg-violet-600 shadow-lg shadow-violet-900/50' : 'bg-zinc-800 group-hover:bg-zinc-700'}`}>
               <Mail size={20} className="text-white" />
             </div>
-            {reportFreq === 'daily' && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}><CheckCircle2 size={24} className="text-blue-500" /></motion.div>}
+            {reportFreq === 'daily' && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}><CheckCircle2 size={24} className="text-violet-500" /></motion.div>}
           </div>
           <h3 className="text-zinc-100 font-bold text-xl mb-2 tracking-tight">Daily Brief</h3>
           <p className="text-zinc-400 text-sm leading-relaxed">A quick daily pulse of competitor changes.</p>
@@ -166,7 +166,7 @@ export const ScheduledReports = () => {
             type="time" 
             value={customTime}
             onChange={handleSaveTime}
-            className="w-full sm:w-auto bg-zinc-900/60 backdrop-blur-md/80 border border-zinc-700 text-zinc-100 font-medium rounded-2xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all shadow-inner"
+            className="w-full sm:w-auto bg-zinc-900/60 backdrop-blur-md/80 border border-zinc-700 text-zinc-100 font-medium rounded-2xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500 transition-all shadow-inner"
           />
         </div>
       </motion.div>

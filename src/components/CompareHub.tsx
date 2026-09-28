@@ -36,10 +36,10 @@ export const CompareHub = () => {
           <div className="flex gap-3 w-full sm:w-auto">
             <div className="relative flex-1 sm:flex-none">
               <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
-              <input type="text" placeholder="Search..." className="w-full sm:w-auto bg-zinc-900/60 backdrop-blur-md border border-white/5 rounded-lg pl-9 pr-3 py-2 text-sm text-zinc-200 focus:outline-none focus:border-blue-500 transition-colors" />
+              <input type="text" placeholder="Search..." className="w-full sm:w-auto bg-zinc-900/60 backdrop-blur-md border border-white/5 rounded-lg pl-9 pr-3 py-2 text-sm text-zinc-200 focus:outline-none focus:border-violet-500 transition-colors" />
             </div>
           </div>
-          <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => alert("Initiating deep comparison matrix using Hindsight Context...")} className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-5 py-2 rounded-lg transition-colors shadow-sm">
+          <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => alert("Initiating deep comparison matrix using Hindsight Context...")} className="w-full sm:w-auto bg-violet-600 hover:bg-violet-700 text-white text-sm font-semibold px-5 py-2 rounded-lg transition-colors shadow-sm">
             Compare
           </motion.button>
         </div>
@@ -65,7 +65,7 @@ export const CompareHub = () => {
                 <td className="p-4">
                   <div className="flex items-center gap-2 text-zinc-200 font-medium">
                     {getDomain(compUrl)}
-                    <a href={compUrl} target="_blank" rel="noreferrer"><ExternalLink size={14} className="text-zinc-500 hover:text-blue-400 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity" /></a>
+                    <a href={compUrl} target="_blank" rel="noreferrer"><ExternalLink size={14} className="text-zinc-500 hover:text-violet-400 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity" /></a>
                   </div>
                 </td>
                 <td className="p-4 text-zinc-400">Technology</td>

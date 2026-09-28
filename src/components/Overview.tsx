@@ -38,7 +38,7 @@ export const Overview = () => {
           className="bg-[#18181b] border border-zinc-700/50 p-4 rounded-2xl shadow-2xl backdrop-blur-md"
         >
           <p className="text-zinc-200 font-bold mb-1">{label}</p>
-          <p className="text-blue-400 text-sm font-medium">Threat Score: {data.threat}</p>
+          <p className="text-violet-400 text-sm font-medium">Threat Score: {data.threat}</p>
           {data.annotation && (
             <div className="mt-3 pt-3 border-t border-white/5 max-w-[220px]">
               <p className="text-xs text-amber-400 font-bold flex items-center gap-1.5 uppercase tracking-wider"><Zap size={12} /> Memory Annotation</p>
@@ -169,7 +169,7 @@ export const Overview = () => {
             disabled={loading}
             className="flex-1 sm:flex-none flex justify-center items-center gap-2 bg-zinc-900/60 backdrop-blur-md/80 border border-white/5 hover:border-zinc-700 hover:bg-zinc-800 text-zinc-200 px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all disabled:opacity-50 backdrop-blur-sm shadow-sm"
           >
-            {loading ? <Activity size={16} className="animate-spin text-blue-500" /> : <Zap size={16} className="text-amber-500" />}
+            {loading ? <Activity size={16} className="animate-spin text-violet-500" /> : <Zap size={16} className="text-amber-500" />}
             {loading ? 'Analyzing...' : 'Trigger Scan'}
           </motion.button>
         </div>
@@ -189,7 +189,7 @@ export const Overview = () => {
           <div className="text-xs font-bold text-zinc-500 tracking-widest uppercase">Traffic Impact</div>
           <div className="mt-5 flex items-end justify-between">
             <div className="text-3xl font-black text-zinc-100 tracking-tight">{loading ? '--' : (data ? data.net_traffic_impact : '--')}</div>
-            <Activity size={24} className="text-blue-500 mb-1 opacity-80 group-hover:opacity-100 transition-opacity" />
+            <Activity size={24} className="text-violet-500 mb-1 opacity-80 group-hover:opacity-100 transition-opacity" />
           </div>
         </motion.div>
 
@@ -256,9 +256,9 @@ export const Overview = () => {
         {/* LEFT COLUMN (60%) */}
         <div className="lg:col-span-3 space-y-6 flex flex-col">
           {data?.analysis_summary && (
-            <motion.div variants={itemVariants} className="bg-blue-900/10 border border-blue-500/30 p-6 sm:p-8 rounded-2xl relative overflow-hidden shadow-lg">
-              <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-blue-400 to-blue-600"></div>
-              <h3 className="text-sm font-bold text-blue-400 mb-3 flex items-center gap-2 uppercase tracking-widest">
+            <motion.div variants={itemVariants} className="bg-blue-900/10 border border-violet-500/30 p-6 sm:p-8 rounded-2xl relative overflow-hidden shadow-lg">
+              <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-violet-400 to-violet-600"></div>
+              <h3 className="text-sm font-bold text-violet-400 mb-3 flex items-center gap-2 uppercase tracking-widest">
                 <Zap size={16} /> AI Executive Summary
               </h3>
               <p className="text-zinc-300 text-sm sm:text-base leading-relaxed">
@@ -306,7 +306,7 @@ export const Overview = () => {
               <p className="text-sm text-zinc-400 leading-relaxed group-hover:text-zinc-300 transition-colors">Launch a comparison battlecard specifically targeting their missing SSO integration.</p>
             </div>
             <div className="group">
-              <span className="text-xs font-bold text-blue-400 bg-blue-400/10 border border-blue-500/20 px-2.5 py-1 rounded-md tracking-wider uppercase inline-block mb-3 transition-colors group-hover:bg-blue-400/20">Sales Enablement</span>
+              <span className="text-xs font-bold text-violet-400 bg-blue-400/10 border border-violet-500/20 px-2.5 py-1 rounded-md tracking-wider uppercase inline-block mb-3 transition-colors group-hover:bg-blue-400/20">Sales Enablement</span>
               <p className="text-sm text-zinc-400 leading-relaxed group-hover:text-zinc-300 transition-colors">Equip SDRs with objection handling for the competitor's new checkout flow changes.</p>
             </div>
           </div>

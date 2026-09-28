@@ -72,7 +72,7 @@ const AuthScreen = ({ isLogin }: { isLogin: boolean }) => {
         <div className="w-full max-w-md space-y-8 bg-[#121212] p-10 rounded-2xl border border-zinc-800 shadow-2xl">
           <div className="text-center">
             <div className="flex items-center justify-center gap-2 mb-6">
-              <div className="bg-blue-600 p-2 rounded-xl">
+              <div className="bg-violet-600 p-2 rounded-xl">
                 <Target size={28} className="text-white" />
               </div>
               <h1 className="text-3xl font-bold text-zinc-100">Senro.AI</h1>
@@ -90,7 +90,7 @@ const AuthScreen = ({ isLogin }: { isLogin: boolean }) => {
             )}
             <div>
               <label className="block text-sm font-medium text-zinc-400 mb-1">Email address</label>
-              <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-3 text-zinc-200 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all" />
+              <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-3 text-zinc-200 focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500 transition-all" />
             </div>
             <div>
               <label className="block text-sm font-medium text-zinc-400 mb-1">Password</label>
@@ -101,7 +101,7 @@ const AuthScreen = ({ isLogin }: { isLogin: boolean }) => {
                   minLength={8} 
                   value={password} 
                   onChange={(e) => setPassword(e.target.value)} 
-                  className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-3 pr-10 text-zinc-200 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all" 
+                  className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-3 pr-10 text-zinc-200 focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500 transition-all" 
                 />
                 <button
                   type="button"
@@ -116,7 +116,7 @@ const AuthScreen = ({ isLogin }: { isLogin: boolean }) => {
                   <button 
                     type="button" 
                     onClick={handleForgotPassword}
-                    className="text-xs text-blue-500 hover:text-blue-400 font-medium transition-colors"
+                    className="text-xs text-violet-500 hover:text-violet-400 font-medium transition-colors"
                   >
                     Forgot password?
                   </button>
@@ -124,14 +124,14 @@ const AuthScreen = ({ isLogin }: { isLogin: boolean }) => {
               )}
             </div>
             
-            <button type="submit" disabled={loading} className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-medium py-3 rounded-lg transition-colors mt-6 shadow-lg shadow-blue-900/20">
+            <button type="submit" disabled={loading} className="w-full bg-violet-600 hover:bg-violet-700 disabled:opacity-50 text-white font-medium py-3 rounded-lg transition-colors mt-6 shadow-lg shadow-violet-900/20">
               {loading ? 'Processing...' : (isLogin ? 'Sign In' : 'Sign Up')}
             </button>
           </form>
 
           <p className="text-center text-sm text-zinc-500">
             {isLogin ? "Don't have an account? " : "Already have an account? "}
-            <Link to={isLogin ? "/signup" : "/login"} className="text-blue-500 hover:text-blue-400 font-medium transition-colors">
+            <Link to={isLogin ? "/signup" : "/login"} className="text-violet-500 hover:text-violet-400 font-medium transition-colors">
               {isLogin ? "Sign up" : "Log in"}
             </Link>
           </p>
@@ -147,7 +147,7 @@ const OnboardingLayout = ({ children, step }: { children: React.ReactNode, step:
     <div className="w-full max-w-xl">
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-xl font-bold text-zinc-100 flex items-center gap-2">
-          <Target size={20} className="text-blue-500" /> Senro.AI Setup
+          <Target size={20} className="text-violet-500" /> Senro.AI Setup
         </h1>
         <div className="flex gap-2">
           {[1, 2, 3].map(i => (
@@ -182,13 +182,13 @@ const OnboardingStep1 = () => {
       }} className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-zinc-400 mb-1">Company Name</label>
-          <input type="text" required placeholder="e.g. Acme Corp" className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-3 text-zinc-200 focus:border-blue-500 focus:outline-none" />
+          <input type="text" required placeholder="e.g. Acme Corp" className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-3 text-zinc-200 focus:border-violet-500 focus:outline-none" />
         </div>
         <div>
           <label className="block text-sm font-medium text-zinc-400 mb-1">Company Website Link</label>
-          <input type="url" required value={url} onChange={e => setUrl(e.target.value)} placeholder="https://acme.com" className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-3 text-zinc-200 focus:border-blue-500 focus:outline-none" />
+          <input type="url" required value={url} onChange={e => setUrl(e.target.value)} placeholder="https://acme.com" className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-3 text-zinc-200 focus:border-violet-500 focus:outline-none" />
         </div>
-        <button type="submit" className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-lg transition-colors mt-6">
+        <button type="submit" className="w-full flex items-center justify-center gap-2 bg-violet-600 hover:bg-violet-700 text-white font-medium py-3 rounded-lg transition-colors mt-6">
           Next Step <ArrowRight size={18} />
         </button>
       </form>
@@ -226,13 +226,13 @@ const OnboardingStep2 = () => {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-zinc-400 mb-1">Opponent Company Name</label>
-          <input type="text" required placeholder="e.g. Globex" className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-3 text-zinc-200 focus:border-blue-500 focus:outline-none" />
+          <input type="text" required placeholder="e.g. Globex" className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-3 text-zinc-200 focus:border-violet-500 focus:outline-none" />
         </div>
         <div>
           <label className="block text-sm font-medium text-zinc-400 mb-1">Opponent Website Link</label>
-          <input type="url" required value={compUrl} onChange={e => setCompUrl(e.target.value)} placeholder="https://globex.com" className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-3 text-zinc-200 focus:border-blue-500 focus:outline-none" />
+          <input type="url" required value={compUrl} onChange={e => setCompUrl(e.target.value)} placeholder="https://globex.com" className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-3 text-zinc-200 focus:border-violet-500 focus:outline-none" />
         </div>
-        <button type="submit" disabled={loading} className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-medium py-3 rounded-lg transition-colors mt-6">
+        <button type="submit" disabled={loading} className="w-full flex items-center justify-center gap-2 bg-violet-600 hover:bg-violet-700 disabled:opacity-50 text-white font-medium py-3 rounded-lg transition-colors mt-6">
           {loading ? 'Checking configuration...' : <>Next Step <ArrowRight size={18} /></>}
         </button>
       </form>
@@ -262,19 +262,19 @@ const OnboardingStep3 = () => {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-xs font-medium text-zinc-400 mb-1">Jina API Key</label>
-            <input type="password" placeholder="Optional" className="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-sm text-zinc-200 focus:border-blue-500/50 focus:ring-4 focus:ring-blue-500/10 focus:outline-none transition-all shadow-inner" />
+            <input type="password" placeholder="Optional" className="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-sm text-zinc-200 focus:border-violet-500/50 focus:ring-4 focus:ring-violet-500/10 focus:outline-none transition-all shadow-inner" />
           </div>
           <div>
             <label className="block text-xs font-medium text-zinc-400 mb-1">Vectorize Hindsight Key</label>
-            <input type="password" placeholder="Optional" className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-2.5 text-sm text-zinc-200 focus:border-blue-500 focus:outline-none" />
+            <input type="password" placeholder="Optional" className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-2.5 text-sm text-zinc-200 focus:border-violet-500 focus:outline-none" />
           </div>
           <div>
             <label className="block text-xs font-medium text-zinc-400 mb-1">Resend Key</label>
-            <input type="password" placeholder="Optional" className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-2.5 text-sm text-zinc-200 focus:border-blue-500 focus:outline-none" />
+            <input type="password" placeholder="Optional" className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-2.5 text-sm text-zinc-200 focus:border-violet-500 focus:outline-none" />
           </div>
           <div>
             <label className="block text-xs font-medium text-zinc-400 mb-1">LLM Key</label>
-            <input type="password" placeholder="Optional" className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-2.5 text-sm text-zinc-200 focus:border-blue-500 focus:outline-none" />
+            <input type="password" placeholder="Optional" className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-2.5 text-sm text-zinc-200 focus:border-violet-500 focus:outline-none" />
           </div>
         </div>
         <button type="submit" className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 rounded-lg transition-colors mt-6 shadow-lg shadow-emerald-900/20">
@@ -297,7 +297,7 @@ const SidebarItem = ({ to, icon: Icon, label }: { to: string; icon: any; label: 
         isActive ? 'bg-zinc-800 text-zinc-100' : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/50'
       }`}
     >
-      <Icon size={18} className={isActive ? 'text-blue-500' : 'text-zinc-500'} />
+      <Icon size={18} className={isActive ? 'text-violet-500' : 'text-zinc-500'} />
       {label}
     </Link>
   );
@@ -338,7 +338,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <div className="min-h-screen bg-transparent text-zinc-200 flex font-sans selection:bg-blue-500/30">
+    <div className="min-h-screen bg-transparent text-zinc-200 flex font-sans selection:bg-violet-500/30">
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -357,12 +357,12 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                   onChange={e => setUrlInput(e.target.value)}
                   placeholder="https://amazon.in" 
                   required
-                  className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-2.5 text-sm text-zinc-200 focus:border-blue-500 focus:outline-none"
+                  className="w-full bg-[#0a0a0a] border border-zinc-800 rounded-lg p-2.5 text-sm text-zinc-200 focus:border-violet-500 focus:outline-none"
                 />
               </div>
               <div className="flex gap-3 justify-end pt-2">
                 <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 text-sm font-medium text-zinc-400 hover:text-zinc-200">Cancel</button>
-                <button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                <button type="submit" className="bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                   Add Competitor
                 </button>
               </div>
@@ -375,7 +375,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     <aside className="w-64 bg-black/40 backdrop-blur-2xl border-r border-white/5 flex flex-col justify-between relative z-20 shadow-2xl">
       <div>
         <Link to="/dashboard" className="p-5 flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
-          <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-1.5 rounded-xl flex items-center justify-center shadow-lg shadow-blue-900/40">
+          <div className="bg-gradient-to-br from-violet-500 to-fuchsia-600 p-1.5 rounded-xl flex items-center justify-center shadow-lg shadow-violet-900/40">
             <Target size={18} className="text-white" />
           </div>
           <h1 className="text-xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-zinc-100 to-zinc-400 tracking-tight">Senro.AI</h1>
@@ -418,14 +418,14 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
           <input 
             type="text" placeholder="Search memory or competitors..." 
-            className="w-full bg-white/5 border border-white/10 text-sm text-zinc-200 rounded-xl pl-9 pr-4 py-2 focus:border-blue-500/50 focus:bg-white/10 focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all backdrop-blur-md"
+            className="w-full bg-white/5 border border-white/10 text-sm text-zinc-200 rounded-xl pl-9 pr-4 py-2 focus:border-violet-500/50 focus:bg-white/10 focus:outline-none focus:ring-4 focus:ring-violet-500/10 transition-all backdrop-blur-md"
           />
         </div>
         <div className="flex items-center gap-4">
-          <button onClick={() => setShowModal(true)} className="flex items-center gap-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-4 py-2 rounded-xl text-sm font-bold transition-all shadow-lg shadow-blue-900/20 hover:shadow-blue-900/40 transform hover:-translate-y-0.5">
+          <button onClick={() => setShowModal(true)} className="flex items-center gap-1.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white px-4 py-2 rounded-xl text-sm font-bold transition-all shadow-lg shadow-violet-900/20 hover:shadow-violet-900/40 transform hover:-translate-y-0.5">
             <Plus size={16} /> Add Competitor
           </button>
-          <Link to="/dashboard/profile" className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-sm cursor-pointer hover:ring-4 hover:ring-blue-500/30 transition-all shadow-lg">
+          <Link to="/dashboard/profile" className="w-9 h-9 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center text-white font-bold text-sm cursor-pointer hover:ring-4 hover:ring-violet-500/30 transition-all shadow-lg">
             {(localStorage.getItem('userEmail') || 'F').charAt(0).toUpperCase()}
           </Link>
         </div>
