@@ -85,14 +85,14 @@ Ensure the output aligns strictly with the user's formatting preferences.`;
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#121212] rounded-xl overflow-hidden">
+    <div className="flex flex-col h-full bg-[#12151C] rounded-lg overflow-hidden">
       {/* Header */}
-      <div className="border-b border-zinc-800 p-4 flex items-center justify-between bg-[#121212]">
+      <div className="border-b border-[#222631] p-4 flex items-center justify-between bg-[#12151C]">
         <div className="flex items-center gap-2">
           <div className="p-1.5 bg-blue-500/10 rounded-md">
             <BrainCircuit className="w-5 h-5 text-blue-500" />
           </div>
-          <h2 className="font-semibold text-sm text-zinc-100">AI Battlecard Agent</h2>
+          <h2 className="font-semibold text-sm text-[#F7F8F8]">AI Battlecard Agent</h2>
         </div>
         <div className="text-[10px] uppercase font-mono tracking-wider bg-blue-500/10 border border-blue-500/20 px-2 py-1 rounded text-blue-400">
           Hindsight Active
@@ -100,21 +100,21 @@ Ensure the output aligns strictly with the user's formatting preferences.`;
       </div>
 
       {/* Chat Area */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-6 bg-[#0a0a0a]">
+      <div className="flex-1 overflow-y-auto p-4 space-y-6 bg-[#08090A]">
         {messages.filter(m => m.role !== 'system').map((msg, index) => (
           <div key={index} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div className={`flex gap-3 max-w-[85%] ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
               <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
                 msg.role === 'user' 
                   ? 'bg-blue-600 text-white' 
-                  : 'bg-zinc-800 border border-zinc-700 text-zinc-300'
+                  : 'bg-zinc-800 border border-zinc-700 text-[#E2E4E9]'
               }`}>
                 {msg.role === 'user' ? <User size={14} /> : <Bot size={14} />}
               </div>
-              <div className={`p-4 rounded-xl ${
+              <div className={`p-4 rounded-lg ${
                 msg.role === 'user' 
                   ? 'bg-blue-600 text-white rounded-tr-none' 
-                  : 'bg-zinc-900 border border-zinc-800 text-zinc-200 rounded-tl-none'
+                  : 'bg-zinc-900 border border-[#222631] text-[#E2E4E9] rounded-tl-none'
               }`}>
                 <div className="whitespace-pre-wrap text-sm leading-relaxed">{msg.content}</div>
               </div>
@@ -125,14 +125,14 @@ Ensure the output aligns strictly with the user's formatting preferences.`;
       </div>
 
       {/* Input Area */}
-      <form onSubmit={handleSendMessage} className="p-4 bg-[#121212] border-t border-zinc-800">
+      <form onSubmit={handleSendMessage} className="p-4 bg-[#12151C] border-t border-[#222631]">
         <div className="relative flex items-center">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Instruct the agent (e.g., 'Focus on enterprise pricing')"
-            className="w-full bg-[#0a0a0a] border border-zinc-800 text-sm text-zinc-200 pl-4 pr-12 py-3 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-zinc-600"
+            className="w-full bg-[#08090A] border border-[#222631] text-sm text-[#E2E4E9] pl-4 pr-12 py-3 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-zinc-600"
             disabled={isGenerating}
           />
           <button
@@ -143,7 +143,7 @@ Ensure the output aligns strictly with the user's formatting preferences.`;
             <Send size={16} />
           </button>
         </div>
-        <p className="text-[11px] text-zinc-500 mt-2 text-center">
+        <p className="text-[11px] text-[#8A8F98] mt-2 text-center">
           Memory feedback continuously updates the Hindsight vector profile for this competitor.
         </p>
       </form>

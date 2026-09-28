@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+const fs = require('fs');
+
+const code = `import React, { useState } from 'react';
 import { Calendar, Clock, Mail, CheckCircle2, Send, Activity } from 'lucide-react';
 import { useData } from '../contexts/DataContext';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -39,7 +41,7 @@ export const ScheduledReports = () => {
       if (!promptEmail || promptEmail === "yourname@example.com") return;
       targetEmail = promptEmail;
     } else {
-      if (!window.confirm(`Ready to send the report to ${targetEmail}?`)) return;
+      if (!window.confirm(\`Ready to send the report to \${targetEmail}?\`)) return;
     }
     setSendingNow(true);
     try {
@@ -95,10 +97,10 @@ export const ScheduledReports = () => {
           variants={itemVariants}
           whileHover={{ y: -2, transition: { duration: 0.15 } }}
           onClick={() => handleSaveFreq('daily')}
-          className={`cursor-pointer border rounded-lg p-5 transition-colors group ${reportFreq === 'daily' ? 'bg-[#1A1D24] border-[#5E6AD2] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]' : 'bg-[#12151C] border-[#222631] hover:border-[#383E4E] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]'}`}
+          className={\`cursor-pointer border rounded-lg p-5 transition-colors group \${reportFreq === 'daily' ? 'bg-[#1A1D24] border-[#5E6AD2] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]' : 'bg-[#12151C] border-[#222631] hover:border-[#383E4E] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]'}\`}
         >
           <div className="flex justify-between items-start mb-4">
-            <div className={`w-8 h-8 rounded flex items-center justify-center transition-colors ${reportFreq === 'daily' ? 'bg-[#5E6AD2]' : 'bg-[#222631] group-hover:bg-[#383E4E]'}`}>
+            <div className={\`w-8 h-8 rounded flex items-center justify-center transition-colors \${reportFreq === 'daily' ? 'bg-[#5E6AD2]' : 'bg-[#222631] group-hover:bg-[#383E4E]'}\`}>
               <Mail size={14} className="text-white" />
             </div>
             {reportFreq === 'daily' && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}><CheckCircle2 size={16} className="text-[#5E6AD2]" /></motion.div>}
@@ -111,10 +113,10 @@ export const ScheduledReports = () => {
           variants={itemVariants}
           whileHover={{ y: -2, transition: { duration: 0.15 } }}
           onClick={() => handleSaveFreq('twice_a_day')}
-          className={`cursor-pointer border rounded-lg p-5 transition-colors group ${reportFreq === 'twice_a_day' ? 'bg-[#1A1D24] border-[#27C93F] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]' : 'bg-[#12151C] border-[#222631] hover:border-[#383E4E] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]'}`}
+          className={\`cursor-pointer border rounded-lg p-5 transition-colors group \${reportFreq === 'twice_a_day' ? 'bg-[#1A1D24] border-[#27C93F] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]' : 'bg-[#12151C] border-[#222631] hover:border-[#383E4E] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]'}\`}
         >
           <div className="flex justify-between items-start mb-4">
-            <div className={`w-8 h-8 rounded flex items-center justify-center transition-colors ${reportFreq === 'twice_a_day' ? 'bg-[#27C93F]' : 'bg-[#222631] group-hover:bg-[#383E4E]'}`}>
+            <div className={\`w-8 h-8 rounded flex items-center justify-center transition-colors \${reportFreq === 'twice_a_day' ? 'bg-[#27C93F]' : 'bg-[#222631] group-hover:bg-[#383E4E]'}\`}>
               <Clock size={14} className="text-white" />
             </div>
             {reportFreq === 'twice_a_day' && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}><CheckCircle2 size={16} className="text-[#27C93F]" /></motion.div>}
@@ -127,10 +129,10 @@ export const ScheduledReports = () => {
           variants={itemVariants}
           whileHover={{ y: -2, transition: { duration: 0.15 } }}
           onClick={() => handleSaveFreq('weekly')}
-          className={`cursor-pointer border rounded-lg p-5 transition-colors group ${reportFreq === 'weekly' ? 'bg-[#1A1D24] border-[#9333EA] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]' : 'bg-[#12151C] border-[#222631] hover:border-[#383E4E] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]'}`}
+          className={\`cursor-pointer border rounded-lg p-5 transition-colors group \${reportFreq === 'weekly' ? 'bg-[#1A1D24] border-[#9333EA] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]' : 'bg-[#12151C] border-[#222631] hover:border-[#383E4E] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]'}\`}
         >
           <div className="flex justify-between items-start mb-4">
-            <div className={`w-8 h-8 rounded flex items-center justify-center transition-colors ${reportFreq === 'weekly' ? 'bg-[#9333EA]' : 'bg-[#222631] group-hover:bg-[#383E4E]'}`}>
+            <div className={\`w-8 h-8 rounded flex items-center justify-center transition-colors \${reportFreq === 'weekly' ? 'bg-[#9333EA]' : 'bg-[#222631] group-hover:bg-[#383E4E]'}\`}>
               <Calendar size={14} className="text-white" />
             </div>
             {reportFreq === 'weekly' && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}><CheckCircle2 size={16} className="text-[#9333EA]" /></motion.div>}
@@ -165,7 +167,7 @@ export const ScheduledReports = () => {
           whileHover={reportFreq !== 'never' ? { y: -1, transition: { duration: 0.15 } } : {}}
           whileTap={reportFreq !== 'never' ? { scale: 0.98 } : {}}
           onClick={() => handleSaveFreq('never')}
-          className={`w-full sm:w-auto px-4 py-1.5 rounded-md text-[13px] font-medium transition-colors ${reportFreq === 'never' ? 'bg-[#08090A] text-[#8A8F98] cursor-default border border-[#222631]' : 'bg-[#e85c5c]/10 text-[#e85c5c] hover:bg-[#e85c5c] hover:text-white border border-[#e85c5c]/20'}`}
+          className={\`w-full sm:w-auto px-4 py-1.5 rounded-md text-[13px] font-medium transition-colors \${reportFreq === 'never' ? 'bg-[#08090A] text-[#8A8F98] cursor-default border border-[#222631]' : 'bg-[#e85c5c]/10 text-[#e85c5c] hover:bg-[#e85c5c] hover:text-white border border-[#e85c5c]/20'}\`}
         >
           {reportFreq === 'never' ? 'Currently Paused' : 'Pause Emails'}
         </motion.button>
@@ -187,3 +189,6 @@ export const ScheduledReports = () => {
     </motion.div>
   );
 };
+`
+fs.writeFileSync('src/components/ScheduledReports.tsx', code);
+console.log('ScheduledReports.tsx converted to Linear design system.');

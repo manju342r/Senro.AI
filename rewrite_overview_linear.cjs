@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+const fs = require('fs');
+
+const code = `import React, { useState } from 'react';
 import { Target, Zap, TrendingUp, AlertTriangle, Activity, Mail } from 'lucide-react';
 import { useData } from '../contexts/DataContext';
 import {
@@ -36,7 +38,7 @@ export const Overview = () => {
           initial={{ opacity: 0, scale: 0.95 }} 
           animate={{ opacity: 1, scale: 1 }} 
           transition={{ duration: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          className="bg-[#12151C] border border-[#222631] px-3 py-2.5 rounded-md shadow-sm shadow-black/20"
+          className="bg-[#12151C] border border-[#222631] px-3 py-2.5 rounded-md shadow-2xl"
         >
           <div className="flex justify-between items-center gap-6 mb-1">
             <span className="text-[#8A8F98] text-[11px] font-mono uppercase tracking-wider">{label}</span>
@@ -64,7 +66,7 @@ export const Overview = () => {
       if (!promptEmail || promptEmail === "yourname@example.com") return;
       email = promptEmail;
     } else {
-      if (!window.confirm(`Ready to send report to ${email}?`)) return;
+      if (!window.confirm(\`Ready to send report to \${email}?\`)) return;
     }
     setEmailing(true);
     try {
@@ -242,7 +244,7 @@ export const Overview = () => {
                   className="flex items-start justify-between gap-4 py-3 first:pt-0 last:pb-0 group"
                 >
                   <div className="flex items-start gap-3">
-                    <div className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${sig.status}`}></div>
+                    <div className={\`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 \${sig.status}\`}></div>
                     <p className="text-[13px] text-[#E2E4E9] leading-snug font-medium group-hover:text-white transition-colors">{sig.text}</p>
                   </div>
                   <span className="text-[11px] text-[#8A8F98] font-mono tracking-wide flex-shrink-0 mt-0.5">{sig.time}</span>
@@ -281,3 +283,6 @@ export const Overview = () => {
     </motion.div>
   );
 };
+`
+fs.writeFileSync('src/components/Overview.tsx', code);
+console.log('Overview.tsx converted to Linear design system.');
