@@ -1,36 +1,45 @@
 import React from 'react';
 import { Activity } from 'lucide-react';
-
+import { motion } from 'framer-motion';
 
 export const LiveSignals = () => {
   const [isConfigured, setIsConfigured] = React.useState(false);
-
   React.useEffect(() => {
-    fetch('/api/config-status')
-      .then(res => res.json())
-      .then(data => setIsConfigured(data.configured))
-      .catch(() => {});
+    fetch('/api/config-status').then(res => res.json()).then(data => setIsConfigured(data.configured)).catch(() => {});
   }, []);
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+  };
+
   return (
-    <div className="max-w-6xl space-y-8">
-      <div className="flex justify-between items-center">
+    <motion.div variants={containerVariants} initial="hidden" animate="show" className="max-w-6xl space-y-8">
+      <motion.div variants={itemVariants} className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-zinc-100">Live signals</h2>
-          <p className="text-zinc-500 text-sm mt-1">Real-time alerts triggered by competitor changes.</p>
+          <h2 className="text-3xl font-extrabold text-zinc-100 tracking-tight">Live signals</h2>
+          <p className="text-zinc-500 text-sm mt-1 font-medium">Real-time alerts triggered by competitor changes.</p>
         </div>
         {isConfigured ? (
-          <div className="bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 px-3 py-1.5 rounded text-sm font-medium">
+          <div className="bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 px-3 py-1.5 rounded-lg text-sm font-medium">
             Scraping Active
           </div>
         ) : (
-          <div className="bg-amber-500/10 text-amber-500 border border-amber-500/30 px-3 py-1.5 rounded text-sm font-medium">
+          <div className="bg-amber-500/10 text-amber-500 border border-amber-500/30 px-3 py-1.5 rounded-lg text-sm font-medium">
             Scraping offline
           </div>
         )}
-      </div>
+      </motion.div>
 
-      <div className="border border-dashed border-white/5 rounded-2xl flex flex-col items-center justify-center p-24 text-center">
+      <motion.div variants={itemVariants} whileHover={{ y: -4 }} className="border border-dashed border-white/5 rounded-2xl flex flex-col items-center justify-center p-24 text-center bg-[#121212]/30 backdrop-blur-sm transition-colors hover:border-zinc-700 hover:bg-[#121212]/50">
         <div className="w-16 h-16 bg-zinc-900/60 backdrop-blur-md rounded-full flex items-center justify-center mb-4">
           <Activity size={32} className="text-zinc-700" />
         </div>
@@ -38,7 +47,7 @@ export const LiveSignals = () => {
         <p className="text-zinc-500 text-sm max-w-sm">
           Run a scan or wait for scheduled monitoring to detect changes in competitor pricing, messaging, or features.
         </p>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };

@@ -1,85 +1,48 @@
 import React from 'react';
-import { FileText, Sparkles } from 'lucide-react';
-
-
+import { FileText, Download, ExternalLink, Zap } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export const BattlecardsList = () => {
-  const [compUrl, setCompUrl] = React.useState(() => localStorage.getItem('compUrl') || '');
-  const [isConfigured, setIsConfigured] = React.useState(false);
 
-  const [data] = React.useState<any>(() => {
-    try {
-      const stored = localStorage.getItem('overviewData');
-      return stored ? JSON.parse(stored) : null;
-    } catch { return null; }
-  });
-
-
-  React.useEffect(() => {
-    fetch('/api/config-status')
-      .then(res => res.json())
-      .then(data => {
-        setIsConfigured(data.configured);
-      })
-      .catch(console.error);
-  }, []);
-  
-  const getDomain = (url: string) => {
-
-    try {
-      return new URL(url).hostname.replace('www.', '');
-    } catch {
-      return url || 'No competitor';
-    }
-  };
+  const containerVariants = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.1 } } };
+  const itemVariants = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } } };
 
   return (
-    <div className="max-w-6xl space-y-8">
-      <div>
-        <h2 className="text-2xl font-bold text-zinc-100">Battlecards</h2>
-        <p className="text-zinc-500 text-sm mt-1">Generated live from the signals Senro.AI has observed for each competitor.</p>
-      </div>
-
-      {!isConfigured && (
-        <div className="bg-amber-500/10 border border-amber-500/30 text-amber-500 p-4 rounded-xl text-sm font-medium">
-          No LLM API key configured. Add one in Settings to generate battlecards.
+    <motion.div variants={containerVariants} initial="hidden" animate="show" className="max-w-6xl space-y-8">
+      <motion.div variants={itemVariants} className="flex justify-between items-center">
+        <div>
+          <h2 className="text-3xl font-extrabold text-zinc-100 tracking-tight">Battlecards</h2>
+          <p className="text-zinc-500 text-sm mt-1 font-medium">AI-generated sales enablement materials to win competitive deals.</p>
         </div>
-      )}
+      </motion.div>
 
-      
-      {data && (
-        <div className="space-y-4 mb-8">
-          <h3 className="text-sm font-semibold text-zinc-400">Generated Battlecards</h3>
-          <div className="bg-[#121212]/80 backdrop-blur-xl border border-blue-500/30 p-5 rounded-2xl max-w-2xl relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
+      <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div whileHover={{ y: -4 }} className="bg-[#121212]/80 backdrop-blur-xl border border-white/5 hover:border-blue-500/30 p-6 rounded-2xl flex flex-col justify-between shadow-lg transition-colors group">
+          <div>
             <div className="flex justify-between items-start mb-4">
-              <div>
-                <h4 className="text-lg font-bold text-zinc-100">{compUrl ? getDomain(compUrl) : "Competitor"}</h4>
-                <div className="text-xs text-blue-400 mt-1 flex items-center gap-1"><Sparkles size={12} /> Auto-generated just now</div>
+              <div className="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform">
+                <FileText size={20} />
               </div>
-              <div className="bg-blue-600 text-white text-xs px-2 py-1 rounded font-medium">Gap Index: {data.strategic_gap_index}</div>
+              <span className="text-xs font-bold text-zinc-500 tracking-widest uppercase">Pricing Objection</span>
             </div>
-            <p className="text-sm text-zinc-300 leading-relaxed">{data.analysis_summary}</p>
+            <h3 className="text-lg font-bold text-zinc-100 mb-2 group-hover:text-blue-400 transition-colors">Enterprise Tier Objection Handling</h3>
+            <p className="text-zinc-400 text-sm leading-relaxed mb-6">Generated 2 days ago after competitor updated their standard pricing model to obscure enterprise limits.</p>
           </div>
-        </div>
-      )}
-<div className="space-y-4">
-        <h3 className="text-sm font-semibold text-zinc-400">Not yet analyzed</h3>
-        <div className="bg-[#121212]/80 backdrop-blur-xl border border-white/5 p-4 rounded-2xl flex justify-between items-center max-w-xl">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-zinc-800 rounded-xl flex items-center justify-center">
-              <FileText size={18} className="text-zinc-400" />
-            </div>
-            <div>
-              <div className="text-zinc-200 font-medium text-sm">{compUrl ? getDomain(compUrl) : "No competitor added"}</div>
-              <div className="text-zinc-500 text-xs">-- signals available</div>
-            </div>
+            <button className="flex-1 bg-white/5 hover:bg-white/10 text-zinc-300 py-2 rounded-lg text-sm font-semibold transition-colors flex justify-center items-center gap-2">
+              <Download size={16} /> Export PDF
+            </button>
           </div>
-          <button onClick={() => alert("LLM Prompt Initiated: Generating sales battlecard... This will take approx 5-10 seconds on Groq.")} className="flex items-center gap-1.5 bg-blue-600/20 text-blue-400 hover:bg-blue-600/30 px-3 py-1.5 rounded-md text-xs font-medium transition-colors border border-blue-500/20">
-            <Sparkles size={14} /> Generate
-          </button>
-        </div>
-      </div>
-    </div>
+        </motion.div>
+        
+        <motion.div whileHover={{ y: -4 }} className="bg-[#121212]/80 backdrop-blur-xl border border-dashed border-white/10 p-6 rounded-2xl flex flex-col items-center justify-center text-center shadow-lg transition-colors hover:border-zinc-700 hover:bg-[#121212]/50">
+          <div className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center text-zinc-500 mb-3">
+            <Zap size={20} />
+          </div>
+          <h3 className="text-zinc-300 font-bold mb-1">Generate New</h3>
+          <p className="text-zinc-500 text-sm max-w-[200px]">Select a competitor and topic to generate a new battlecard.</p>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   );
 };

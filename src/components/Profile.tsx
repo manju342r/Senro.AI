@@ -1,89 +1,32 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { User, LogOut } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { useData } from '../contexts/DataContext';
-import { LogOut } from 'lucide-react';
 
 export const Profile = () => {
-  const [email] = useState(() => localStorage.getItem('userEmail') || 'demo@senro.ai (Guest)');
-  const navigate = useNavigate();
+  const email = localStorage.getItem('userEmail') || 'F';
   const { supabase } = useData();
-  
 
-  const handlePasswordReset = async () => {
-    try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email);
-      if (error) throw error;
-      alert('Password reset link has been sent to your email address!');
-    } catch (e: any) {
-      alert('Error sending password reset: ' + e.message);
-    }
-  };
-
-  const handleSignOut = async () => {
-    try { await supabase.auth.signOut(); } catch (e) {}
-    localStorage.removeItem('userEmail');
-    navigate('/login');
-  };
-  const [ownUrl] = useState(() => localStorage.getItem('ownUrl') || 'https://acme.com');
-  
-  const getWorkspaceName = (url: string) => {
-    try {
-      return new URL(url).hostname.replace('www.', '').split('.')[0];
-    } catch {
-      return 'workspace';
-    }
-  };
+  const containerVariants = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.1 } } };
+  const itemVariants = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } } };
 
   return (
-    <div className="max-w-3xl space-y-8">
-      <div>
-        <h2 className="text-2xl font-bold text-zinc-100">User Profile</h2>
-        <p className="text-zinc-500 text-sm mt-1">View your account details and associated company workspace.</p>
-      </div>
-
-      <div className="bg-[#121212] border border-zinc-800 rounded-xl overflow-hidden">
-        <div className="p-4 border-b border-zinc-800 bg-[#0a0a0a]">
-          <h3 className="text-sm font-semibold text-zinc-300">Account Details</h3>
+    <motion.div variants={containerVariants} initial="hidden" animate="show" className="max-w-3xl mx-auto space-y-8 pb-12">
+      <motion.div variants={itemVariants}>
+        <h2 className="text-3xl font-extrabold text-zinc-100 tracking-tight">Your Profile</h2>
+      </motion.div>
+      
+      <motion.div variants={itemVariants} className="bg-[#121212]/80 backdrop-blur-xl border border-white/5 rounded-2xl overflow-hidden shadow-lg p-8 flex flex-col items-center text-center">
+        <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-black text-4xl mb-4 shadow-xl">
+          {email.charAt(0).toUpperCase()}
         </div>
-        <div className="p-6 space-y-6">
-          
-          <div className="flex items-center gap-4 border-b border-zinc-800/50 pb-6">
-            <div className="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-2xl">
-              {email.charAt(0).toUpperCase()}
-            </div>
-            <div>
-              <div className="text-lg font-medium text-zinc-200">{email}</div>
-              <div className="text-sm text-zinc-500">Administrator</div>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-2 gap-6 pt-2">
-            <div>
-              <label className="block text-xs font-medium text-zinc-500 uppercase tracking-wider mb-2">Company Name</label>
-              <div className="text-zinc-200 capitalize font-medium text-lg">{getWorkspaceName(ownUrl)}</div>
-            </div>
-
-            <div>
-              <label className="block text-xs font-medium text-zinc-500 uppercase tracking-wider mb-2">Company URL</label>
-              <div className="text-blue-400 hover:underline font-medium text-lg">
-                <a href={ownUrl} target="_blank" rel="noreferrer">{ownUrl}</a>
-              </div>
-            </div>
-          </div>
-
-
-
-          <div className="pt-6 border-t border-zinc-800/50 flex flex-col gap-3">
-            <button onClick={handlePasswordReset} className="flex items-center justify-center gap-2 bg-blue-600/10 hover:bg-blue-600/20 text-blue-500 border border-blue-500/20 px-4 py-2 rounded-lg text-sm font-medium transition-colors w-full sm:w-auto">
-              Change password via Email
-            </button>
-            <button onClick={handleSignOut} className="flex items-center justify-center gap-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 px-4 py-2 rounded-lg text-sm font-medium transition-colors w-full sm:w-auto">
-              <LogOut size={16} /> Sign out of Senro.AI
-            </button>
-          </div>
-        </div>
-      </div>
-
-    </div>
+        <h3 className="text-xl font-bold text-zinc-100">{email}</h3>
+        <p className="text-zinc-500 text-sm mt-1 mb-8">Senro.AI Administrator</p>
+        
+        <button onClick={async () => { await supabase.auth.signOut(); localStorage.removeItem('userEmail'); window.location.href = '/login'; }} className="bg-red-500/10 hover:bg-red-500/20 text-red-500 px-6 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center gap-2">
+          <LogOut size={16} /> Sign out of Senro.AI
+        </button>
+      </motion.div>
+    </motion.div>
   );
 };

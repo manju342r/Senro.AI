@@ -1,14 +1,7 @@
-import React from 'react';
-import { Search, ChevronDown, RefreshCw, Trash2, ExternalLink } from 'lucide-react';
-import { motion } from 'framer-motion';
+const fs = require('fs');
 
-export const CompareHub = () => {
-  const [compUrl, setCompUrl] = React.useState(() => localStorage.getItem('compUrl') || '');
-  const [data] = React.useState<any>(() => {
-    try { const stored = localStorage.getItem('overviewData'); return stored ? JSON.parse(stored) : null; } catch { return null; }
-  });
-  const getDomain = (url: string) => { try { return new URL(url).hostname.replace('www.', ''); } catch { return url || 'No competitor'; } };
-
+const motion_imports = "import { motion } from 'framer-motion';\n";
+const variants_code = `
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
@@ -21,7 +14,66 @@ export const CompareHub = () => {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
   };
+`;
 
+let code;
+
+// LiveSignals
+code = `import React from 'react';
+import { Activity } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+export const LiveSignals = () => {
+  const [isConfigured, setIsConfigured] = React.useState(false);
+  React.useEffect(() => {
+    fetch('/api/config-status').then(res => res.json()).then(data => setIsConfigured(data.configured)).catch(() => {});
+  }, []);
+${variants_code}
+  return (
+    <motion.div variants={containerVariants} initial="hidden" animate="show" className="max-w-6xl space-y-8">
+      <motion.div variants={itemVariants} className="flex justify-between items-center">
+        <div>
+          <h2 className="text-3xl font-extrabold text-zinc-100 tracking-tight">Live signals</h2>
+          <p className="text-zinc-500 text-sm mt-1 font-medium">Real-time alerts triggered by competitor changes.</p>
+        </div>
+        {isConfigured ? (
+          <div className="bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 px-3 py-1.5 rounded-lg text-sm font-medium">
+            Scraping Active
+          </div>
+        ) : (
+          <div className="bg-amber-500/10 text-amber-500 border border-amber-500/30 px-3 py-1.5 rounded-lg text-sm font-medium">
+            Scraping offline
+          </div>
+        )}
+      </motion.div>
+
+      <motion.div variants={itemVariants} whileHover={{ y: -4 }} className="border border-dashed border-white/5 rounded-2xl flex flex-col items-center justify-center p-24 text-center bg-[#121212]/30 backdrop-blur-sm transition-colors hover:border-zinc-700 hover:bg-[#121212]/50">
+        <div className="w-16 h-16 bg-zinc-900/60 backdrop-blur-md rounded-full flex items-center justify-center mb-4">
+          <Activity size={32} className="text-zinc-700" />
+        </div>
+        <h3 className="text-zinc-300 font-medium mb-1">No signals recorded yet</h3>
+        <p className="text-zinc-500 text-sm max-w-sm">
+          Run a scan or wait for scheduled monitoring to detect changes in competitor pricing, messaging, or features.
+        </p>
+      </motion.div>
+    </motion.div>
+  );
+};
+`;
+fs.writeFileSync('src/components/LiveSignals.tsx', code);
+
+// CompareHub
+code = `import React from 'react';
+import { Search, ChevronDown, RefreshCw, Trash2, ExternalLink } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+export const CompareHub = () => {
+  const [compUrl, setCompUrl] = React.useState(() => localStorage.getItem('compUrl') || '');
+  const [data] = React.useState<any>(() => {
+    try { const stored = localStorage.getItem('overviewData'); return stored ? JSON.parse(stored) : null; } catch { return null; }
+  });
+  const getDomain = (url: string) => { try { return new URL(url).hostname.replace('www.', ''); } catch { return url || 'No competitor'; } };
+${variants_code}
   return (
     <motion.div variants={containerVariants} initial="hidden" animate="show" className="max-w-6xl space-y-8">
       <motion.div variants={itemVariants} className="flex justify-between items-center">
@@ -76,7 +128,7 @@ export const CompareHub = () => {
                   </div>
                 </td>
                 <td className="p-4">
-                  <span className={`text-xs font-bold px-2 py-1 rounded-md ${data?.risk_level === "High" ? "bg-red-500/10 text-red-500 border border-red-500/20" : "bg-amber-500/10 text-amber-500 border border-amber-500/20"}`}>{data?.risk_level || "Medium"}</span>
+                  <span className={\`text-xs font-bold px-2 py-1 rounded-md \${data?.risk_level === "High" ? "bg-red-500/10 text-red-500 border border-red-500/20" : "bg-amber-500/10 text-amber-500 border border-amber-500/20"}\`}>{data?.risk_level || "Medium"}</span>
                 </td>
                 <td className="p-4 text-zinc-500 font-medium">Just now</td>
                 <td className="p-4 text-right">
@@ -98,3 +150,7 @@ export const CompareHub = () => {
     </motion.div>
   );
 };
+`;
+fs.writeFileSync('src/components/CompareHub.tsx', code);
+
+console.log("Rewrote components with Framer Motion!");
