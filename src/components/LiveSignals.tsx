@@ -25,8 +25,8 @@ export const LiveSignals = () => {
     <motion.div variants={containerVariants} initial="hidden" animate="show" className="max-w-6xl space-y-8">
       <motion.div variants={itemVariants} className="flex justify-between items-center">
         <div>
-          <h2 className="text-3xl font-extrabold text-zinc-100 tracking-tight">Live signals</h2>
-          <p className="text-zinc-500 text-sm mt-1 font-medium">Real-time alerts triggered by competitor changes.</p>
+          <h2 className="text-3xl font-extrabold text-content tracking-tight">Live signals</h2>
+          <p className="text-muted text-sm mt-1 font-medium">Real-time alerts triggered by competitor changes.</p>
         </div>
         {isConfigured ? (
           <div className="bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 px-3 py-1.5 rounded-lg text-sm font-medium">
@@ -39,12 +39,12 @@ export const LiveSignals = () => {
         )}
       </motion.div>
 
-      <motion.div variants={itemVariants} whileHover={{ y: -4 }} className="border border-dashed border-white/5 rounded-2xl flex flex-col items-center justify-center p-24 text-center bg-[#121212]/30 backdrop-blur-sm transition-colors hover:border-zinc-700 hover:bg-[#121212]/50">
-        <div className="w-16 h-16 bg-zinc-900/60 backdrop-blur-md rounded-full flex items-center justify-center mb-4">
-          <Activity size={32} className="text-zinc-700" />
+      <motion.div variants={itemVariants} whileHover={{ y: -4 }} className="border border-dashed border-line rounded-2xl flex flex-col items-center justify-center p-24 text-center bg-surface/30 backdrop-blur-sm transition-colors hover:border-line-hover hover:bg-surface/50">
+        <div className="w-16 h-16 bg-surface/60 backdrop-blur-md rounded-full flex items-center justify-center mb-4">
+          <Activity size={32} className="text-muted" />
         </div>
-        <h3 className="text-zinc-300 font-medium mb-1">No signals recorded yet</h3>
-        <p className="text-zinc-500 text-sm max-w-sm">
+        <h3 className="text-content font-medium mb-1">No signals recorded yet</h3>
+        <p className="text-muted text-sm max-w-sm">
           Run a scan or wait for scheduled monitoring to detect changes in competitor pricing, messaging, or features.
         </p>
       </motion.div>

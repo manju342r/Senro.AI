@@ -35,14 +35,14 @@ export const Overview = () => {
         <motion.div 
           initial={{ opacity: 0, y: 5 }} 
           animate={{ opacity: 1, y: 0 }} 
-          className="bg-[#18181b] border border-zinc-700/50 p-4 rounded-2xl shadow-2xl backdrop-blur-md"
+          className="bg-[#18181b] border border-line-hover/50 p-4 rounded-2xl shadow-2xl backdrop-blur-md"
         >
-          <p className="text-zinc-200 font-bold mb-1">{label}</p>
+          <p className="text-content font-bold mb-1">{label}</p>
           <p className="text-violet-400 text-sm font-medium">Threat Score: {data.threat}</p>
           {data.annotation && (
-            <div className="mt-3 pt-3 border-t border-white/5 max-w-[220px]">
+            <div className="mt-3 pt-3 border-t border-line max-w-[220px]">
               <p className="text-xs text-amber-400 font-bold flex items-center gap-1.5 uppercase tracking-wider"><Zap size={12} /> Memory Annotation</p>
-              <p className="text-xs text-zinc-300 mt-1.5 leading-relaxed">{data.annotation}</p>
+              <p className="text-xs text-content mt-1.5 leading-relaxed">{data.annotation}</p>
             </div>
           )}
         </motion.div>
@@ -144,11 +144,11 @@ export const Overview = () => {
     >
       <motion.div variants={itemVariants} className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
         <div>
-          <h2 className="text-3xl font-extrabold text-zinc-100 flex items-center gap-2 tracking-tight">
+          <h2 className="text-3xl font-extrabold text-content flex items-center gap-2 tracking-tight">
             Dashboard
           </h2>
-          <p className="text-zinc-400 text-sm mt-1.5 font-medium">
-            Monitoring <span className="text-zinc-200">{compUrl ? getDomain(compUrl) : 'competitors'}</span> against <span className="text-zinc-200">{getDomain(ownUrl)}</span>
+          <p className="text-muted text-sm mt-1.5 font-medium">
+            Monitoring <span className="text-content">{compUrl ? getDomain(compUrl) : 'competitors'}</span> against <span className="text-content">{getDomain(ownUrl)}</span>
           </p>
         </div>
         <div className="flex items-center gap-3 w-full sm:w-auto">
@@ -157,9 +157,9 @@ export const Overview = () => {
             whileTap={{ scale: 0.98 }}
             onClick={handleEmailReport}
             disabled={emailing || loading}
-            className="flex-1 sm:flex-none flex justify-center items-center gap-2 bg-zinc-900/60 backdrop-blur-md/80 border border-white/5 hover:border-zinc-700 hover:bg-zinc-800 text-zinc-200 px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all disabled:opacity-50 backdrop-blur-sm shadow-sm"
+            className="flex-1 sm:flex-none flex justify-center items-center gap-2 bg-surface/60 backdrop-blur-md/80 border border-line hover:border-line-hover hover:bg-surface-hover text-content px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all disabled:opacity-50 backdrop-blur-sm shadow-sm"
           >
-            {emailing ? <Activity size={16} className="animate-spin text-zinc-400" /> : <Mail size={16} className="text-zinc-400" />}
+            {emailing ? <Activity size={16} className="animate-spin text-muted" /> : <Mail size={16} className="text-muted" />}
             {emailing ? 'Sending...' : 'Email Report'}
           </motion.button>
           <motion.button 
@@ -167,7 +167,7 @@ export const Overview = () => {
             whileTap={{ scale: 0.98 }}
             onClick={handleScan}
             disabled={loading}
-            className="flex-1 sm:flex-none flex justify-center items-center gap-2 bg-zinc-900/60 backdrop-blur-md/80 border border-white/5 hover:border-zinc-700 hover:bg-zinc-800 text-zinc-200 px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all disabled:opacity-50 backdrop-blur-sm shadow-sm"
+            className="flex-1 sm:flex-none flex justify-center items-center gap-2 bg-surface/60 backdrop-blur-md/80 border border-line hover:border-line-hover hover:bg-surface-hover text-content px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all disabled:opacity-50 backdrop-blur-sm shadow-sm"
           >
             {loading ? <Activity size={16} className="animate-spin text-violet-500" /> : <Zap size={16} className="text-amber-500" />}
             {loading ? 'Analyzing...' : 'Trigger Scan'}
@@ -177,44 +177,44 @@ export const Overview = () => {
 
       {/* Top Metrics Row */}
       <motion.div variants={containerVariants} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-        <motion.div variants={itemVariants} whileHover={{ y: -4 }} className="bg-[#121212]/80 backdrop-blur-xl/90 backdrop-blur-md border border-white/5/80 hover:border-zinc-700 p-6 rounded-2xl flex flex-col justify-between shadow-lg transition-colors group">
-          <div className="text-xs font-bold text-zinc-500 tracking-widest uppercase">Strategic Gap Index</div>
+        <motion.div variants={itemVariants} whileHover={{ y: -4 }} className="bg-surface/80 backdrop-blur-xl/90 backdrop-blur-md border border-line/80 hover:border-line-hover p-6 rounded-2xl flex flex-col justify-between shadow-lg transition-colors group">
+          <div className="text-xs font-bold text-muted tracking-widest uppercase">Strategic Gap Index</div>
           <div className="mt-5 flex items-end justify-between">
-            <div className="text-4xl font-black text-zinc-100 tracking-tight">{loading ? '--' : (data ? data.strategic_gap_index : '--')}</div>
+            <div className="text-4xl font-black text-content tracking-tight">{loading ? '--' : (data ? data.strategic_gap_index : '--')}</div>
             <TrendingUp size={24} className="text-emerald-500 mb-1 opacity-80 group-hover:opacity-100 transition-opacity" />
           </div>
         </motion.div>
         
-        <motion.div variants={itemVariants} whileHover={{ y: -4 }} className="bg-[#121212]/80 backdrop-blur-xl/90 backdrop-blur-md border border-white/5/80 hover:border-zinc-700 p-6 rounded-2xl flex flex-col justify-between shadow-lg transition-colors group">
-          <div className="text-xs font-bold text-zinc-500 tracking-widest uppercase">Traffic Impact</div>
+        <motion.div variants={itemVariants} whileHover={{ y: -4 }} className="bg-surface/80 backdrop-blur-xl/90 backdrop-blur-md border border-line/80 hover:border-line-hover p-6 rounded-2xl flex flex-col justify-between shadow-lg transition-colors group">
+          <div className="text-xs font-bold text-muted tracking-widest uppercase">Traffic Impact</div>
           <div className="mt-5 flex items-end justify-between">
-            <div className="text-3xl font-black text-zinc-100 tracking-tight">{loading ? '--' : (data ? data.net_traffic_impact : '--')}</div>
+            <div className="text-3xl font-black text-content tracking-tight">{loading ? '--' : (data ? data.net_traffic_impact : '--')}</div>
             <Activity size={24} className="text-violet-500 mb-1 opacity-80 group-hover:opacity-100 transition-opacity" />
           </div>
         </motion.div>
 
-        <motion.div variants={itemVariants} whileHover={{ y: -4 }} className="bg-[#121212]/80 backdrop-blur-xl/90 backdrop-blur-md border border-white/5/80 hover:border-zinc-700 p-6 rounded-2xl flex flex-col justify-between shadow-lg transition-colors group">
-          <div className="text-xs font-bold text-zinc-500 tracking-widest uppercase">Threat Level</div>
+        <motion.div variants={itemVariants} whileHover={{ y: -4 }} className="bg-surface/80 backdrop-blur-xl/90 backdrop-blur-md border border-line/80 hover:border-line-hover p-6 rounded-2xl flex flex-col justify-between shadow-lg transition-colors group">
+          <div className="text-xs font-bold text-muted tracking-widest uppercase">Threat Level</div>
           <div className="mt-5 flex items-end justify-between">
-            <div className="text-3xl font-black text-zinc-100 capitalize tracking-tight">{loading ? '--' : (data ? data.risk_level : '--')}</div>
+            <div className="text-3xl font-black text-content capitalize tracking-tight">{loading ? '--' : (data ? data.risk_level : '--')}</div>
             <AlertTriangle size={24} className={data?.risk_level === 'High' ? 'text-red-500 mb-1 opacity-80 group-hover:opacity-100 transition-opacity' : 'text-amber-500 mb-1 opacity-80 group-hover:opacity-100 transition-opacity'} />
           </div>
         </motion.div>
 
-        <motion.div variants={itemVariants} whileHover={{ y: -4 }} className="bg-[#121212]/80 backdrop-blur-xl/90 backdrop-blur-md border border-white/5/80 hover:border-zinc-700 p-6 rounded-2xl flex flex-col justify-between shadow-lg transition-colors group">
-          <div className="text-xs font-bold text-zinc-500 tracking-widest uppercase">Recent Signals</div>
+        <motion.div variants={itemVariants} whileHover={{ y: -4 }} className="bg-surface/80 backdrop-blur-xl/90 backdrop-blur-md border border-line/80 hover:border-line-hover p-6 rounded-2xl flex flex-col justify-between shadow-lg transition-colors group">
+          <div className="text-xs font-bold text-muted tracking-widest uppercase">Recent Signals</div>
           <div className="mt-5 flex items-end justify-between">
-            <div className="text-4xl font-black text-zinc-100 tracking-tight">{loading ? '--' : (data ? data.signals_24h : '--')}</div>
-            <div className="text-sm font-medium text-zinc-500 mb-1.5">{loading ? '--' : (data ? data.signals_total : '--')} total</div>
+            <div className="text-4xl font-black text-content tracking-tight">{loading ? '--' : (data ? data.signals_24h : '--')}</div>
+            <div className="text-sm font-medium text-muted mb-1.5">{loading ? '--' : (data ? data.signals_total : '--')} total</div>
           </div>
         </motion.div>
       </motion.div>
 
       {/* Charts Row */}
       <motion.div variants={itemVariants} className="grid grid-cols-1 gap-6">
-        <div className="bg-[#121212]/80 backdrop-blur-xl/90 backdrop-blur-md border border-white/5/80 p-6 sm:p-8 rounded-2xl shadow-lg">
-          <h3 className="text-sm font-bold text-zinc-200 mb-6 uppercase tracking-widest flex items-center gap-2">
-            Threat Score Timeline <span className="text-zinc-600 font-medium normal-case tracking-normal">(7 Days)</span>
+        <div className="bg-surface/80 backdrop-blur-xl/90 backdrop-blur-md border border-line/80 p-6 sm:p-8 rounded-2xl shadow-lg">
+          <h3 className="text-sm font-bold text-content mb-6 uppercase tracking-widest flex items-center gap-2">
+            Threat Score Timeline <span className="text-muted font-medium normal-case tracking-normal">(7 Days)</span>
           </h3>
           <div className="h-64 sm:h-80 w-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -261,14 +261,14 @@ export const Overview = () => {
               <h3 className="text-sm font-bold text-violet-400 mb-3 flex items-center gap-2 uppercase tracking-widest">
                 <Zap size={16} /> AI Executive Summary
               </h3>
-              <p className="text-zinc-300 text-sm sm:text-base leading-relaxed">
+              <p className="text-content text-sm sm:text-base leading-relaxed">
                 {data.analysis_summary}
               </p>
             </motion.div>
           )}
           
-          <motion.div variants={itemVariants} className="bg-[#121212]/80 backdrop-blur-xl/90 backdrop-blur-md border border-white/5/80 p-6 sm:p-8 rounded-2xl shadow-lg flex-1">
-            <h3 className="text-sm font-bold text-zinc-200 mb-6 uppercase tracking-widest">Raw Live Signals</h3>
+          <motion.div variants={itemVariants} className="bg-surface/80 backdrop-blur-xl/90 backdrop-blur-md border border-line/80 p-6 sm:p-8 rounded-2xl shadow-lg flex-1">
+            <h3 className="text-sm font-bold text-content mb-6 uppercase tracking-widest">Raw Live Signals</h3>
             <div className="space-y-4">
               {[
                 { status: 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]', text: 'Pricing page frequency increased (+12%)', time: '2h ago' },
@@ -280,13 +280,13 @@ export const Overview = () => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.4 + i * 0.1 }}
                   key={i} 
-                  className="flex items-start justify-between gap-4 border-b border-white/5/50 pb-4 last:border-0 last:pb-0"
+                  className="flex items-start justify-between gap-4 border-b border-line/50 pb-4 last:border-0 last:pb-0"
                 >
                   <div className="flex items-start gap-4">
                     <div className={"w-2.5 h-2.5 rounded-full mt-1.5 flex-shrink-0 " + sig.status}></div>
-                    <p className="text-sm text-zinc-300 leading-snug font-medium">{sig.text}</p>
+                    <p className="text-sm text-content leading-snug font-medium">{sig.text}</p>
                   </div>
-                  <span className="text-xs text-zinc-600 font-medium flex-shrink-0">{sig.time}</span>
+                  <span className="text-xs text-muted font-medium flex-shrink-0">{sig.time}</span>
                 </motion.div>
               ))}
             </div>
@@ -294,26 +294,26 @@ export const Overview = () => {
         </div>
 
         {/* RIGHT COLUMN (40%) */}
-        <motion.div variants={itemVariants} className="lg:col-span-2 bg-[#121212]/80 backdrop-blur-xl/90 backdrop-blur-md border border-white/5/80 p-6 sm:p-8 rounded-2xl flex flex-col shadow-lg">
-          <h3 className="text-sm font-bold text-zinc-200 mb-6 uppercase tracking-widest">Recommended Actions</h3>
+        <motion.div variants={itemVariants} className="lg:col-span-2 bg-surface/80 backdrop-blur-xl/90 backdrop-blur-md border border-line/80 p-6 sm:p-8 rounded-2xl flex flex-col shadow-lg">
+          <h3 className="text-sm font-bold text-content mb-6 uppercase tracking-widest">Recommended Actions</h3>
           <div className="space-y-6 flex-1">
             <div className="group">
               <span className="text-xs font-bold text-emerald-400 bg-emerald-400/10 border border-emerald-500/20 px-2.5 py-1 rounded-md tracking-wider uppercase inline-block mb-3 transition-colors group-hover:bg-emerald-400/20">Pricing Strategy</span>
-              <p className="text-sm text-zinc-400 leading-relaxed group-hover:text-zinc-300 transition-colors">Adjust standard tier messaging to highlight transparent pricing against competitor's new opaque enterprise model.</p>
+              <p className="text-sm text-muted leading-relaxed group-hover:text-content transition-colors">Adjust standard tier messaging to highlight transparent pricing against competitor's new opaque enterprise model.</p>
             </div>
             <div className="group">
               <span className="text-xs font-bold text-amber-400 bg-amber-400/10 border border-amber-500/20 px-2.5 py-1 rounded-md tracking-wider uppercase inline-block mb-3 transition-colors group-hover:bg-amber-400/20">Product Marketing</span>
-              <p className="text-sm text-zinc-400 leading-relaxed group-hover:text-zinc-300 transition-colors">Launch a comparison battlecard specifically targeting their missing SSO integration.</p>
+              <p className="text-sm text-muted leading-relaxed group-hover:text-content transition-colors">Launch a comparison battlecard specifically targeting their missing SSO integration.</p>
             </div>
             <div className="group">
               <span className="text-xs font-bold text-violet-400 bg-blue-400/10 border border-violet-500/20 px-2.5 py-1 rounded-md tracking-wider uppercase inline-block mb-3 transition-colors group-hover:bg-blue-400/20">Sales Enablement</span>
-              <p className="text-sm text-zinc-400 leading-relaxed group-hover:text-zinc-300 transition-colors">Equip SDRs with objection handling for the competitor's new checkout flow changes.</p>
+              <p className="text-sm text-muted leading-relaxed group-hover:text-content transition-colors">Equip SDRs with objection handling for the competitor's new checkout flow changes.</p>
             </div>
           </div>
           <motion.button 
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full mt-8 py-3 bg-zinc-900/60 backdrop-blur-md border border-zinc-700/50 hover:bg-zinc-800 hover:border-zinc-600 text-zinc-200 rounded-2xl text-sm font-bold transition-all shadow-sm"
+            className="w-full mt-8 py-3 bg-surface/60 backdrop-blur-md border border-line-hover/50 hover:bg-surface-hover hover:border-zinc-600 text-content rounded-2xl text-sm font-bold transition-all shadow-sm"
           >
             Generate Counter-Moves
           </motion.button>

@@ -11,36 +11,36 @@ export const BattlecardsList = () => {
     <motion.div variants={containerVariants} initial="hidden" animate="show" className="max-w-6xl space-y-8">
       <motion.div variants={itemVariants} className="flex justify-between items-center">
         <div>
-          <h2 className="text-3xl font-extrabold text-zinc-100 tracking-tight">Battlecards</h2>
-          <p className="text-zinc-500 text-sm mt-1 font-medium">AI-generated sales enablement materials to win competitive deals.</p>
+          <h2 className="text-3xl font-extrabold text-content tracking-tight">Battlecards</h2>
+          <p className="text-muted text-sm mt-1 font-medium">AI-generated sales enablement materials to win competitive deals.</p>
         </div>
       </motion.div>
 
       <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <motion.div whileHover={{ y: -4 }} className="bg-[#121212]/80 backdrop-blur-xl border border-white/5 hover:border-violet-500/30 p-6 rounded-2xl flex flex-col justify-between shadow-lg transition-colors group">
+        <motion.div whileHover={{ y: -4 }} className="bg-surface/80 backdrop-blur-xl border border-line hover:border-violet-500/30 p-6 rounded-2xl flex flex-col justify-between shadow-lg transition-colors group">
           <div>
             <div className="flex justify-between items-start mb-4">
               <div className="w-10 h-10 bg-violet-500/10 rounded-xl flex items-center justify-center text-violet-400 group-hover:scale-110 transition-transform">
                 <FileText size={20} />
               </div>
-              <span className="text-xs font-bold text-zinc-500 tracking-widest uppercase">Pricing Objection</span>
+              <span className="text-xs font-bold text-muted tracking-widest uppercase">Pricing Objection</span>
             </div>
-            <h3 className="text-lg font-bold text-zinc-100 mb-2 group-hover:text-violet-400 transition-colors">Enterprise Tier Objection Handling</h3>
-            <p className="text-zinc-400 text-sm leading-relaxed mb-6">Generated 2 days ago after competitor updated their standard pricing model to obscure enterprise limits.</p>
+            <h3 className="text-lg font-bold text-content mb-2 group-hover:text-violet-400 transition-colors">Enterprise Tier Objection Handling</h3>
+            <p className="text-muted text-sm leading-relaxed mb-6">Generated 2 days ago after competitor updated their standard pricing model to obscure enterprise limits.</p>
           </div>
           <div className="flex items-center gap-3">
-            <button className="flex-1 bg-white/5 hover:bg-white/10 text-zinc-300 py-2 rounded-lg text-sm font-semibold transition-colors flex justify-center items-center gap-2">
+            <button className="flex-1 bg-input hover:bg-surface-hover text-content py-2 rounded-lg text-sm font-semibold transition-colors flex justify-center items-center gap-2">
               <Download size={16} /> Export PDF
             </button>
           </div>
         </motion.div>
         
-        <motion.div whileHover={{ y: -4 }} className="bg-[#121212]/80 backdrop-blur-xl border border-dashed border-white/10 p-6 rounded-2xl flex flex-col items-center justify-center text-center shadow-lg transition-colors hover:border-zinc-700 hover:bg-[#121212]/50">
-          <div className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center text-zinc-500 mb-3">
+        <motion.div whileHover={{ y: -4 }} className="bg-surface/80 backdrop-blur-xl border border-dashed border-line p-6 rounded-2xl flex flex-col items-center justify-center text-center shadow-lg transition-colors hover:border-line-hover hover:bg-surface/50">
+          <div className="w-12 h-12 bg-input rounded-full flex items-center justify-center text-muted mb-3">
             <Zap size={20} />
           </div>
-          <h3 className="text-zinc-300 font-bold mb-1">Generate New</h3>
-          <p className="text-zinc-500 text-sm max-w-[200px]">Select a competitor and topic to generate a new battlecard.</p>
+          <h3 className="text-content font-bold mb-1">Generate New</h3>
+          <p className="text-muted text-sm max-w-[200px]">Select a competitor and topic to generate a new battlecard.</p>
         </motion.div>
       </motion.div>
     </motion.div>

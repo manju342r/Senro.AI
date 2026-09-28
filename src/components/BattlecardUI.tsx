@@ -87,12 +87,12 @@ Ensure the output aligns strictly with the user's formatting preferences.`;
   return (
     <div className="flex flex-col h-full bg-[#121212] rounded-xl overflow-hidden">
       {/* Header */}
-      <div className="border-b border-zinc-800 p-4 flex items-center justify-between bg-[#121212]">
+      <div className="border-b border-line p-4 flex items-center justify-between bg-[#121212]">
         <div className="flex items-center gap-2">
           <div className="p-1.5 bg-violet-500/10 rounded-md">
             <BrainCircuit className="w-5 h-5 text-violet-500" />
           </div>
-          <h2 className="font-semibold text-sm text-zinc-100">AI Battlecard Agent</h2>
+          <h2 className="font-semibold text-sm text-content">AI Battlecard Agent</h2>
         </div>
         <div className="text-[10px] uppercase font-mono tracking-wider bg-violet-500/10 border border-violet-500/20 px-2 py-1 rounded text-violet-400">
           Hindsight Active
@@ -100,21 +100,21 @@ Ensure the output aligns strictly with the user's formatting preferences.`;
       </div>
 
       {/* Chat Area */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-6 bg-[#0a0a0a]">
+      <div className="flex-1 overflow-y-auto p-4 space-y-6 bg-canvas">
         {messages.filter(m => m.role !== 'system').map((msg, index) => (
           <div key={index} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div className={`flex gap-3 max-w-[85%] ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
               <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
                 msg.role === 'user' 
-                  ? 'bg-violet-600 text-white' 
-                  : 'bg-zinc-800 border border-zinc-700 text-zinc-300'
+                  ? 'bg-violet-600 text-inverted' 
+                  : 'bg-surface-hover border border-line-hover text-content'
               }`}>
                 {msg.role === 'user' ? <User size={14} /> : <Bot size={14} />}
               </div>
               <div className={`p-4 rounded-xl ${
                 msg.role === 'user' 
-                  ? 'bg-violet-600 text-white rounded-tr-none' 
-                  : 'bg-zinc-900 border border-zinc-800 text-zinc-200 rounded-tl-none'
+                  ? 'bg-violet-600 text-inverted rounded-tr-none' 
+                  : 'bg-surface-hover border border-line text-content rounded-tl-none'
               }`}>
                 <div className="whitespace-pre-wrap text-sm leading-relaxed">{msg.content}</div>
               </div>
@@ -125,25 +125,25 @@ Ensure the output aligns strictly with the user's formatting preferences.`;
       </div>
 
       {/* Input Area */}
-      <form onSubmit={handleSendMessage} className="p-4 bg-[#121212] border-t border-zinc-800">
+      <form onSubmit={handleSendMessage} className="p-4 bg-[#121212] border-t border-line">
         <div className="relative flex items-center">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Instruct the agent (e.g., 'Focus on enterprise pricing')"
-            className="w-full bg-[#0a0a0a] border border-zinc-800 text-sm text-zinc-200 pl-4 pr-12 py-3 rounded-lg focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all placeholder:text-zinc-600"
+            className="w-full bg-canvas border border-line text-sm text-content pl-4 pr-12 py-3 rounded-lg focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all placeholder:text-muted"
             disabled={isGenerating}
           />
           <button
             type="submit"
             disabled={!input.trim() || isGenerating}
-            className="absolute right-2 p-2 bg-violet-600 text-white rounded-md hover:bg-violet-700 disabled:opacity-50 disabled:hover:bg-violet-600 transition-colors"
+            className="absolute right-2 p-2 bg-violet-600 text-inverted rounded-md hover:bg-violet-700 disabled:opacity-50 disabled:hover:bg-violet-600 transition-colors"
           >
             <Send size={16} />
           </button>
         </div>
-        <p className="text-[11px] text-zinc-500 mt-2 text-center">
+        <p className="text-[11px] text-muted mt-2 text-center">
           Memory feedback continuously updates the Hindsight vector profile for this competitor.
         </p>
       </form>
