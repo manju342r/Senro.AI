@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+const fs = require('fs');
+
+let code = `import React, { useState, useEffect } from 'react';
 import { Target, Zap, TrendingUp, AlertTriangle, Activity, Mail } from 'lucide-react';
 import { useData } from '../contexts/DataContext';
 import {
@@ -62,7 +64,7 @@ export const Overview = () => {
       if (!promptEmail || promptEmail === "yourname@example.com") return;
       email = promptEmail;
     } else {
-      if (!window.confirm(`Ready to send report to ${email}?`)) return;
+      if (!window.confirm(\`Ready to send report to \${email}?\`)) return;
     }
     
     setEmailing(true);
@@ -322,3 +324,6 @@ export const Overview = () => {
     </motion.div>
   );
 };
+`
+fs.writeFileSync('src/components/Overview.tsx', code);
+console.log('Overview.tsx has been rewritten with framer-motion and modern UI.');

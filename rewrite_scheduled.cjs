@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+const fs = require('fs');
+
+let code = `import React, { useState } from 'react';
 import { Calendar, Clock, Mail, CheckCircle2, Send, Activity } from 'lucide-react';
 import { useData } from '../contexts/DataContext';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -42,7 +44,7 @@ export const ScheduledReports = () => {
       }
       targetEmail = promptEmail;
     } else {
-      if (!window.confirm(`Ready to send the report to ${targetEmail}?`)) return;
+      if (!window.confirm(\`Ready to send the report to \${targetEmail}?\`)) return;
     }
 
     setSendingNow(true);
@@ -107,11 +109,11 @@ export const ScheduledReports = () => {
           variants={itemVariants}
           whileHover={{ y: -4 }}
           onClick={() => handleSaveFreq('daily')}
-          className={`cursor-pointer border rounded-2xl p-6 sm:p-8 transition-all shadow-lg backdrop-blur-sm relative overflow-hidden group ${reportFreq === 'daily' ? 'bg-blue-500/10 border-blue-500/50 shadow-blue-900/20' : 'bg-[#121212]/90 border-zinc-800/80 hover:border-zinc-700'}`}
+          className={\`cursor-pointer border rounded-2xl p-6 sm:p-8 transition-all shadow-lg backdrop-blur-sm relative overflow-hidden group \${reportFreq === 'daily' ? 'bg-blue-500/10 border-blue-500/50 shadow-blue-900/20' : 'bg-[#121212]/90 border-zinc-800/80 hover:border-zinc-700'}\`}
         >
           {reportFreq === 'daily' && <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>}
           <div className="flex justify-between items-start mb-6 relative">
-            <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${reportFreq === 'daily' ? 'bg-blue-600 shadow-lg shadow-blue-900/50' : 'bg-zinc-800 group-hover:bg-zinc-700'}`}>
+            <div className={\`w-12 h-12 rounded-full flex items-center justify-center transition-colors \${reportFreq === 'daily' ? 'bg-blue-600 shadow-lg shadow-blue-900/50' : 'bg-zinc-800 group-hover:bg-zinc-700'}\`}>
               <Mail size={20} className="text-white" />
             </div>
             {reportFreq === 'daily' && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}><CheckCircle2 size={24} className="text-blue-500" /></motion.div>}
@@ -124,11 +126,11 @@ export const ScheduledReports = () => {
           variants={itemVariants}
           whileHover={{ y: -4 }}
           onClick={() => handleSaveFreq('twice_a_day')}
-          className={`cursor-pointer border rounded-2xl p-6 sm:p-8 transition-all shadow-lg backdrop-blur-sm relative overflow-hidden group ${reportFreq === 'twice_a_day' ? 'bg-emerald-500/10 border-emerald-500/50 shadow-emerald-900/20' : 'bg-[#121212]/90 border-zinc-800/80 hover:border-zinc-700'}`}
+          className={\`cursor-pointer border rounded-2xl p-6 sm:p-8 transition-all shadow-lg backdrop-blur-sm relative overflow-hidden group \${reportFreq === 'twice_a_day' ? 'bg-emerald-500/10 border-emerald-500/50 shadow-emerald-900/20' : 'bg-[#121212]/90 border-zinc-800/80 hover:border-zinc-700'}\`}
         >
           {reportFreq === 'twice_a_day' && <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>}
           <div className="flex justify-between items-start mb-6 relative">
-            <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${reportFreq === 'twice_a_day' ? 'bg-emerald-600 shadow-lg shadow-emerald-900/50' : 'bg-zinc-800 group-hover:bg-zinc-700'}`}>
+            <div className={\`w-12 h-12 rounded-full flex items-center justify-center transition-colors \${reportFreq === 'twice_a_day' ? 'bg-emerald-600 shadow-lg shadow-emerald-900/50' : 'bg-zinc-800 group-hover:bg-zinc-700'}\`}>
               <Clock size={20} className="text-white" />
             </div>
             {reportFreq === 'twice_a_day' && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}><CheckCircle2 size={24} className="text-emerald-500" /></motion.div>}
@@ -141,11 +143,11 @@ export const ScheduledReports = () => {
           variants={itemVariants}
           whileHover={{ y: -4 }}
           onClick={() => handleSaveFreq('weekly')}
-          className={`cursor-pointer border rounded-2xl p-6 sm:p-8 transition-all shadow-lg backdrop-blur-sm relative overflow-hidden group ${reportFreq === 'weekly' ? 'bg-purple-500/10 border-purple-500/50 shadow-purple-900/20' : 'bg-[#121212]/90 border-zinc-800/80 hover:border-zinc-700'}`}
+          className={\`cursor-pointer border rounded-2xl p-6 sm:p-8 transition-all shadow-lg backdrop-blur-sm relative overflow-hidden group \${reportFreq === 'weekly' ? 'bg-purple-500/10 border-purple-500/50 shadow-purple-900/20' : 'bg-[#121212]/90 border-zinc-800/80 hover:border-zinc-700'}\`}
         >
           {reportFreq === 'weekly' && <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>}
           <div className="flex justify-between items-start mb-6 relative">
-            <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${reportFreq === 'weekly' ? 'bg-purple-600 shadow-lg shadow-purple-900/50' : 'bg-zinc-800 group-hover:bg-zinc-700'}`}>
+            <div className={\`w-12 h-12 rounded-full flex items-center justify-center transition-colors \${reportFreq === 'weekly' ? 'bg-purple-600 shadow-lg shadow-purple-900/50' : 'bg-zinc-800 group-hover:bg-zinc-700'}\`}>
               <Calendar size={20} className="text-white" />
             </div>
             {reportFreq === 'weekly' && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}><CheckCircle2 size={24} className="text-purple-500" /></motion.div>}
@@ -180,7 +182,7 @@ export const ScheduledReports = () => {
           whileHover={reportFreq !== 'never' ? { scale: 1.02 } : {}}
           whileTap={reportFreq !== 'never' ? { scale: 0.98 } : {}}
           onClick={() => handleSaveFreq('never')}
-          className={`w-full sm:w-auto px-6 py-2.5 rounded-xl text-sm font-bold transition-all ${reportFreq === 'never' ? 'bg-zinc-800/50 text-zinc-500 cursor-default border border-zinc-800/50' : 'bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white border border-red-500/20 shadow-lg shadow-red-900/10'}`}
+          className={\`w-full sm:w-auto px-6 py-2.5 rounded-xl text-sm font-bold transition-all \${reportFreq === 'never' ? 'bg-zinc-800/50 text-zinc-500 cursor-default border border-zinc-800/50' : 'bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white border border-red-500/20 shadow-lg shadow-red-900/10'}\`}
         >
           {reportFreq === 'never' ? 'Currently Paused' : 'Pause Emails'}
         </motion.button>
@@ -201,3 +203,6 @@ export const ScheduledReports = () => {
     </motion.div>
   );
 };
+`
+fs.writeFileSync('src/components/ScheduledReports.tsx', code);
+console.log('ScheduledReports.tsx rewritten!');
