@@ -98,7 +98,7 @@ export default async function handler(req, res) {
 
       const { error: emailError } = await resend.emails.send({
         from: 'Senro.AI Reports <onboarding@resend.dev>', 
-        to: [user.email],
+        to: ['vikasvalugonda2@gmail.com'], // TEMPORARY HACKATHON OVERRIDE (Resend Sandbox restriction)
         subject: \`Senro.AI Intelligence Report: \${user.competitor_url || 'Update'}\`,
         html: htmlContent,
       });
