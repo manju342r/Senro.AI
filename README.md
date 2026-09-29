@@ -129,8 +129,6 @@ Senro.AI/
 ├── public/       # Public assets
 └── README.md
 
-Hackathon Context
-
 Senro.AI was built around the idea of AI agents that learn using hindsight.
 
 The key concept is simple:
