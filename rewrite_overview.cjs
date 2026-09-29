@@ -7,8 +7,10 @@ import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from 'recharts';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 export const Overview = () => {
+  const navigate = useNavigate();
   const { supabase, ingestToHindsight } = useData();
   const [ownUrl] = useState(() => localStorage.getItem('ownUrl') || 'https://acme.com');
   const [compUrl] = useState(() => localStorage.getItem('compUrl') || '');
@@ -315,6 +317,7 @@ export const Overview = () => {
           <motion.button 
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
+            onClick={() => navigate('/dashboard/battlecards')}
             className="w-full mt-8 py-3 bg-zinc-900 border border-zinc-700/50 hover:bg-zinc-800 hover:border-zinc-600 text-zinc-200 rounded-xl text-sm font-bold transition-all shadow-sm"
           >
             Generate Counter-Moves
