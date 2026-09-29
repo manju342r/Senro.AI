@@ -1,6 +1,8 @@
-#Senro.AI
+# Senro.AI
 
-live application link : https://senroai.vercel.app/
+### AI-Powered Competitive Intelligence That Remembers
+
+Live web application link : https://senroai.vercel.app/
 
 AI-Powered Competitive Intelligence That Remembers
 
