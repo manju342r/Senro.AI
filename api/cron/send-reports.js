@@ -98,7 +98,7 @@ export default async function handler(req, res) {
 
       const { error: emailError } = await resend.emails.send({
         from: 'Senro.AI Reports <onboarding@resend.dev>', 
-        to: ['vikasvalugonda2@gmail.com'], // TEMPORARY OVERRIDE (Resend Sandbox restriction)
+        to: [user.email],
         subject: \`Senro.AI Intelligence Report: \${user.competitor_url || 'Update'}\`,
         html: htmlContent,
       });
