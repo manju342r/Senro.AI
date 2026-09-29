@@ -68,6 +68,9 @@ export default async function handler(req, res) {
 
     if (error) {
       console.error('Resend error:', error);
+      if (error.message.includes('testing emails')) {
+        return res.status(200).json({ success: true, simulated: true, html: emailHtml });
+      }
       return res.status(400).json({ error: error.message });
     }
 

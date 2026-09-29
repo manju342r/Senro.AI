@@ -56,7 +56,7 @@ export const ScheduledReports = () => {
       });
       const res = await response.json();
       if (res.error) alert("Error: " + res.error);
-      else if (res.simulated) alert("Simulated Send (No Resend API Key configured). Check console for HTML.");
+      else if (res.simulated) alert(`Simulated Send: Resend sandbox blocks sending to ${targetEmail}. Check console for email HTML.`);
       else alert(`Report sent successfully! (Check your SPAM folder in ${targetEmail} - Resend test emails often land there)`);
     } catch (e) {
       alert("Failed to send email.");
