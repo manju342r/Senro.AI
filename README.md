@@ -8,11 +8,9 @@ AI-Powered Competitive Intelligence That Remembers
 
 Senro.AI is an AI-powered competitive intelligence platform that monitors competitor websites, detects meaningful changes, and uses AI memory to understand what those changes mean over time.
 
-Traditional competitive tracking tools mostly tell you what changed.
+Traditional competitive tracking tools mostly tell you what changes have been implemented.
 
-Senro.AI tries to answer:
-
-What changed, why does it matter, and what should we pay attention to next?
+Senro.AI tries to answer questions like what changed, why does it matter, and what should we pay attention to next?
 
 The Problem
 
@@ -26,9 +24,9 @@ Companies continuously change their:
 * Positioning
 * Messaging
 
-A simple website diff can detect a change, but it does not understand the context behind repeated changes.
+A simple website difference can detect a change, but it does not understand the context behind repeated changes.
 
-This creates a problem: teams receive alerts, but still have to manually connect today’s change with what happened before.
+This creates a problem where team receive alerts, but still have to manually connect today’s change with what happened before.
 
 Our Approach
 
@@ -77,7 +75,7 @@ Store previous observations and use them when analyzing future changes.
 
 📈 Competitive Signals
 
-Turn individual website changes into higher-level competitive insights.
+Turn individual websites into higher-level competitive insights.
 
 🚨 Alerts
 
