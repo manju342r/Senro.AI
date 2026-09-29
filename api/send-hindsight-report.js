@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 
 export default async function handler(req, res) {
   // CORS
@@ -51,30 +51,35 @@ export default async function handler(req, res) {
     let emailHtml = completion.choices[0].message.content;
     emailHtml = emailHtml.replace(/```html/g, '').replace(/```/g, '').trim();
 
-    // 3. Send email via Resend
-    const resendKey = process.env.RESEND_API_KEY;
-    if (!resendKey) {
-      console.warn('No RESEND_API_KEY found, simulating email send.');
+    // 3. Send email via Nodemailer
+    const emailUser = process.env.EMAIL_USER;
+    const emailPass = process.env.EMAIL_PASS;
+    
+    if (!emailUser || !emailPass) {
+      console.warn('No EMAIL_USER or EMAIL_PASS found, simulating email send.');
       return res.status(200).json({ success: true, simulated: true, html: emailHtml });
     }
 
-    const resend = new Resend(resendKey);
-    const { data, error } = await resend.emails.send({
-      from: 'Senro.AI <onboarding@resend.dev>',
-      to: email, // Use dynamic email
-      subject: `🚨 Hindsight Intelligence Report: ${competitorUrl}`,
-      html: emailHtml
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: emailUser,
+        pass: emailPass
+      }
     });
 
-    if (error) {
-      console.error('Resend error:', error);
-      if (error.message.includes('testing emails')) {
-        return res.status(200).json({ success: true, simulated: true, html: emailHtml });
-      }
+    try {
+      const info = await transporter.sendMail({
+        from: `"Senro.AI" <${emailUser}>`,
+        to: email, // Use dynamic email
+        subject: `🚨 Hindsight Intelligence Report: ${competitorUrl}`,
+        html: emailHtml
+      });
+      return res.status(200).json({ success: true, data: info });
+    } catch (error) {
+      console.error('Nodemailer error:', error);
       return res.status(400).json({ error: error.message });
     }
-
-    return res.status(200).json({ success: true, data });
   } catch (error) {
     console.error('Email report error:', error);
     return res.status(500).json({ error: error.message });
