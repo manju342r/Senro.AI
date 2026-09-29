@@ -76,8 +76,8 @@ export const Overview = () => {
       });
       const res = await response.json();
       if (res.error) alert("Error: " + res.error);
-      else if (res.simulated) alert(`Simulated Send: Resend sandbox blocks sending to ${email}. Check console for email HTML.`);
-      else alert(`Hindsight Report sent! (Check the SPAM folder of ${email} - Resend test emails often land there)`);
+      else if (res.simulated) alert(`Simulated Send: No email credentials found on server. Check console for email HTML.`);
+      else alert(`Hindsight Report sent to ${email}!`);
     } catch (e) {
       alert("Failed to send email.");
     } finally {

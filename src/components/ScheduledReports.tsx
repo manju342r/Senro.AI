@@ -54,8 +54,8 @@ export const ScheduledReports = () => {
       });
       const res = await response.json();
       if (res.error) alert("Error: " + res.error);
-      else if (res.simulated) alert(`Simulated Send: Resend sandbox blocks sending to ${targetEmail}. Check console for email HTML.`);
-      else alert(`Report sent successfully! (Check your SPAM folder in ${targetEmail} - Resend test emails often land there)`);
+      else if (res.simulated) alert(`Simulated Send: No email credentials found on server. Check console for email HTML.`);
+      else alert(`Report sent successfully to ${targetEmail}!`);
     } catch (e) {
       alert("Failed to send email.");
     } finally {
