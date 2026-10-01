@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { LogOut, User, Building, Mail, Shield, CreditCard, Clock, Globe, Save } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useData } from '../contexts/DataContext';
 
@@ -151,6 +152,12 @@ export const Profile = () => {
           </motion.div>
 
         </div>
+      </div>
+      
+      <div className="flex justify-center gap-6 pt-8 text-sm text-muted">
+        <Link to="/dashboard/privacy" className="hover:text-content transition-colors">Privacy Policy</Link>
+        <span>&bull;</span>
+        <Link to="/dashboard/terms" className="hover:text-content transition-colors">Terms and Conditions</Link>
       </div>
     </motion.div>
   );
