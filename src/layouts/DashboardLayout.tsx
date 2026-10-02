@@ -75,7 +75,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             className="flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-full bg-content text-canvas hover:opacity-90 transition-all shadow-lg"
           >
             <Plus size={14} strokeWidth={2} /> 
-            <span className="hidden sm:inline">Add Target</span>
+            <span className="hidden sm:inline">Add Competitor</span>
           </button>
           
           <button 
