@@ -38,15 +38,15 @@ export const SettingsUI = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-semibold text-content mb-2">My Company URL</label>
-              <input type="url" value={ownUrl} onChange={e => setOwnUrl(e.target.value)} placeholder="https://acme.com" className="w-full bg-surface/60 backdrop-blur-md border border-line rounded-lg p-3 text-sm text-content focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all" />
+              <input type="url" value={ownUrl} onChange={e => setOwnUrl(e.target.value)} placeholder="https://acme.com" className="w-full bg-surface/60  border border-line rounded-lg p-3 text-sm text-content focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all" />
             </div>
             <div>
               <label className="block text-sm font-semibold text-content mb-2">Primary Competitor URL</label>
-              <input type="url" value={compUrl} onChange={e => setCompUrl(e.target.value)} placeholder="https://competitor.com" className="w-full bg-surface/60 backdrop-blur-md border border-line rounded-lg p-3 text-sm text-content focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all" />
+              <input type="url" value={compUrl} onChange={e => setCompUrl(e.target.value)} placeholder="https://competitor.com" className="w-full bg-surface/60  border border-line rounded-lg p-3 text-sm text-content focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all" />
             </div>
           </div>
           <div className="flex justify-end pt-4">
-            <button onClick={handleSaveWorkspace} className="bg-violet-600 hover:bg-violet-700 text-inverted px-5 py-2.5 rounded-lg text-sm font-bold transition-all shadow-lg shadow-violet-900/20 hover:shadow-violet-900/40 flex items-center gap-2 transform hover:-translate-y-0.5">
+            <button onClick={handleSaveWorkspace} className="bg-brand-emerald hover:bg-brand-dark text-inverted px-5 py-2.5 rounded-lg text-sm font-bold transition-all shadow-lg shadow-brand-emerald/20 hover:shadow-brand-emerald/40 flex items-center gap-2 transform hover:-translate-y-0.5">
               <Save size={16} /> Save Workspace
             </button>
           </div>
@@ -63,11 +63,11 @@ export const SettingsUI = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-semibold text-content mb-2">Vectorize Key (Hindsight)</label>
-              <input type="password" placeholder="sk-..." className="w-full bg-surface/60 backdrop-blur-md border border-line rounded-lg p-3 text-sm text-content focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all" />
+              <input type="password" placeholder="sk-..." className="w-full bg-surface/60  border border-line rounded-lg p-3 text-sm text-content focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all" />
             </div>
             <div>
               <label className="block text-sm font-semibold text-content mb-2">Jina AI Key</label>
-              <input type="password" placeholder="jina-..." className="w-full bg-surface/60 backdrop-blur-md border border-line rounded-lg p-3 text-sm text-content focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all" />
+              <input type="password" placeholder="jina-..." className="w-full bg-surface/60  border border-line rounded-lg p-3 text-sm text-content focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all" />
             </div>
           </div>
           <div className="flex justify-end pt-4">

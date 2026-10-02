@@ -1,4 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap');
+with open('src/index.css', 'r') as f:
+    content = f.read()
+
+# Let's replace the whole :root section
+new_css = """@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -114,3 +118,7 @@ body {
   border: 1px solid var(--glass-border);
   pointer-events: none;
 }
+"""
+
+with open('src/index.css', 'w') as f:
+    f.write(new_css)

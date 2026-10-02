@@ -36,10 +36,10 @@ export const CompareHub = () => {
           <div className="flex gap-3 w-full sm:w-auto">
             <div className="relative flex-1 sm:flex-none">
               <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
-              <input type="text" placeholder="Search..." className="w-full sm:w-auto bg-surface/60 backdrop-blur-md border border-line rounded-lg pl-9 pr-3 py-2 text-sm text-content focus:outline-none focus:border-violet-500 transition-colors" />
+              <input type="text" placeholder="Search..." className="w-full sm:w-auto bg-surface/60  border border-line rounded-lg pl-9 pr-3 py-2 text-sm text-content focus:outline-none focus:border-violet-500 transition-colors" />
             </div>
           </div>
-          <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => alert("Initiating deep comparison matrix using Hindsight Context...")} className="w-full sm:w-auto bg-violet-600 hover:bg-violet-700 text-inverted text-sm font-semibold px-5 py-2 rounded-lg transition-colors shadow-sm">
+          <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => alert("Initiating deep comparison matrix using Hindsight Context...")} className="w-full sm:w-auto bg-brand-emerald hover:bg-brand-dark text-inverted text-sm font-semibold px-5 py-2 rounded-lg transition-colors shadow-sm">
             Compare
           </motion.button>
         </div>
@@ -48,7 +48,7 @@ export const CompareHub = () => {
           <table className="w-full text-left text-sm">
             <thead className="bg-canvas border-b border-line text-muted font-medium tracking-wide">
               <tr>
-                <th className="p-4 w-12"><input type="checkbox" className="rounded border-line-hover bg-surface/60 backdrop-blur-md" /></th>
+                <th className="p-4 w-12"><input type="checkbox" className="rounded border-line-hover bg-surface/60 " /></th>
                 <th className="p-4 uppercase text-xs tracking-wider">Competitor</th>
                 <th className="p-4 uppercase text-xs tracking-wider">Category</th>
                 <th className="p-4 uppercase text-xs tracking-wider">Pricing</th>
@@ -61,11 +61,11 @@ export const CompareHub = () => {
             <tbody className="divide-y divide-white/5">
               {compUrl ? (
               <tr className="hover:bg-surface/40 backdrop-blur-sm transition-colors group">
-                <td className="p-4"><input type="checkbox" className="rounded border-line-hover bg-surface/60 backdrop-blur-md" /></td>
+                <td className="p-4"><input type="checkbox" className="rounded border-line-hover bg-surface/60 " /></td>
                 <td className="p-4">
                   <div className="flex items-center gap-2 text-content font-medium">
                     {getDomain(compUrl)}
-                    <a href={compUrl} target="_blank" rel="noreferrer"><ExternalLink size={14} className="text-muted hover:text-violet-400 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity" /></a>
+                    <a href={compUrl} target="_blank" rel="noreferrer"><ExternalLink size={14} className="text-muted hover:text-brand-mint cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity" /></a>
                   </div>
                 </td>
                 <td className="p-4 text-muted">Technology</td>

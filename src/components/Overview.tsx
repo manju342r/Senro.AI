@@ -7,51 +7,18 @@ import {
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-export const Overview = () => {
-  const navigate = useNavigate();
-  const { supabase, ingestToHindsight } = useData();
-  const [ownUrl] = useState(() => localStorage.getItem('ownUrl') || 'https://acme.com');
-  const [compUrl] = useState(() => localStorage.getItem('compUrl') || '');
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState<any>(() => {
-    try {
-      const stored = localStorage.getItem('overviewData');
-      return stored ? JSON.parse(stored) : null;
-    } catch { return null; }
-  });
 
-  const mockTimelineData = [
-    { name: 'Mon', threat: 20, signals: 1 },
-    { name: 'Tue', threat: 35, signals: 3 },
-    { name: 'Wed', threat: 30, signals: 2, annotation: "Hindsight: Competitor updated checkout flow" },
-    { name: 'Thu', threat: 50, signals: 5 },
-    { name: 'Fri', threat: 45, signals: 4 },
-    { name: 'Sat', threat: 60, signals: 7, annotation: "Hindsight: Enterprise pricing tier detected" },
-    { name: 'Sun', threat: 75, signals: 8 },
-  ];
-  
-  const CustomTooltip = ({ active, payload, label }: any) => {
-    if (active && payload && payload.length) {
-      const data = payload[0].payload;
-      return (
-        <motion.div 
-          initial={{ opacity: 0, y: 5 }} 
-          animate={{ opacity: 1, y: 0 }} 
-          className="bg-[#18181b] border border-line-hover/50 p-4 rounded-2xl shadow-2xl backdrop-blur-md"
-        >
-          <p className="text-content font-bold mb-1">{label}</p>
-          <p className="text-violet-400 text-sm font-medium">Threat Score: {data.threat}</p>
-          {data.annotation && (
-            <div className="mt-3 pt-3 border-t border-line max-w-[220px]">
-              <p className="text-xs text-amber-400 font-bold flex items-center gap-1.5 uppercase tracking-wider"><Zap size={12} /> Memory Annotation</p>
-              <p className="text-xs text-content mt-1.5 leading-relaxed">{data.annotation}</p>
-            </div>
-          )}
-        </motion.div>
-      );
-    }
-    return null;
-  };
+const MetricCard = ({ title, value, icon: Icon, iconColor, subtext }: { title: string, value: string | number, icon?: any, iconColor?: string, subtext?: string }) => (
+  <motion.div variants={itemVariants} whileHover={{ y: -4 }} className="bg-surface/80 backdrop-blur-xl/90 border border-line/80 hover:border-line-hover p-6 rounded-2xl flex flex-col justify-between shadow-lg transition-colors group">
+    <div className="text-xs font-bold text-muted tracking-widest uppercase">{title}</div>
+    <div className="mt-5 flex items-end justify-between">
+      <div className="text-4xl font-black text-content tracking-tight">{value}</div>
+      {Icon && <Icon size={24} className={`${iconColor} mb-1 opacity-80 group-hover:opacity-100 transition-opacity`} />}
+      {subtext && <div className="text-xs uppercase tracking-widest text-muted font-medium mb-1">{subtext}</div>}
+    </div>
+  </motion.div>
+);
+
 
   const [emailing, setEmailing] = useState(false);
   
@@ -132,11 +99,7 @@ export const Overview = () => {
     }
   };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
-  };
-
+  
   return (
     <motion.div 
       variants={containerVariants}
@@ -159,7 +122,7 @@ export const Overview = () => {
             whileTap={{ scale: 0.98 }}
             onClick={handleEmailReport}
             disabled={emailing || loading}
-            className="flex-1 sm:flex-none flex justify-center items-center gap-2 bg-surface/60 backdrop-blur-md/80 border border-line hover:border-line-hover hover:bg-surface-hover text-content px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all disabled:opacity-50 backdrop-blur-sm shadow-sm"
+            className="flex-1 sm:flex-none flex justify-center items-center gap-2 bg-surface/60 /80 border border-line hover:border-line-hover hover:bg-surface-hover text-content px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all disabled:opacity-50 backdrop-blur-sm shadow-sm"
           >
             {emailing ? <Activity size={16} className="animate-spin text-muted" /> : <Mail size={16} className="text-muted" />}
             {emailing ? 'Sending...' : 'Email Report'}
@@ -169,7 +132,7 @@ export const Overview = () => {
             whileTap={{ scale: 0.98 }}
             onClick={handleScan}
             disabled={loading}
-            className="flex-1 sm:flex-none flex justify-center items-center gap-2 bg-surface/60 backdrop-blur-md/80 border border-line hover:border-line-hover hover:bg-surface-hover text-content px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all disabled:opacity-50 backdrop-blur-sm shadow-sm"
+            className="flex-1 sm:flex-none flex justify-center items-center gap-2 bg-surface/60 /80 border border-line hover:border-line-hover hover:bg-surface-hover text-content px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all disabled:opacity-50 backdrop-blur-sm shadow-sm"
           >
             {loading ? <Activity size={16} className="animate-spin text-violet-500" /> : <Zap size={16} className="text-amber-500" />}
             {loading ? 'Analyzing...' : 'Trigger Scan'}
@@ -179,42 +142,15 @@ export const Overview = () => {
 
       {/* Top Metrics Row */}
       <motion.div variants={containerVariants} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-        <motion.div variants={itemVariants} whileHover={{ y: -4 }} className="bg-surface/80 backdrop-blur-xl/90 backdrop-blur-md border border-line/80 hover:border-line-hover p-6 rounded-2xl flex flex-col justify-between shadow-lg transition-colors group">
-          <div className="text-xs font-bold text-muted tracking-widest uppercase">Strategic Gap Index</div>
-          <div className="mt-5 flex items-end justify-between">
-            <div className="text-4xl font-black text-content tracking-tight">{loading ? '--' : (data ? data.strategic_gap_index : '--')}</div>
-            <TrendingUp size={24} className="text-emerald-500 mb-1 opacity-80 group-hover:opacity-100 transition-opacity" />
-          </div>
-        </motion.div>
-        
-        <motion.div variants={itemVariants} whileHover={{ y: -4 }} className="bg-surface/80 backdrop-blur-xl/90 backdrop-blur-md border border-line/80 hover:border-line-hover p-6 rounded-2xl flex flex-col justify-between shadow-lg transition-colors group">
-          <div className="text-xs font-bold text-muted tracking-widest uppercase">Traffic Impact</div>
-          <div className="mt-5 flex items-end justify-between">
-            <div className="text-3xl font-black text-content tracking-tight">{loading ? '--' : (data ? data.net_traffic_impact : '--')}</div>
-            <Activity size={24} className="text-violet-500 mb-1 opacity-80 group-hover:opacity-100 transition-opacity" />
-          </div>
-        </motion.div>
-
-        <motion.div variants={itemVariants} whileHover={{ y: -4 }} className="bg-surface/80 backdrop-blur-xl/90 backdrop-blur-md border border-line/80 hover:border-line-hover p-6 rounded-2xl flex flex-col justify-between shadow-lg transition-colors group">
-          <div className="text-xs font-bold text-muted tracking-widest uppercase">Threat Level</div>
-          <div className="mt-5 flex items-end justify-between">
-            <div className="text-3xl font-black text-content capitalize tracking-tight">{loading ? '--' : (data ? data.risk_level : '--')}</div>
-            <AlertTriangle size={24} className={data?.risk_level === 'High' ? 'text-red-500 mb-1 opacity-80 group-hover:opacity-100 transition-opacity' : 'text-amber-500 mb-1 opacity-80 group-hover:opacity-100 transition-opacity'} />
-          </div>
-        </motion.div>
-
-        <motion.div variants={itemVariants} whileHover={{ y: -4 }} className="bg-surface/80 backdrop-blur-xl/90 backdrop-blur-md border border-line/80 hover:border-line-hover p-6 rounded-2xl flex flex-col justify-between shadow-lg transition-colors group">
-          <div className="text-xs font-bold text-muted tracking-widest uppercase">Recent Signals</div>
-          <div className="mt-5 flex items-end justify-between">
-            <div className="text-4xl font-black text-content tracking-tight">{loading ? '--' : (data ? data.signals_24h : '--')}</div>
-            <div className="text-sm font-medium text-muted mb-1.5">{loading ? '--' : (data ? data.signals_total : '--')} total</div>
-          </div>
-        </motion.div>
+        <MetricCard title="Strategic Gap Index" value={loading ? '--' : (data ? data.strategic_gap_index : '--')} icon={TrendingUp} iconColor="text-emerald-500" />
+        <MetricCard title="Traffic Impact" value={loading ? '--' : (data ? data.net_traffic_impact : '--')} icon={Activity} iconColor="text-violet-500" />
+        <MetricCard title="Threat Level" value={loading ? '--' : (data ? data.threat_level : '--')} icon={AlertTriangle} iconColor="text-amber-500" />
+        <MetricCard title="Recent Signals" value={loading ? '--' : (data ? data.signals_24h : '--')} subtext={`${loading ? '--' : (data ? data.signals_total : '--')} total`} />
       </motion.div>
 
       {/* Charts Row */}
       <motion.div variants={itemVariants} className="grid grid-cols-1 gap-6">
-        <div className="bg-surface/80 backdrop-blur-xl/90 backdrop-blur-md border border-line/80 p-6 sm:p-8 rounded-2xl shadow-lg">
+        <div className="bg-surface/80 backdrop-blur-xl/90  border border-line/80 p-6 sm:p-8 rounded-2xl shadow-lg">
           <h3 className="text-sm font-bold text-content mb-6 uppercase tracking-widest flex items-center gap-2">
             Threat Score Timeline <span className="text-muted font-medium normal-case tracking-normal">(7 Days)</span>
           </h3>
@@ -258,9 +194,9 @@ export const Overview = () => {
         {/* LEFT COLUMN (60%) */}
         <div className="lg:col-span-3 space-y-6 flex flex-col">
           {data?.analysis_summary && (
-            <motion.div variants={itemVariants} className="bg-blue-900/10 border border-violet-500/30 p-6 sm:p-8 rounded-2xl relative overflow-hidden shadow-lg">
+            <motion.div variants={itemVariants} className="bg-blue-900/10 border border-brand-emerald/30 p-6 sm:p-8 rounded-2xl relative overflow-hidden shadow-lg">
               <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-violet-400 to-violet-600"></div>
-              <h3 className="text-sm font-bold text-violet-400 mb-3 flex items-center gap-2 uppercase tracking-widest">
+              <h3 className="text-sm font-bold text-content text-xs uppercase tracking-widest mb-3 flex items-center gap-2 uppercase tracking-widest">
                 <Zap size={16} /> AI Executive Summary
               </h3>
               <p className="text-content text-sm sm:text-base leading-relaxed">
@@ -269,7 +205,7 @@ export const Overview = () => {
             </motion.div>
           )}
           
-          <motion.div variants={itemVariants} className="bg-surface/80 backdrop-blur-xl/90 backdrop-blur-md border border-line/80 p-6 sm:p-8 rounded-2xl shadow-lg flex-1">
+          <motion.div variants={itemVariants} className="bg-surface/80 backdrop-blur-xl/90  border border-line/80 p-6 sm:p-8 rounded-2xl shadow-lg flex-1">
             <h3 className="text-sm font-bold text-content mb-6 uppercase tracking-widest">Raw Live Signals</h3>
             <div className="space-y-4">
               {[
@@ -296,7 +232,7 @@ export const Overview = () => {
         </div>
 
         {/* RIGHT COLUMN (40%) */}
-        <motion.div variants={itemVariants} className="lg:col-span-2 bg-surface/80 backdrop-blur-xl/90 backdrop-blur-md border border-line/80 p-6 sm:p-8 rounded-2xl flex flex-col shadow-lg">
+        <motion.div variants={itemVariants} className="lg:col-span-2 bg-surface/80 backdrop-blur-xl/90  border border-line/80 p-6 sm:p-8 rounded-2xl flex flex-col shadow-lg">
           <h3 className="text-sm font-bold text-content mb-6 uppercase tracking-widest">Recommended Actions</h3>
           <div className="space-y-6 flex-1">
             <div className="group">
@@ -308,7 +244,7 @@ export const Overview = () => {
               <p className="text-sm text-muted leading-relaxed group-hover:text-content transition-colors">Launch a comparison battlecard specifically targeting their missing SSO integration.</p>
             </div>
             <div className="group">
-              <span className="text-xs font-bold text-violet-400 bg-blue-400/10 border border-violet-500/20 px-2.5 py-1 rounded-md tracking-wider uppercase inline-block mb-3 transition-colors group-hover:bg-blue-400/20">Sales Enablement</span>
+              <span className="text-xs font-bold text-content text-xs uppercase tracking-widest bg-blue-400/10 border border-brand-emerald/20 px-2.5 py-1 rounded-md tracking-wider uppercase inline-block mb-3 transition-colors group-hover:bg-blue-400/20">Sales Enablement</span>
               <p className="text-sm text-muted leading-relaxed group-hover:text-content transition-colors">Equip SDRs with objection handling for the competitor's new checkout flow changes.</p>
             </div>
           </div>
@@ -316,7 +252,7 @@ export const Overview = () => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => navigate('/dashboard/battlecards')}
-            className="w-full mt-8 py-3 bg-surface/60 backdrop-blur-md border border-line-hover/50 hover:bg-surface-hover hover:border-zinc-600 text-content rounded-2xl text-sm font-bold transition-all shadow-sm"
+            className="w-full mt-8 py-3 bg-surface/60  border border-line-hover/50 hover:bg-surface-hover hover:border-zinc-600 text-content rounded-2xl text-sm font-bold transition-all shadow-sm"
           >
             Generate Counter-Moves
           </motion.button>

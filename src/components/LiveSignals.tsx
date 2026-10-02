@@ -40,7 +40,7 @@ export const LiveSignals = () => {
       </motion.div>
 
       <motion.div variants={itemVariants} whileHover={{ y: -4 }} className="border border-dashed border-line rounded-2xl flex flex-col items-center justify-center p-24 text-center bg-surface/30 backdrop-blur-sm transition-colors hover:border-line-hover hover:bg-surface/50">
-        <div className="w-16 h-16 bg-surface/60 backdrop-blur-md rounded-full flex items-center justify-center mb-4">
+        <div className="w-16 h-16 bg-surface/60  rounded-full flex items-center justify-center mb-4">
           <Activity size={32} className="text-muted" />
         </div>
         <h3 className="text-content font-medium mb-1">No signals recorded yet</h3>

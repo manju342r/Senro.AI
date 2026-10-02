@@ -17,15 +17,15 @@ export const BattlecardsList = () => {
       </motion.div>
 
       <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <motion.div whileHover={{ y: -4 }} className="bg-surface/80 backdrop-blur-xl border border-line hover:border-violet-500/30 p-6 rounded-2xl flex flex-col justify-between shadow-lg transition-colors group">
+        <motion.div whileHover={{ y: -4 }} className="bg-surface/80 backdrop-blur-xl border border-line hover:border-brand-emerald/30 p-6 rounded-2xl flex flex-col justify-between shadow-lg transition-colors group">
           <div>
             <div className="flex justify-between items-start mb-4">
-              <div className="w-10 h-10 bg-violet-500/10 rounded-xl flex items-center justify-center text-violet-400 group-hover:scale-110 transition-transform">
+              <div className="w-10 h-10 bg-violet-500/10 rounded-xl flex items-center justify-center text-brand-mint group-hover:scale-110 transition-transform">
                 <FileText size={20} />
               </div>
               <span className="text-xs font-bold text-muted tracking-widest uppercase">Pricing Objection</span>
             </div>
-            <h3 className="text-lg font-bold text-content mb-2 group-hover:text-violet-400 transition-colors">Enterprise Tier Objection Handling</h3>
+            <h3 className="text-lg font-bold text-content mb-2 group-hover:text-brand-mint transition-colors">Enterprise Tier Objection Handling</h3>
             <p className="text-muted text-sm leading-relaxed mb-6">Generated 2 days ago after competitor updated their standard pricing model to obscure enterprise limits.</p>
           </div>
           <div className="flex items-center gap-3">
