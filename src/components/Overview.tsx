@@ -47,15 +47,6 @@ const MetricCard = ({ title, value, icon: Icon, iconColor, subtext }: { title: s
     } catch { return null; }
   });
 
-  const mockTimelineData = [
-    { name: 'Mon', threat: 20, signals: 1 },
-    { name: 'Tue', threat: 35, signals: 3 },
-    { name: 'Wed', threat: 30, signals: 2, annotation: "Hindsight: Competitor updated checkout flow" },
-    { name: 'Thu', threat: 50, signals: 5 },
-    { name: 'Fri', threat: 45, signals: 4 },
-    { name: 'Sat', threat: 60, signals: 7, annotation: "Hindsight: Enterprise pricing tier detected" },
-    { name: 'Sun', threat: 75, signals: 8 },
-  ];
   
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
@@ -198,7 +189,7 @@ const MetricCard = ({ title, value, icon: Icon, iconColor, subtext }: { title: s
       <motion.div variants={containerVariants} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         <MetricCard title="Strategic Gap Index" value={loading ? '--' : (data ? data.strategic_gap_index : '--')} icon={TrendingUp} iconColor="text-emerald-500" />
         <MetricCard title="Traffic Impact" value={loading ? '--' : (data ? data.net_traffic_impact : '--')} icon={Activity} iconColor="text-violet-500" />
-        <MetricCard title="Threat Level" value={loading ? '--' : (data ? data.threat_level : '--')} icon={AlertTriangle} iconColor="text-amber-500" />
+        <MetricCard title="Threat Level" value={loading ? '--' : (data ? data.risk_level : '--')} icon={AlertTriangle} iconColor="text-amber-500" />
         <MetricCard title="Recent Signals" value={loading ? '--' : (data ? data.signals_24h : '--')} subtext={`${loading ? '--' : (data ? data.signals_total : '--')} total`} />
       </motion.div>
 
@@ -210,7 +201,7 @@ const MetricCard = ({ title, value, icon: Icon, iconColor, subtext }: { title: s
           </h3>
           <div className="h-64 sm:h-80 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={mockTimelineData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+              <AreaChart data={data?.timeline_data || []} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorThreat" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.4}/>
@@ -259,14 +250,14 @@ const MetricCard = ({ title, value, icon: Icon, iconColor, subtext }: { title: s
             </motion.div>
           )}
           
-          <motion.div variants={itemVariants} className="bg-surface/80 backdrop-blur-xl/90  border border-line/80 p-6 sm:p-8 rounded-2xl shadow-lg flex-1">
+          <motion.div variants={itemVariants} className="bg-surface/80 backdrop-blur-xl/90 border border-line/80 p-6 sm:p-8 rounded-2xl shadow-lg flex-1">
             <h3 className="text-sm font-bold text-content mb-6 uppercase tracking-widest">Raw Live Signals</h3>
             <div className="space-y-4">
-              {[
-                { status: 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]', text: 'Pricing page frequency increased (+12%)', time: '2h ago' },
-                { status: 'bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.5)]', text: 'New "Enterprise" feature tier launched on homepage', time: '12h ago' },
-                { status: 'bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]', text: 'Checkout flow updated to require work email', time: '1d ago' }
-              ].map((sig, i) => (
+              {(!data?.raw_signals ? [] : data.raw_signals).map((sig: any, i: number) => {
+                const statusColor = sig.urgency === 'high' ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]' 
+                  : sig.urgency === 'medium' ? 'bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.5)]' 
+                  : 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]';
+                return (
                 <motion.div 
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -275,12 +266,14 @@ const MetricCard = ({ title, value, icon: Icon, iconColor, subtext }: { title: s
                   className="flex items-start justify-between gap-4 border-b border-line/50 pb-4 last:border-0 last:pb-0"
                 >
                   <div className="flex items-start gap-4">
-                    <div className={"w-2.5 h-2.5 rounded-full mt-1.5 flex-shrink-0 " + sig.status}></div>
+                    <div className={"w-2.5 h-2.5 rounded-full mt-1.5 flex-shrink-0 " + statusColor}></div>
                     <p className="text-sm text-content leading-snug font-medium">{sig.text}</p>
                   </div>
                   <span className="text-xs text-muted font-medium flex-shrink-0">{sig.time}</span>
                 </motion.div>
-              ))}
+                );
+              })}
+              {(!data || !data.raw_signals) && <p className="text-sm text-muted">No recent signals detected.</p>}
             </div>
           </motion.div>
         </div>

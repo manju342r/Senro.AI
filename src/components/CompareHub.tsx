@@ -68,11 +68,11 @@ export const CompareHub = () => {
                     <a href={compUrl} target="_blank" rel="noreferrer"><ExternalLink size={14} className="text-muted hover:text-brand-mint cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity" /></a>
                   </div>
                 </td>
-                <td className="p-4 text-muted">Technology</td>
+                <td className="p-4 text-muted">{data?.category || "Unknown"}</td>
                 <td className="p-4 text-muted capitalize">{data?.risk_level === "High" ? "Enterprise" : "Standard"}</td>
                 <td className="p-4">
                   <div className="w-24 h-2 bg-surface-hover rounded-full overflow-hidden shadow-inner">
-                    <div className="h-full bg-gradient-to-r from-emerald-400 to-emerald-600 w-[75%]"></div>
+                    <div className="h-full bg-gradient-to-r from-emerald-400 to-emerald-600" style={{ width: `${data?.sentiment_score || 50}%` }}></div>
                   </div>
                 </td>
                 <td className="p-4">
