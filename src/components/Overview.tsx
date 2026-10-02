@@ -8,6 +8,20 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
 
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { type: "spring" as any, stiffness: 300, damping: 24 } }
+};
+
 const MetricCard = ({ title, value, icon: Icon, iconColor, subtext }: { title: string, value: string | number, icon?: any, iconColor?: string, subtext?: string }) => (
   <motion.div variants={itemVariants} whileHover={{ y: -4 }} className="bg-surface/80 backdrop-blur-xl/90 border border-line/80 hover:border-line-hover p-6 rounded-2xl flex flex-col justify-between shadow-lg transition-colors group">
     <div className="text-xs font-bold text-muted tracking-widest uppercase">{title}</div>
@@ -135,13 +149,9 @@ const MetricCard = ({ title, value, icon: Icon, iconColor, subtext }: { title: s
     }
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 }
-    }
-  };
+
+
+
 
   
   return (
