@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Target, CheckCircle2, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useData } from '../contexts/DataContext';
 
 // --- ONBOARDING FLOW ---
 const OnboardingLayout = ({ children, step }: { children: React.ReactNode, step: number }) => (
@@ -32,6 +33,7 @@ const OnboardingLayout = ({ children, step }: { children: React.ReactNode, step:
 const OnboardingStep1 = () => {
   const navigate = useNavigate();
   const [url, setUrl] = useState('');
+  const { supabase } = useData();
   
   return (
     <OnboardingLayout step={1}>
@@ -39,8 +41,16 @@ const OnboardingStep1 = () => {
       <p className="text-muted mb-6 text-sm">Tell us about your company so we can monitor your own visibility baseline.</p>
       <form onSubmit={(e) => { 
         e.preventDefault(); 
-        if(url) localStorage.setItem('ownUrl', url);
-        navigate('/onboarding/step-2'); 
+        
+        if(url) {
+          localStorage.setItem('ownUrl', url);
+          supabase.auth.updateUser({ data: { ownUrl: url } }).then(() => {
+            navigate('/onboarding/step-2');
+          });
+        } else {
+          navigate('/onboarding/step-2');
+        }
+ 
       }} className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-muted mb-1">Company Name</label>
@@ -62,10 +72,14 @@ const OnboardingStep2 = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = React.useState(false);
   const [compUrl, setCompUrl] = useState('');
+  const { supabase } = useData();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if(compUrl) localStorage.setItem('compUrl', compUrl);
+    if(compUrl) {
+      localStorage.setItem('compUrl', compUrl);
+      await supabase.auth.updateUser({ data: { compUrl: compUrl } });
+    }
     setLoading(true);
     try {
       const res = await fetch('/api/config-status');

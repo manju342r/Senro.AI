@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Save, Key, Globe } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useData } from '../contexts/DataContext';
 
 export const SettingsUI = () => {
   const [ownUrl, setOwnUrl] = useState('');
   const [compUrl, setCompUrl] = useState('');
+  const { supabase } = useData();
 
   useEffect(() => {
     setOwnUrl(localStorage.getItem('ownUrl') || '');
     setCompUrl(localStorage.getItem('compUrl') || '');
   }, []);
 
-  const handleSaveWorkspace = () => {
+  const handleSaveWorkspace = async () => {
     if (ownUrl) localStorage.setItem('ownUrl', ownUrl);
     if (compUrl) localStorage.setItem('compUrl', compUrl);
+    await supabase.auth.updateUser({ data: { ownUrl: ownUrl, compUrl: compUrl } });
     alert("Workspace settings saved. Reloading to apply changes...");
     window.location.reload();
   };

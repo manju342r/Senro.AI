@@ -27,6 +27,21 @@ const DataContext = createContext<DataContextType | undefined>(undefined);
 
 export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   
+  // Sync Supabase user_metadata to localStorage on auth state change
+  React.useEffect(() => {
+    const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (session?.user?.user_metadata) {
+        const { ownUrl, compUrl } = session.user.user_metadata;
+        if (ownUrl) localStorage.setItem('ownUrl', ownUrl);
+        if (compUrl) localStorage.setItem('compUrl', compUrl);
+      }
+    });
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, []);
+
+  
   // 1. Ingestion: Push summarized signal into Hindsight for the competitor
   const ingestToHindsight = async (competitorId: string, summary: string) => {
     try {
