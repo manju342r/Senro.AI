@@ -55,32 +55,38 @@ const AuthScreen = ({ isLogin }: { isLogin: boolean }) => {
   };
 
   return (
-    <div className="min-h-screen bg-canvas text-content flex items-center justify-center p-6 sm:p-8">
-      <div className="w-full max-w-md space-y-8 bg-surface p-8 sm:p-10 rounded-2xl border border-line shadow-2xl">
+    <div className="min-h-screen bg-[#09090b] text-zinc-900 flex items-center justify-center p-6 sm:p-8">
+      <div className="w-full max-w-md space-y-8 bg-white p-8 sm:p-10 rounded-2xl shadow-2xl border border-zinc-100">
         <div className="text-center">
           <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="bg-content p-2.5 rounded-xl shadow-md">
-              <Target size={24} className="text-canvas" />
+            <div className="bg-zinc-900 p-2.5 rounded-xl shadow-md">
+              <Target size={24} className="text-white" />
             </div>
-            <h1 className="text-2xl font-bold tracking-tight text-content">Senro.AI</h1>
+            <h1 className="text-2xl font-bold tracking-tight text-zinc-900">Senro.AI</h1>
           </div>
-          <h2 className="text-xl font-semibold text-content tracking-tight">
+          <h2 className="text-xl font-semibold text-zinc-900 tracking-tight">
             {isLogin ? 'Welcome back' : 'Create your account'}
           </h2>
         </div>
         
         <form className="space-y-5" onSubmit={handleSubmit}>
           {error && (
-            <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-sm text-red-400">
+            <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-600">
               {error}
             </div>
           )}
           <div>
-            <label className="block text-sm font-medium text-muted mb-1.5">Email address</label>
-            <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="w-full bg-canvas border border-line rounded-lg p-3 text-content focus:border-content focus:outline-none focus:ring-1 focus:ring-content transition-all" />
+            <label className="block text-sm font-medium text-zinc-600 mb-1.5">Email address</label>
+            <input 
+              type="email" 
+              required 
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)} 
+              className="w-full bg-zinc-50 border border-zinc-200 rounded-lg p-3 text-zinc-900 focus:border-zinc-900 focus:outline-none focus:ring-1 focus:ring-zinc-900 transition-all" 
+            />
           </div>
           <div>
-            <label className="block text-sm font-medium text-muted mb-1.5">Password</label>
+            <label className="block text-sm font-medium text-zinc-600 mb-1.5">Password</label>
             <div className="relative">
               <input 
                 type={showPassword ? "text" : "password"} 
@@ -88,12 +94,12 @@ const AuthScreen = ({ isLogin }: { isLogin: boolean }) => {
                 minLength={8} 
                 value={password} 
                 onChange={(e) => setPassword(e.target.value)} 
-                className="w-full bg-canvas border border-line rounded-lg p-3 pr-10 text-content focus:border-content focus:outline-none focus:ring-1 focus:ring-content transition-all" 
+                className="w-full bg-zinc-50 border border-zinc-200 rounded-lg p-3 pr-10 text-zinc-900 focus:border-zinc-900 focus:outline-none focus:ring-1 focus:ring-zinc-900 transition-all" 
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-content transition-colors"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-900 transition-colors"
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
@@ -103,7 +109,7 @@ const AuthScreen = ({ isLogin }: { isLogin: boolean }) => {
                 <button 
                   type="button" 
                   onClick={handleForgotPassword}
-                  className="text-xs text-muted hover:text-content font-medium transition-colors"
+                  className="text-xs text-zinc-500 hover:text-zinc-900 font-medium transition-colors"
                 >
                   Forgot password?
                 </button>
@@ -111,14 +117,18 @@ const AuthScreen = ({ isLogin }: { isLogin: boolean }) => {
             )}
           </div>
           
-          <button type="submit" disabled={loading} className="w-full bg-content text-canvas hover:opacity-90 disabled:opacity-50 font-semibold py-3 rounded-lg transition-all mt-6 shadow-md">
+          <button 
+            type="submit" 
+            disabled={loading} 
+            className="w-full bg-zinc-900 hover:bg-black disabled:opacity-50 text-white font-semibold py-3 rounded-lg transition-all mt-6 shadow-md"
+          >
             {loading ? 'Processing...' : (isLogin ? 'Sign In' : 'Sign Up')}
           </button>
         </form>
 
-        <p className="text-center text-sm text-muted">
+        <p className="text-center text-sm text-zinc-500">
           {isLogin ? "Don't have an account? " : "Already have an account? "}
-          <Link to={isLogin ? "/signup" : "/login"} className="text-content hover:underline font-semibold transition-colors">
+          <Link to={isLogin ? "/signup" : "/login"} className="text-zinc-900 hover:underline font-semibold transition-colors">
             {isLogin ? "Sign up" : "Log in"}
           </Link>
         </p>
