@@ -58,7 +58,7 @@ const MetricCard = ({ title, value, icon: Icon, iconColor, subtext }: { title: s
           className="bg-[#18181b] border border-line-hover/50 p-4 rounded-2xl shadow-2xl backdrop-blur-md"
         >
           <p className="text-content font-bold mb-1">{label}</p>
-          <p className="text-violet-400 text-sm font-medium">Threat Score: {data.threat}</p>
+          <p className="text-muted text-sm font-medium">Threat Score: {data.threat}</p>
           {data.annotation && (
             <div className="mt-3 pt-3 border-t border-line max-w-[220px]">
               <p className="text-xs text-amber-400 font-bold flex items-center gap-1.5 uppercase tracking-wider"><Zap size={12} /> Memory Annotation</p>
@@ -179,7 +179,7 @@ const MetricCard = ({ title, value, icon: Icon, iconColor, subtext }: { title: s
             disabled={loading}
             className="flex-1 sm:flex-none flex justify-center items-center gap-2 bg-surface/60 /80 border border-line hover:border-line-hover hover:bg-surface-hover text-content px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all disabled:opacity-50 backdrop-blur-sm shadow-sm"
           >
-            {loading ? <Activity size={16} className="animate-spin text-violet-500" /> : <Zap size={16} className="text-amber-500" />}
+            {loading ? <Activity size={16} className="animate-spin text-content" /> : <Zap size={16} className="text-amber-500" />}
             {loading ? 'Analyzing...' : 'Trigger Scan'}
           </motion.button>
         </div>
@@ -188,7 +188,7 @@ const MetricCard = ({ title, value, icon: Icon, iconColor, subtext }: { title: s
       {/* Top Metrics Row */}
       <motion.div variants={containerVariants} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         <MetricCard title="Strategic Gap Index" value={loading ? '--' : (data ? data.strategic_gap_index : '--')} icon={TrendingUp} iconColor="text-emerald-500" />
-        <MetricCard title="Traffic Impact" value={loading ? '--' : (data ? data.net_traffic_impact : '--')} icon={Activity} iconColor="text-violet-500" />
+        <MetricCard title="Traffic Impact" value={loading ? '--' : (data ? data.net_traffic_impact : '--')} icon={Activity} iconColor="text-content" />
         <MetricCard title="Threat Level" value={loading ? '--' : (data ? data.risk_level : '--')} icon={AlertTriangle} iconColor="text-amber-500" />
         <MetricCard title="Recent Signals" value={loading ? '--' : (data ? data.signals_24h : '--')} subtext={`${loading ? '--' : (data ? data.signals_total : '--')} total`} />
       </motion.div>
@@ -240,7 +240,7 @@ const MetricCard = ({ title, value, icon: Icon, iconColor, subtext }: { title: s
         <div className="lg:col-span-3 space-y-6 flex flex-col">
           {data?.analysis_summary && (
             <motion.div variants={itemVariants} className="bg-blue-900/10 border border-brand-emerald/30 p-6 sm:p-8 rounded-2xl relative overflow-hidden shadow-lg">
-              <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-violet-400 to-violet-600"></div>
+              <div className="absolute top-0 left-0 w-1.5 h-full bg-content"></div>
               <h3 className="text-sm font-bold text-content text-xs uppercase tracking-widest mb-3 flex items-center gap-2 uppercase tracking-widest">
                 <Zap size={16} /> AI Executive Summary
               </h3>

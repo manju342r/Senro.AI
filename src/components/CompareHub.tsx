@@ -36,7 +36,7 @@ export const CompareHub = () => {
           <div className="flex gap-3 w-full sm:w-auto">
             <div className="relative flex-1 sm:flex-none">
               <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
-              <input type="text" placeholder="Search..." className="w-full sm:w-auto bg-surface/60  border border-line rounded-lg pl-9 pr-3 py-2 text-sm text-content focus:outline-none focus:border-violet-500 transition-colors" />
+              <input type="text" placeholder="Search..." className="w-full sm:w-auto bg-surface/60  border border-line rounded-lg pl-9 pr-3 py-2 text-sm text-content focus:outline-none focus:border-content transition-colors" />
             </div>
           </div>
           <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => alert("Initiating deep comparison matrix using Hindsight Context...")} className="w-full sm:w-auto bg-brand-emerald hover:bg-brand-dark text-inverted text-sm font-semibold px-5 py-2 rounded-lg transition-colors shadow-sm">

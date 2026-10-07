@@ -10,7 +10,7 @@ const OnboardingLayout = ({ children, step }: { children: React.ReactNode, step:
     <div className="w-full max-w-xl">
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-xl font-bold text-content flex items-center gap-2">
-          <Target size={20} className="text-violet-500" /> Senro.AI Setup
+          <Target size={20} className="text-content" /> Senro.AI Setup
         </h1>
         <div className="flex gap-2">
           {[1, 2, 3].map(i => (
@@ -54,11 +54,11 @@ const OnboardingStep1 = () => {
       }} className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-muted mb-1">Company Name</label>
-          <input type="text" required placeholder="e.g. Acme Corp" className="w-full bg-canvas border border-line rounded-lg p-3 text-content focus:border-violet-500 focus:outline-none" />
+          <input type="text" required placeholder="e.g. Acme Corp" className="w-full bg-canvas border border-line rounded-lg p-3 text-content focus:border-content focus:outline-none" />
         </div>
         <div>
           <label className="block text-sm font-medium text-muted mb-1">Company Website Link</label>
-          <input type="url" required value={url} onChange={e => setUrl(e.target.value)} placeholder="https://acme.com" className="w-full bg-canvas border border-line rounded-lg p-3 text-content focus:border-violet-500 focus:outline-none" />
+          <input type="url" required value={url} onChange={e => setUrl(e.target.value)} placeholder="https://acme.com" className="w-full bg-canvas border border-line rounded-lg p-3 text-content focus:border-content focus:outline-none" />
         </div>
         <button type="submit" className="w-full flex items-center justify-center gap-2 bg-brand-emerald hover:bg-brand-dark text-inverted font-medium py-3 rounded-lg transition-colors mt-6">
           Next Step <ArrowRight size={18} />
@@ -102,11 +102,11 @@ const OnboardingStep2 = () => {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-muted mb-1">Opponent Company Name</label>
-          <input type="text" required placeholder="e.g. Globex" className="w-full bg-canvas border border-line rounded-lg p-3 text-content focus:border-violet-500 focus:outline-none" />
+          <input type="text" required placeholder="e.g. Globex" className="w-full bg-canvas border border-line rounded-lg p-3 text-content focus:border-content focus:outline-none" />
         </div>
         <div>
           <label className="block text-sm font-medium text-muted mb-1">Opponent Website Link</label>
-          <input type="url" required value={compUrl} onChange={e => setCompUrl(e.target.value)} placeholder="https://globex.com" className="w-full bg-canvas border border-line rounded-lg p-3 text-content focus:border-violet-500 focus:outline-none" />
+          <input type="url" required value={compUrl} onChange={e => setCompUrl(e.target.value)} placeholder="https://globex.com" className="w-full bg-canvas border border-line rounded-lg p-3 text-content focus:border-content focus:outline-none" />
         </div>
         <button type="submit" disabled={loading} className="w-full flex items-center justify-center gap-2 bg-brand-emerald hover:bg-brand-dark disabled:opacity-50 text-inverted font-medium py-3 rounded-lg transition-colors mt-6">
           {loading ? 'Checking configuration...' : <>Next Step <ArrowRight size={18} /></>}
@@ -142,15 +142,15 @@ const OnboardingStep3 = () => {
           </div>
           <div>
             <label className="block text-xs font-medium text-muted mb-1">Vectorize Hindsight Key</label>
-            <input type="password" placeholder="Optional" className="w-full bg-canvas border border-line rounded-lg p-2.5 text-sm text-content focus:border-violet-500 focus:outline-none" />
+            <input type="password" placeholder="Optional" className="w-full bg-canvas border border-line rounded-lg p-2.5 text-sm text-content focus:border-content focus:outline-none" />
           </div>
           <div>
             <label className="block text-xs font-medium text-muted mb-1">Resend Key</label>
-            <input type="password" placeholder="Optional" className="w-full bg-canvas border border-line rounded-lg p-2.5 text-sm text-content focus:border-violet-500 focus:outline-none" />
+            <input type="password" placeholder="Optional" className="w-full bg-canvas border border-line rounded-lg p-2.5 text-sm text-content focus:border-content focus:outline-none" />
           </div>
           <div>
             <label className="block text-xs font-medium text-muted mb-1">LLM Key</label>
-            <input type="password" placeholder="Optional" className="w-full bg-canvas border border-line rounded-lg p-2.5 text-sm text-content focus:border-violet-500 focus:outline-none" />
+            <input type="password" placeholder="Optional" className="w-full bg-canvas border border-line rounded-lg p-2.5 text-sm text-content focus:border-content focus:outline-none" />
           </div>
         </div>
         <button type="submit" className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-inverted font-medium py-3 rounded-lg transition-colors mt-6 shadow-lg shadow-emerald-900/20">

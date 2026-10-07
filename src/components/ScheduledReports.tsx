@@ -86,7 +86,7 @@ export const ScheduledReports = () => {
       <motion.div variants={itemVariants} className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
         <div>
           <h2 className="text-3xl font-extrabold text-content flex items-center gap-2 tracking-tight">
-            <Calendar className="text-violet-500 mb-1" /> Automated Reports
+            <Calendar className="text-content mb-1" /> Automated Reports
           </h2>
           <p className="text-muted text-sm mt-1.5 font-medium">Configure your email intelligence summaries sent via Resend & Vercel Cron.</p>
         </div>
@@ -95,7 +95,7 @@ export const ScheduledReports = () => {
           whileTap={{ scale: 0.98 }}
           onClick={handleSendNow}
           disabled={sendingNow}
-          className="w-full sm:w-auto flex items-center justify-center gap-2 bg-brand-emerald hover:bg-blue-500 disabled:opacity-50 text-inverted px-5 py-2.5 rounded-2xl text-sm font-bold transition-colors shadow-lg shadow-brand-emerald/20"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 bg-content text-canvas hover:opacity-90 disabled:opacity-50 px-5 py-2.5 rounded-2xl text-sm font-bold transition-all shadow-lg"
         >
           {sendingNow ? <Activity size={18} className="animate-spin" /> : <Send size={18} />}
           {sendingNow ? 'Sending...' : 'Send Email Now'}
@@ -107,14 +107,13 @@ export const ScheduledReports = () => {
           variants={itemVariants}
           whileHover={{ y: -4 }}
           onClick={() => handleSaveFreq('daily')}
-          className={`cursor-pointer border rounded-2xl p-6 sm:p-8 transition-all shadow-lg backdrop-blur-sm relative overflow-hidden group ${reportFreq === 'daily' ? 'bg-violet-500/10 border-violet-500/50 shadow-brand-emerald/20' : 'bg-surface/80 backdrop-blur-xl/90 border-line/80 hover:border-line-hover'}`}
+          className={`cursor-pointer border rounded-2xl p-6 sm:p-8 transition-all shadow-lg backdrop-blur-sm relative overflow-hidden group ${reportFreq === 'daily' ? 'bg-surface-elevated border-content shadow-xl' : 'bg-surface/80 backdrop-blur-xl/90 border-line/80 hover:border-line-hover'}`}
         >
-          {reportFreq === 'daily' && <div className="absolute top-0 right-0 w-32 h-32 bg-violet-500/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>}
           <div className="flex justify-between items-start mb-6 relative">
-            <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${reportFreq === 'daily' ? 'bg-brand-emerald shadow-lg shadow-violet-900/50' : 'bg-surface-hover group-hover:bg-surface-hover'}`}>
-              <Mail size={20} className="text-inverted" />
+            <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${reportFreq === 'daily' ? 'bg-content text-canvas' : 'bg-surface-hover group-hover:bg-surface-hover'}`}>
+              <Mail size={20} className={reportFreq === 'daily' ? 'text-canvas' : 'text-content'} />
             </div>
-            {reportFreq === 'daily' && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}><CheckCircle2 size={24} className="text-violet-500" /></motion.div>}
+            {reportFreq === 'daily' && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}><CheckCircle2 size={24} className="text-content" /></motion.div>}
           </div>
           <h3 className="text-content font-bold text-xl mb-2 tracking-tight">Daily Brief</h3>
           <p className="text-muted text-sm leading-relaxed">A quick daily pulse of competitor changes.</p>
@@ -124,14 +123,13 @@ export const ScheduledReports = () => {
           variants={itemVariants}
           whileHover={{ y: -4 }}
           onClick={() => handleSaveFreq('twice_a_day')}
-          className={`cursor-pointer border rounded-2xl p-6 sm:p-8 transition-all shadow-lg backdrop-blur-sm relative overflow-hidden group ${reportFreq === 'twice_a_day' ? 'bg-emerald-500/10 border-emerald-500/50 shadow-emerald-900/20' : 'bg-surface/80 backdrop-blur-xl/90 border-line/80 hover:border-line-hover'}`}
+          className={`cursor-pointer border rounded-2xl p-6 sm:p-8 transition-all shadow-lg backdrop-blur-sm relative overflow-hidden group ${reportFreq === 'twice_a_day' ? 'bg-surface-elevated border-content shadow-xl' : 'bg-surface/80 backdrop-blur-xl/90 border-line/80 hover:border-line-hover'}`}
         >
-          {reportFreq === 'twice_a_day' && <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>}
           <div className="flex justify-between items-start mb-6 relative">
-            <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${reportFreq === 'twice_a_day' ? 'bg-emerald-600 shadow-lg shadow-emerald-900/50' : 'bg-surface-hover group-hover:bg-surface-hover'}`}>
-              <Clock size={20} className="text-inverted" />
+            <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${reportFreq === 'twice_a_day' ? 'bg-content text-canvas' : 'bg-surface-hover group-hover:bg-surface-hover'}`}>
+              <Clock size={20} className={reportFreq === 'twice_a_day' ? 'text-canvas' : 'text-content'} />
             </div>
-            {reportFreq === 'twice_a_day' && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}><CheckCircle2 size={24} className="text-emerald-500" /></motion.div>}
+            {reportFreq === 'twice_a_day' && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}><CheckCircle2 size={24} className="text-content" /></motion.div>}
           </div>
           <h3 className="text-content font-bold text-xl mb-2 tracking-tight">Twice a Day</h3>
           <p className="text-muted text-sm leading-relaxed">Sent morning and evening for rapid updates.</p>
@@ -141,14 +139,13 @@ export const ScheduledReports = () => {
           variants={itemVariants}
           whileHover={{ y: -4 }}
           onClick={() => handleSaveFreq('weekly')}
-          className={`cursor-pointer border rounded-2xl p-6 sm:p-8 transition-all shadow-lg backdrop-blur-sm relative overflow-hidden group ${reportFreq === 'weekly' ? 'bg-purple-500/10 border-purple-500/50 shadow-purple-900/20' : 'bg-surface/80 backdrop-blur-xl/90 border-line/80 hover:border-line-hover'}`}
+          className={`cursor-pointer border rounded-2xl p-6 sm:p-8 transition-all shadow-lg backdrop-blur-sm relative overflow-hidden group ${reportFreq === 'weekly' ? 'bg-surface-elevated border-content shadow-xl' : 'bg-surface/80 backdrop-blur-xl/90 border-line/80 hover:border-line-hover'}`}
         >
-          {reportFreq === 'weekly' && <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>}
           <div className="flex justify-between items-start mb-6 relative">
-            <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${reportFreq === 'weekly' ? 'bg-purple-600 shadow-lg shadow-purple-900/50' : 'bg-surface-hover group-hover:bg-surface-hover'}`}>
-              <Calendar size={20} className="text-inverted" />
+            <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${reportFreq === 'weekly' ? 'bg-content text-canvas' : 'bg-surface-hover group-hover:bg-surface-hover'}`}>
+              <Calendar size={20} className={reportFreq === 'weekly' ? 'text-canvas' : 'text-content'} />
             </div>
-            {reportFreq === 'weekly' && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}><CheckCircle2 size={24} className="text-purple-500" /></motion.div>}
+            {reportFreq === 'weekly' && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}><CheckCircle2 size={24} className="text-content" /></motion.div>}
           </div>
           <h3 className="text-content font-bold text-xl mb-2 tracking-tight">Weekly Digest</h3>
           <p className="text-muted text-sm leading-relaxed">A high-level overview sent every Monday.</p>
@@ -166,7 +163,7 @@ export const ScheduledReports = () => {
             type="time" 
             value={customTime}
             onChange={handleSaveTime}
-            className="w-full sm:w-auto bg-surface/60 /80 border border-line-hover text-content font-medium rounded-2xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500 transition-all shadow-inner"
+            className="w-full sm:w-auto bg-surface/60 border border-line text-content font-medium rounded-2xl px-4 py-2.5 focus:outline-none focus:ring-1 focus:ring-content focus:border-content transition-all shadow-inner"
           />
         </div>
       </motion.div>

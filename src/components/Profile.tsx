@@ -38,7 +38,7 @@ export const Profile = () => {
           <h3 className="text-2xl font-bold text-content">{email}</h3>
           <p className="text-muted text-sm mt-1 mb-4">Senro.AI Administrator • Joined Sep 2024</p>
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3">
-            <span className="bg-violet-500/10 text-brand-mint border border-brand-emerald/20 px-3 py-1 rounded-md text-xs font-semibold uppercase tracking-wider">Pro Tier</span>
+            <span className="bg-line text-content border border-line px-3 py-1 rounded-md text-xs font-semibold uppercase tracking-wider">Pro Tier</span>
             <span className="bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-3 py-1 rounded-md text-xs font-semibold uppercase tracking-wider">Active</span>
           </div>
         </div>
@@ -55,11 +55,11 @@ export const Profile = () => {
             <div className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-semibold text-muted mb-2">First Name</label>
-                <input type="text" defaultValue="Manjunath" className="w-full bg-surface/60  border border-line rounded-lg p-3 text-sm text-content focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all" />
+                <input type="text" defaultValue="Manjunath" className="w-full bg-surface/60  border border-line rounded-lg p-3 text-sm text-content focus:outline-none focus:border-content focus:ring-1 focus:ring-content transition-all" />
               </div>
               <div>
                 <label className="block text-sm font-semibold text-muted mb-2">Last Name</label>
-                <input type="text" defaultValue="Chakri" className="w-full bg-surface/60  border border-line rounded-lg p-3 text-sm text-content focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all" />
+                <input type="text" defaultValue="Chakri" className="w-full bg-surface/60  border border-line rounded-lg p-3 text-sm text-content focus:outline-none focus:border-content focus:ring-1 focus:ring-content transition-all" />
               </div>
               <div className="sm:col-span-2">
                 <label className="block text-sm font-semibold text-muted mb-2">Email Address</label>
@@ -80,11 +80,11 @@ export const Profile = () => {
             <div className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-semibold text-muted mb-2">Company Name</label>
-                <input type="text" defaultValue="Acme Corp" className="w-full bg-surface/60  border border-line rounded-lg p-3 text-sm text-content focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all" />
+                <input type="text" defaultValue="Acme Corp" className="w-full bg-surface/60  border border-line rounded-lg p-3 text-sm text-content focus:outline-none focus:border-content focus:ring-1 focus:ring-content transition-all" />
               </div>
               <div>
                 <label className="block text-sm font-semibold text-muted mb-2">Job Role</label>
-                <input type="text" defaultValue="Founder / CEO" className="w-full bg-surface/60  border border-line rounded-lg p-3 text-sm text-content focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all" />
+                <input type="text" defaultValue="Founder / CEO" className="w-full bg-surface/60  border border-line rounded-lg p-3 text-sm text-content focus:outline-none focus:border-content focus:ring-1 focus:ring-content transition-all" />
               </div>
             </div>
           </motion.div>
@@ -99,7 +99,7 @@ export const Profile = () => {
             <div className="p-5 space-y-5">
               <div>
                 <label className="block text-sm font-semibold text-muted mb-2 flex items-center gap-2"><Globe size={14}/> Language</label>
-                <select className="w-full bg-surface/60  border border-line rounded-lg p-2.5 text-sm text-content focus:outline-none focus:border-violet-500 transition-all appearance-none">
+                <select className="w-full bg-surface/60 border border-line rounded-lg p-2.5 text-sm text-content focus:outline-none focus:border-content transition-all appearance-none">
                   <option>English (US)</option>
                   <option>English (UK)</option>
                   <option>Spanish</option>
@@ -108,7 +108,7 @@ export const Profile = () => {
               </div>
               <div>
                 <label className="block text-sm font-semibold text-muted mb-2 flex items-center gap-2"><Clock size={14}/> Timezone</label>
-                <select className="w-full bg-surface/60  border border-line rounded-lg p-2.5 text-sm text-content focus:outline-none focus:border-violet-500 transition-all appearance-none">
+                <select className="w-full bg-surface/60 border border-line rounded-lg p-2.5 text-sm text-content focus:outline-none focus:border-content transition-all appearance-none">
                   <option>Pacific Time (PT)</option>
                   <option>Eastern Time (ET)</option>
                   <option>Coordinated Universal Time (UTC)</option>
@@ -121,7 +121,7 @@ export const Profile = () => {
           {/* Billing Summary */}
           <motion.div variants={itemVariants} className="bg-gradient-to-b from-blue-900/20 to-transparent border border-brand-emerald/20 rounded-2xl overflow-hidden shadow-lg">
             <div className="p-5 flex items-center gap-3">
-              <div className="p-2 bg-violet-500/20 rounded-lg"><CreditCard size={18} className="text-brand-mint" /></div>
+              <div className="p-2 bg-line rounded-lg"><CreditCard size={18} className="text-content" /></div>
               <h3 className="text-base font-bold text-content">Plan & Usage</h3>
             </div>
             <div className="px-5 pb-6">

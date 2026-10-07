@@ -87,14 +87,14 @@ Ensure the output aligns strictly with the user's formatting preferences.`;
   return (
     <div className="flex flex-col h-full bg-[#121212] rounded-xl overflow-hidden">
       {/* Header */}
-      <div className="border-b border-line p-4 flex items-center justify-between bg-[#121212]">
+      <div className="border-b border-line p-4 flex items-center justify-between bg-surface">
         <div className="flex items-center gap-2">
-          <div className="p-1.5 bg-violet-500/10 rounded-md">
-            <BrainCircuit className="w-5 h-5 text-violet-500" />
+          <div className="p-1.5 bg-line rounded-md">
+            <BrainCircuit className="w-5 h-5 text-content" />
           </div>
           <h2 className="font-semibold text-sm text-content">AI Battlecard Agent</h2>
         </div>
-        <div className="text-[10px] uppercase font-mono tracking-wider bg-violet-500/10 border border-brand-emerald/20 px-2 py-1 rounded text-brand-mint">
+        <div className="text-[10px] uppercase font-mono tracking-wider bg-line border border-line px-2 py-1 rounded text-content">
           Hindsight Active
         </div>
       </div>
@@ -106,14 +106,14 @@ Ensure the output aligns strictly with the user's formatting preferences.`;
             <div className={`flex gap-3 max-w-[85%] ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
               <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
                 msg.role === 'user' 
-                  ? 'bg-brand-emerald text-inverted' 
+                  ? 'bg-content text-canvas' 
                   : 'bg-surface-hover border border-line-hover text-content'
               }`}>
                 {msg.role === 'user' ? <User size={14} /> : <Bot size={14} />}
               </div>
               <div className={`p-4 rounded-xl ${
                 msg.role === 'user' 
-                  ? 'bg-brand-emerald text-inverted rounded-tr-none' 
+                  ? 'bg-content text-canvas rounded-tr-none' 
                   : 'bg-surface-hover border border-line text-content rounded-tl-none'
               }`}>
                 <div className="whitespace-pre-wrap text-sm leading-relaxed">{msg.content}</div>
@@ -125,14 +125,14 @@ Ensure the output aligns strictly with the user's formatting preferences.`;
       </div>
 
       {/* Input Area */}
-      <form onSubmit={handleSendMessage} className="p-4 bg-[#121212] border-t border-line">
+      <form onSubmit={handleSendMessage} className="p-4 bg-surface border-t border-line">
         <div className="relative flex items-center">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Instruct the agent (e.g., 'Focus on enterprise pricing')"
-            className="w-full bg-canvas border border-line text-sm text-content pl-4 pr-12 py-3 rounded-lg focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all placeholder:text-muted"
+            className="w-full bg-canvas border border-line text-sm text-content pl-4 pr-12 py-3 rounded-lg focus:outline-none focus:border-content focus:ring-1 focus:ring-content transition-all placeholder:text-muted"
             disabled={isGenerating}
           />
           <button
