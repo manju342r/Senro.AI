@@ -6,17 +6,20 @@ import { useData } from '../contexts/DataContext';
 export const SettingsUI = () => {
   const [ownUrl, setOwnUrl] = useState('');
   const [compUrl, setCompUrl] = useState('');
+  const [compPlaceId, setCompPlaceId] = useState('');
   const { supabase } = useData();
 
   useEffect(() => {
     setOwnUrl(localStorage.getItem('ownUrl') || '');
     setCompUrl(localStorage.getItem('compUrl') || '');
+    setCompPlaceId(localStorage.getItem('compPlaceId') || '');
   }, []);
 
   const handleSaveWorkspace = async () => {
-    if (ownUrl) localStorage.setItem('ownUrl', ownUrl);
-    if (compUrl) localStorage.setItem('compUrl', compUrl);
-    await supabase.auth.updateUser({ data: { ownUrl: ownUrl, compUrl: compUrl } });
+    localStorage.setItem('ownUrl', ownUrl);
+    localStorage.setItem('compUrl', compUrl);
+    localStorage.setItem('compPlaceId', compPlaceId);
+    await supabase.auth.updateUser({ data: { ownUrl: ownUrl, compUrl: compUrl, compPlaceId: compPlaceId } });
     alert("Workspace settings saved. Reloading to apply changes...");
     window.location.reload();
   };
@@ -47,6 +50,10 @@ export const SettingsUI = () => {
               <label className="block text-sm font-semibold text-content mb-2">Primary Competitor URL</label>
               <input type="url" value={compUrl} onChange={e => setCompUrl(e.target.value)} placeholder="https://competitor.com" className="w-full bg-surface/60 border border-line rounded-lg p-3 text-sm text-content focus:outline-none focus:border-content focus:ring-1 focus:ring-content transition-all" />
             </div>
+            <div>
+              <label className="block text-sm font-semibold text-content mb-2">Competitor Google Place ID</label>
+              <input type="text" value={compPlaceId} onChange={e => setCompPlaceId(e.target.value)} placeholder="ChIJN1t_tDeuEmsRUsoyG83frY4" className="w-full bg-surface/60 border border-line rounded-lg p-3 text-sm text-content focus:outline-none focus:border-content focus:ring-1 focus:ring-content transition-all" />
+            </div>
           </div>
           <div className="flex justify-end pt-4">
             <button onClick={handleSaveWorkspace} className="bg-content text-canvas hover:opacity-90 px-5 py-2.5 rounded-lg text-sm font-bold transition-all shadow-lg flex items-center gap-2">
@@ -71,6 +78,10 @@ export const SettingsUI = () => {
             <div>
               <label className="block text-sm font-semibold text-content mb-2">Jina AI Key</label>
               <input type="password" placeholder="jina-..." className="w-full bg-surface/60 border border-line rounded-lg p-3 text-sm text-content focus:outline-none focus:border-content focus:ring-1 focus:ring-content transition-all" />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-content mb-2">Google Places API Key</label>
+              <input type="password" placeholder="AIza..." className="w-full bg-surface/60 border border-line rounded-lg p-3 text-sm text-content focus:outline-none focus:border-content focus:ring-1 focus:ring-content transition-all" />
             </div>
           </div>
           <div className="flex justify-end pt-4">
