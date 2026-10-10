@@ -86,6 +86,13 @@ export const Profile = () => {
                 <label className="block text-sm font-semibold text-muted mb-2">Job Role</label>
                 <input type="text" defaultValue="Founder / CEO" className="w-full bg-surface/60  border border-line rounded-lg p-3 text-sm text-content focus:outline-none focus:border-content focus:ring-1 focus:ring-content transition-all" />
               </div>
+              <div className="sm:col-span-2">
+                <label className="block text-sm font-semibold text-muted mb-2">Company Website</label>
+                <div className="relative">
+                  <Globe size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
+                  <input type="url" defaultValue="https://acme.com" placeholder="https://example.com" className="w-full bg-surface/60 border border-line rounded-lg pl-9 pr-3 py-3 text-sm text-content focus:outline-none focus:border-content focus:ring-1 focus:ring-content transition-all" />
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>
