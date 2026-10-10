@@ -8,6 +8,8 @@ export const Profile = () => {
   const email = localStorage.getItem('userEmail') || 'demo@senro.ai';
   const { supabase } = useData();
   const [loading, setLoading] = useState(false);
+  const ownUrl = localStorage.getItem('ownUrl') || '';
+  const companyName = localStorage.getItem('companyName') || '';
 
   const containerVariants = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.1 } } };
   const itemVariants = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { type: "spring" as any, stiffness: 300, damping: 24 } } };
@@ -80,7 +82,7 @@ export const Profile = () => {
             <div className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-semibold text-muted mb-2">Company Name</label>
-                <input type="text" defaultValue="Acme Corp" className="w-full bg-surface/60  border border-line rounded-lg p-3 text-sm text-content focus:outline-none focus:border-content focus:ring-1 focus:ring-content transition-all" />
+                <input type="text" defaultValue={companyName} placeholder="Your Company Name" className="w-full bg-surface/60  border border-line rounded-lg p-3 text-sm text-content focus:outline-none focus:border-content focus:ring-1 focus:ring-content transition-all" />
               </div>
               <div>
                 <label className="block text-sm font-semibold text-muted mb-2">Job Role</label>
@@ -90,7 +92,7 @@ export const Profile = () => {
                 <label className="block text-sm font-semibold text-muted mb-2">Company Website</label>
                 <div className="relative">
                   <Globe size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
-                  <input type="url" defaultValue="https://acme.com" placeholder="https://example.com" className="w-full bg-surface/60 border border-line rounded-lg pl-9 pr-3 py-3 text-sm text-content focus:outline-none focus:border-content focus:ring-1 focus:ring-content transition-all" />
+                  <input type="url" defaultValue={ownUrl} placeholder="https://yourcompany.com" className="w-full bg-surface/60 border border-line rounded-lg pl-9 pr-3 py-3 text-sm text-content focus:outline-none focus:border-content focus:ring-1 focus:ring-content transition-all" />
                 </div>
               </div>
             </div>

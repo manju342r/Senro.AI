@@ -37,8 +37,9 @@ const MetricCard = ({ title, value, icon: Icon, iconColor, subtext }: { title: s
   export const Overview = () => {
   const navigate = useNavigate();
   const { supabase, ingestToHindsight } = useData();
-  const [ownUrl] = useState(() => localStorage.getItem('ownUrl') || 'https://acme.com');
+  const [ownUrl] = useState(() => localStorage.getItem('ownUrl') || '');
   const [compUrl] = useState(() => localStorage.getItem('compUrl') || '');
+  const [compPlaceId] = useState(() => localStorage.getItem('compPlaceId') || '');
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any>(() => {
     try {
@@ -111,7 +112,8 @@ const MetricCard = ({ title, value, icon: Icon, iconColor, subtext }: { title: s
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ownUrl: ownUrl,
-          competitorUrls: [compUrl]
+          competitorUrls: [compUrl],
+          googlePlaceId: compPlaceId
         })
       });
 
@@ -158,7 +160,7 @@ const MetricCard = ({ title, value, icon: Icon, iconColor, subtext }: { title: s
             Dashboard
           </h2>
           <p className="text-muted text-sm mt-1.5 font-medium">
-            Monitoring <span className="text-content">{compUrl ? getDomain(compUrl) : 'competitors'}</span> against <span className="text-content">{getDomain(ownUrl)}</span>
+            Monitoring <span className="text-content">{compUrl ? getDomain(compUrl) : 'competitors'}</span> against <span className="text-content">{ownUrl ? getDomain(ownUrl) : 'your company'}</span>
           </p>
         </div>
         <div className="flex items-center gap-3 w-full sm:w-auto">
